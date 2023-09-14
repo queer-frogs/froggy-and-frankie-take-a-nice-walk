@@ -16,3 +16,5 @@ main_menu.py
 player.py # physics engine & player inputs
 tiled_utils.py # for the tiled editor
 utils.py # misc functions used across the game
+requirements.txt # python dependencies
+
