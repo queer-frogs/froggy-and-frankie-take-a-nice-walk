@@ -1,7 +1,7 @@
 # game (not the definitive name as u might have guessed)
 
 ## Project structure
-assets # data referenced in game code 
+```assets # data referenced in game code 
 | backgrounds
 | characters
 | fonts
@@ -16,5 +16,5 @@ main_menu.py
 player.py # physics engine & player inputs
 tiled_utils.py # for the tiled editor
 utils.py # misc functions used across the game
-requirements.txt # python dependencies
+requirements.txt # python dependencies```
 
