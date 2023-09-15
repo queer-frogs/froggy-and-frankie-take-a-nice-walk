@@ -1,2 +1,5 @@
 # environnement
 env
+
+# finder macOs
+.DS_Store
