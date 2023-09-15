@@ -1,0 +1,113 @@
+Metadata-Version: 2.1
+Name: arcade
+Version: 2.6.17
+Summary: Arcade Game Development Library
+Home-page: https://api.arcade.academy
+Author: Paul Vincent Craven
+Author-email: paul.craven@simpson.edu
+License: MIT
+Download-URL: https://api.arcade.academy
+Project-URL: Documentation, https://api.arcade.academy/
+Project-URL: Example Code, https://api.arcade.academy/en/latest/examples/index.html
+Project-URL: Issue Tracker, https://github.com/pythonarcade/arcade/issues
+Project-URL: Source, https://github.com/pythonarcade/arcade
+Project-URL: On-line Book, https://learn.arcade.academy
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.7
+License-File: license.rst
+Requires-Dist: pyglet (==2.0.dev23)
+Requires-Dist: pillow (~=9.3.0)
+Requires-Dist: pymunk (~=6.4.0)
+Requires-Dist: pytiled-parser (==2.2.0)
+Provides-Extra: dev
+Requires-Dist: pytest ; extra == 'dev'
+Requires-Dist: flake8 ; extra == 'dev'
+Requires-Dist: mypy ; extra == 'dev'
+Requires-Dist: coverage ; extra == 'dev'
+Requires-Dist: coveralls ; extra == 'dev'
+Requires-Dist: pytest-mock ; extra == 'dev'
+Requires-Dist: pytest-cov ; extra == 'dev'
+Requires-Dist: Sphinx (==4.5.0) ; extra == 'dev'
+Requires-Dist: Pygments (==2.10.0) ; extra == 'dev'
+Requires-Dist: sphinx-copybutton (==0.5.0) ; extra == 'dev'
+Requires-Dist: sphinx-sitemap (==2.2.0) ; extra == 'dev'
+Requires-Dist: dirsync (==2.2.5) ; extra == 'dev'
+Requires-Dist: pyyaml (==6.0) ; extra == 'dev'
+Requires-Dist: docutils (<0.18) ; extra == 'dev'
+Requires-Dist: sphinx-sitemap ; extra == 'dev'
+Requires-Dist: furo ; extra == 'dev'
+Requires-Dist: sphinx-copybutton ; extra == 'dev'
+Requires-Dist: dirsync ; extra == 'dev'
+Requires-Dist: wheel ; extra == 'dev'
+Provides-Extra: docs
+Requires-Dist: Sphinx (==4.5.0) ; extra == 'docs'
+Requires-Dist: Pygments (==2.10.0) ; extra == 'docs'
+Requires-Dist: sphinx-copybutton (==0.5.0) ; extra == 'docs'
+Requires-Dist: sphinx-sitemap (==2.2.0) ; extra == 'docs'
+Requires-Dist: dirsync (==2.2.5) ; extra == 'docs'
+Requires-Dist: pyyaml (==6.0) ; extra == 'docs'
+Requires-Dist: docutils (<0.18) ; extra == 'docs'
+Requires-Dist: sphinx-sitemap ; extra == 'docs'
+Requires-Dist: furo ; extra == 'docs'
+Requires-Dist: sphinx-copybutton ; extra == 'docs'
+Requires-Dist: dirsync ; extra == 'docs'
+Requires-Dist: wheel ; extra == 'docs'
+
+Welcome to The Arcade Library!
+==============================
+
+Arcade is an easy-to-learn Python library for creating 2D video games.
+It is ideal for beginning programmers, or programmers who want to create
+2D games without learning a complex framework.
+
+Arcade is built on top of Pyglet and OpenGL.
+
+.. image:: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)
+    :target: http://makeapullrequest.com
+    :alt: Pull Requests Welcome
+
+.. image:: https://img.shields.io/badge/first--timers--only-friendly-blue.svg
+    :alt: first-timers-only Friendly
+    :target: http://www.firsttimersonly.com/
+
+.. image:: https://img.shields.io/pypi/dm/arcade
+    :alt: PyPI - Downloads
+
+.. image:: https://img.shields.io/github/commit-activity/m/pythonarcade/arcade
+    :alt: GitHub commit activity
+
+.. image:: https://img.shields.io/pypi/l/arcade
+    :alt: PyPI - License
+
+Documentation
+-------------
+
+* For full documentation see https://api.arcade.academy
+* For installation: https://api.arcade.academy/en/latest/install/index.html
+* For example code that uses the Arcade library see: https://api.arcade.academy/en/latest/examples/index.html
+* For API documentation see: https://api.arcade.academy/en/latest/quick_index.html
+* Learn Arcade AND how to program: https://learn.arcade.academy
+* Release notes: https://api.arcade.academy/en/latest/development/release_notes.html
+
+Games Using Arcade
+------------------
+
+See: https://api.arcade.academy/en/latest/sample_games.html
+
+Contact the Maintainer
+----------------------
+
+paul@cravenfamily.com
+
