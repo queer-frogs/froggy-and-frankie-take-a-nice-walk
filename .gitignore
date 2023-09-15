@@ -1,5 +1,8 @@
 # environnement
 env
+.idea
 
 # finder macOs
 .DS_Store
+assets/.DS_Store
+
