@@ -72,6 +72,7 @@ class Game(arcade.Window):
 
         # Create sprite lists here, and set them to None
         self.player_sprite = None
+        self.walls_list = None
 
         # Our 'physics' engine
         self.physics_engine = None
@@ -92,22 +93,24 @@ class Game(arcade.Window):
     def setup(self):
         """ Set up the game here. Call this function to restart the game."""
 
+        # Initialize Scene
+        self.scene = arcade.Scene()
+
         # Set up the Cameras
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
-        self.player_list = arcade.SpriteList()
         self.player_sprite = arcade.Sprite(image_source)
         self.player_sprite.center_x = 64
         self.player_sprite.center_y = 128
-        self.player_list.append(self.player_sprite)
 
         # Initialize map
         # Initialize sprites and sprite lists here
         # Keep track of score
 
         # Create the physics engine
+        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
 
 
     def on_draw(self):
@@ -125,7 +128,7 @@ class Game(arcade.Window):
 
         # Draw our Scene
 
-        self.player_list.draw()
+        self.player_sprite.draw()
 
 
         # Activate the GUI camera before drawing GUI elements
@@ -139,9 +142,10 @@ class Game(arcade.Window):
         Normally, you'll call update() on the sprite lists that need it.
         """
         # Move the player with the physics engine
-        # self.physics_engine.update()
+        self.physics_engine.update()
 
         # Update animations
+
 
         # Position the camera
         self.center_camera_to_player()
@@ -179,9 +183,14 @@ class Game(arcade.Window):
         """ Called when we change a key """
 
         # Process up/down
-        # Process left/right
 
-        pass
+        # Process left/right
+        if self.left_pressed and not self.right_pressed :
+            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED
+        elif self.right_pressed and not self.left_pressed :
+            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
+        else :
+            self.player_sprite.change_x = 0
 
     def center_camera_to_player(self):
         """ Center camera to the player sprite """
