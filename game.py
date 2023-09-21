@@ -96,6 +96,13 @@ class Game(arcade.Window):
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
+        image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
+        self.player_list = arcade.SpriteList()
+        self.player_sprite = arcade.Sprite(image_source)
+        self.player_sprite.center_x = 64
+        self.player_sprite.center_y = 128
+        self.player_list.append(self.player_sprite)
+
         # Initialize map
         # Initialize sprites and sprite lists here
         # Keep track of score
@@ -117,6 +124,8 @@ class Game(arcade.Window):
         self.camera.use()
 
         # Draw our Scene
+
+        self.player_list.draw()
 
 
         # Activate the GUI camera before drawing GUI elements
