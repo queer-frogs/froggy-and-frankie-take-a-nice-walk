@@ -62,7 +62,7 @@ class Game(arcade.Window):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
-        self.jump_needs_reset = False
+        #self.jump_needs_reset = False
 
         # Our TileMap Object
         self.tile_map = None
@@ -93,32 +93,44 @@ class Game(arcade.Window):
     def setup(self):
         """ Set up the game here. Call this function to restart the game."""
 
-        # Initialize Scene
-        self.scene = arcade.Scene()
-
         # Set up the Cameras
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
+        # Initialize Scene
+        self.scene = arcade.Scene()
+
         image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
         self.player_sprite = arcade.Sprite(image_source)
-        self.player_sprite.center_x = 64
+        self.player_sprite.center_x = 50
         self.player_sprite.center_y = 128
+
+        self.walls_list = arcade.SpriteList(use_spatial_hash=True)
+
+        self.scene.add_sprite("Player", self.player_sprite)
+        self.scene.add_sprite_list("Walls", True, self.walls_list)
+
+        coordinate_list = [[50, 60], [150, 60], [300, 60], [500, 60], [700, 60]]
+        for coordinate in coordinate_list:
+            block = arcade.Sprite(":resources:images/tiles/mushroomRed.png")
+            block.position = coordinate
+            self.walls_list.append(block)
+
+
+        self.scene.add_sprite_list("Block", True, self.walls_list)
 
         # Initialize map
         # Initialize sprites and sprite lists here
         # Keep track of score
 
         # Create the physics engine
-        self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
+        #self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
+
+        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.walls_list, gravity_constant=GRAVITY)
 
 
     def on_draw(self):
         """ Render the screen. """
-
-        # This command should happen before we start drawing. It will clear
-        # the screen to the background color, and erase what we drew last frame.
-        arcade.start_render()
 
         # Clear the screen to the background color
         self.clear()
@@ -128,11 +140,10 @@ class Game(arcade.Window):
 
         # Draw our Scene
 
-        self.player_sprite.draw()
-
+        self.scene.draw()
 
         # Activate the GUI camera before drawing GUI elements
-        self.gui_camera.use()
+        #self.gui_camera.use()
 
         # Draw score
 
@@ -146,11 +157,9 @@ class Game(arcade.Window):
 
         # Update animations
 
-
         # Position the camera
         self.center_camera_to_player()
 
-        pass
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
@@ -183,6 +192,11 @@ class Game(arcade.Window):
         """ Called when we change a key """
 
         # Process up/down
+
+        # Process jump
+        if self.up_pressed and not self.down_pressed:
+            if self.physics_engine.can_jump(y_distance=10) :
+                self.player_sprite.change_y = PLAYER_JUMP_SPEED
 
         # Process left/right
         if self.left_pressed and not self.right_pressed :
