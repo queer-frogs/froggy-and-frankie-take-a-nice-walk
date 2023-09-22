@@ -8,7 +8,7 @@ def user_instructions(code, forbidden):
     Args:
         code: str containing code performed by user,
         forbidden: list (refers to instructions denied in the current level).
-    Returns: True if success, Simplified error string else.
+    Returns: Buffer text or error.
     Raises: Environment error if forbidden code is detected.
     """
 
