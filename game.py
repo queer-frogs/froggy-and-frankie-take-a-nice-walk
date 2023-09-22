@@ -5,6 +5,10 @@ SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 650
 SCREEN_TITLE = "Game"
 
+# Player starting position
+PLAYER_START_X = 50
+PLAYER_START_Y = 120
+
 # Movement speed of player, in pixels per frame
 PLAYER_MOVEMENT_SPEED = 7
 GRAVITY = 1.5
@@ -83,10 +87,17 @@ class Game(arcade.Window):
         # A Camera that can be used to draw GUI elements (menu, score)
         self.gui_camera = None
 
-        self.end_of_map = 0
-
         # Keep track of the score
         self.score = 0
+
+        # Do we need to reset the score?
+        self.reset_score = True
+
+        # Where is the right edge of the map?
+        self.end_of_map = 0
+
+        # Level
+        self.level = 1
 
         # Load sounds
 
@@ -100,10 +111,13 @@ class Game(arcade.Window):
         # Initialize Scene
         self.scene = arcade.Scene()
 
+        # ⚠️to redefine with the correct value
+        self.end_of_map = 1000
+
         image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
         self.player_sprite = arcade.Sprite(image_source)
-        self.player_sprite.center_x = 50
-        self.player_sprite.center_y = 128
+        self.player_sprite.center_x = PLAYER_START_X
+        self.player_sprite.center_y = PLAYER_START_Y
 
         self.walls_list = arcade.SpriteList(use_spatial_hash=True)
 
@@ -121,7 +135,12 @@ class Game(arcade.Window):
 
         # Initialize map
         # Initialize sprites and sprite lists here
-        # Keep track of score
+
+        # Keep track of the score, make sure we keep the score if the player finishes a level
+        if self.reset_score:
+            self.score = 0
+        self.reset_score = True
+
 
         # Create the physics engine
         #self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
@@ -143,7 +162,13 @@ class Game(arcade.Window):
         self.scene.draw()
 
         # Activate the GUI camera before drawing GUI elements
-        #self.gui_camera.use()
+        # Activate the GUI camera before drawing GUI elements
+        self.gui_camera.use()
+
+
+        # Indicate level number
+        nb_level = f"Level: {self.level}"
+        arcade.draw_text(nb_level, 10, 600, arcade.csscolor.WHITE, 18)
 
         # Draw score
 
@@ -157,8 +182,21 @@ class Game(arcade.Window):
 
         # Update animations
 
-        # Position the camera
-        self.center_camera_to_player()
+        # Did the player fall off the map?
+        if self.player_sprite.center_y < -100:
+            self.player_sprite.center_x = PLAYER_START_X
+            self.player_sprite.center_y = PLAYER_START_Y
+
+        # See if the user got to the end of the level
+        if self.player_sprite.center_x >= self.end_of_map:
+            # Advance to the next level
+            self.level += 1
+
+            # Make sure to keep the score from this level when setting up the next level
+            self.reset_score = False
+
+            # Load the next level
+            self.setup()
 
 
     def on_key_press(self, key, modifiers):
@@ -205,10 +243,6 @@ class Game(arcade.Window):
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
         else :
             self.player_sprite.change_x = 0
-
-    def center_camera_to_player(self):
-        """ Center camera to the player sprite """
-        pass
 
 
 def main():
