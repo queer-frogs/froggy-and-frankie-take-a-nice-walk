@@ -1,4 +1,5 @@
 import arcade
+import arcade.gui as gui
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -59,6 +60,9 @@ class Game(arcade.Window):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
+        self.manager = gui.UIManager()
+        self.manager.enable()
+
         arcade.set_background_color(arcade.color.AMAZON)
 
         # Track the current state of what key is pressed
@@ -67,6 +71,19 @@ class Game(arcade.Window):
         self.up_pressed = False
         self.down_pressed = False
         #self.jump_needs_reset = False
+
+        # Code Input
+        self.input_field = gui.UIInputText(color=arcade.color.DARK_BLUE_GRAY, font_size=10, width=200, multiline=True)
+        # Create a button
+        submit_button = gui.UIFlatButton(color=arcade.color.DARK_BLUE_GRAY, text='Submit', width=100)
+
+        self.box = gui.UIBoxLayout(vertical=True)
+        self.box.add(self.input_field)
+        self.box.add(submit_button)
+
+        self.padd = gui.UIPadding(bg_color=arcade.color.APRICOT, child=self.box, padding=(0.3, 0.3, 0.3, 0.3))
+
+        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=self.padd))
 
         # Our TileMap Object
         self.tile_map = None
@@ -160,6 +177,7 @@ class Game(arcade.Window):
         # Draw our Scene
 
         self.scene.draw()
+        self.manager.draw()
 
         # Activate the GUI camera before drawing GUI elements
         # Activate the GUI camera before drawing GUI elements
