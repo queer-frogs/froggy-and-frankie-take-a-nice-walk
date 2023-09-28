@@ -30,13 +30,11 @@ def user_instructions(code, forbidden):
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 
-    artificial_buffer = ""
     local_variables = locals()
 
     # execution
 
     try:
-        artificial_buffer = ""
         exec(code, globals(), local_variables)
         artificial_buffer = local_variables['artificial_buffer']
 
