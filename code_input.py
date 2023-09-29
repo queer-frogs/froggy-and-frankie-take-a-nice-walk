@@ -26,7 +26,7 @@ def user_instructions(code, forbidden):
     # artificial buffer + code modification
 
     artificial_buffer = ""
-    code = code.replace('print(', 'artificial_buffer += (')
+    code = code.replace('print(', "artificial_buffer +=  '\\n' + str(")
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 
@@ -48,5 +48,5 @@ def user_instructions(code, forbidden):
     return artificial_buffer
 
 
-res = user_instructions('print("hello world!")', [])
+res = user_instructions('print("hello world!")\na = 3\nfor i in range(1,10):\n\tprint(a)', [])
 print(res)
