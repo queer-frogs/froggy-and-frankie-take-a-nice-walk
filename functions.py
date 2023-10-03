@@ -10,11 +10,9 @@ def grid_position(screen_size_x, screen_size_y, grid_size_x, grid_size_y, coordi
     :param coordinate_y: vertical coordinate on the grid
     :return: position_x, position_y AKA where in pixels to place your object
     """
-    # things that will give us invalide values are send for error treatment
     if (coordinate_x > grid_size_x) or (coordinate_y > grid_size_y) or (grid_size_x > screen_size_x) or (
             grid_size_y > screen_size_y):
         return -1
-    # calculate with basic maths the output coordinates
     cell_size_x = screen_size_x / grid_size_x
     cell_size_y = screen_size_y / grid_size_y
     position_x = cell_size_x * (coordinate_x - 1)
