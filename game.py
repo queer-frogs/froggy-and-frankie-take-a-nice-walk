@@ -6,13 +6,16 @@ SCREEN_HEIGHT = 650
 SCREEN_TITLE = "Game"
 
 # Player starting position
-PLAYER_START_X = 50
-PLAYER_START_Y = 120
+PLAYER_START_X = 100
+PLAYER_START_Y = 240
 
 # Movement speed of player, in pixels per frame
 PLAYER_MOVEMENT_SPEED = 7
 GRAVITY = 1.5
 PLAYER_JUMP_SPEED = 30
+
+# Tiled constants
+TILE_SCALING = 1
 
 # Constants used to scale our sprites from their original size
 
@@ -21,6 +24,7 @@ PLAYER_JUMP_SPEED = 30
 # Constants used to track if the player is facing left or right
 RIGHT_FACING = 0
 LEFT_FACING = 1
+
 
 class Entity(arcade.Sprite):
     """ Basic structure of every sprite """
@@ -41,6 +45,7 @@ class Entity(arcade.Sprite):
 
 class PlayerCharacter(Entity):
     """ Player Sprite """
+
     def __init__(self):
         super().__init__("player", "player")
 
@@ -51,7 +56,8 @@ class PlayerCharacter(Entity):
     def update_animation(self, delta_time: float = 1 / 60):
         # Update sprite based on state
         pass
-    
+
+
 class Game(arcade.Window):
     """ Main application class. """
 
@@ -66,7 +72,7 @@ class Game(arcade.Window):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
-        #self.jump_needs_reset = False
+        # self.jump_needs_reset = False
 
         # Our TileMap Object
         self.tile_map = None
@@ -108,32 +114,32 @@ class Game(arcade.Window):
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
+        # Initialize map
+        map_path = "tilemaps/sample.tmx"
+        layer_options = {  # options specific to each layer
+            "Platforms": {
+                "use_spatial_hash": True,
+            },
+        }
+        self.tile_map = arcade.load_tilemap(map_path, TILE_SCALING, layer_options)
+        if self.tile_map.background_color:
+            arcade.set_background_color(self.tile_map.background_color)
+
         # Initialize Scene
-        self.scene = arcade.Scene()
+        self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
         # ⚠️to redefine with the correct value
         self.end_of_map = 1000
 
+        # Initialize Player Sprite
         image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
         self.player_sprite = arcade.Sprite(image_source)
         self.player_sprite.center_x = PLAYER_START_X
         self.player_sprite.center_y = PLAYER_START_Y
 
-        self.walls_list = arcade.SpriteList(use_spatial_hash=True)
-
         self.scene.add_sprite("Player", self.player_sprite)
         self.scene.add_sprite_list("Walls", True, self.walls_list)
 
-        coordinate_list = [[50, 60], [150, 60], [300, 60], [500, 60], [700, 60]]
-        for coordinate in coordinate_list:
-            block = arcade.Sprite(":resources:images/tiles/mushroomRed.png")
-            block.position = coordinate
-            self.walls_list.append(block)
-
-
-        self.scene.add_sprite_list("Block", True, self.walls_list)
-
-        # Initialize map
         # Initialize sprites and sprite lists here
 
         # Keep track of the score, make sure we keep the score if the player finishes a level
@@ -141,12 +147,11 @@ class Game(arcade.Window):
             self.score = 0
         self.reset_score = True
 
-
         # Create the physics engine
-        #self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
+        # self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
 
-        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.walls_list, gravity_constant=GRAVITY)
-
+        self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
+                                                             gravity_constant=GRAVITY)
 
     def on_draw(self):
         """ Render the screen. """
@@ -162,9 +167,7 @@ class Game(arcade.Window):
         self.scene.draw()
 
         # Activate the GUI camera before drawing GUI elements
-        # Activate the GUI camera before drawing GUI elements
         self.gui_camera.use()
-
 
         # Indicate level number
         nb_level = f"Level: {self.level}"
@@ -197,7 +200,6 @@ class Game(arcade.Window):
 
             # Load the next level
             self.setup()
-
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
@@ -233,15 +235,15 @@ class Game(arcade.Window):
 
         # Process jump
         if self.up_pressed and not self.down_pressed:
-            if self.physics_engine.can_jump(y_distance=10) :
+            if self.physics_engine.can_jump(y_distance=10):
                 self.player_sprite.change_y = PLAYER_JUMP_SPEED
 
         # Process left/right
-        if self.left_pressed and not self.right_pressed :
+        if self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED
-        elif self.right_pressed and not self.left_pressed :
+        elif self.right_pressed and not self.left_pressed:
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
-        else :
+        else:
             self.player_sprite.change_x = 0
 
 

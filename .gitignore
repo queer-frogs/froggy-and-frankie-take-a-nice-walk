@@ -5,4 +5,5 @@ env
 # finder macOs
 .DS_Store
 assets/.DS_Store
+assets/tiles/.DS_Store
 
