@@ -115,7 +115,7 @@ class Game(arcade.Window):
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         # Initialize map
-        map_path = "tilemaps/sample.tmx"
+        map_path = "assets/tiled/tilemaps/sample.tmx"
         layer_options = {  # options specific to each layer
             "Platforms": {
                 "use_spatial_hash": True,
