@@ -1,7 +1,7 @@
 import json
 
 
-def user_instructions(code, forbidden):
+def user_instructions(code, forbidden=[]):
     """
     Function checking, executing user input code and handling errors.
 
@@ -26,7 +26,8 @@ def user_instructions(code, forbidden):
     # artificial buffer + code modification
 
     artificial_buffer = ""
-    code = code.replace('print(', 'artificial_buffer += (')
+    code = code.replace('print(', "artificial_buffer += '\\n' + str(")
+    print()
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 
@@ -50,5 +51,6 @@ def user_instructions(code, forbidden):
     return artificial_buffer
 
 
-res = user_instructions('print("hello world!")', [])
-print(res)
+if __name__ == "__main__":
+    res = user_instructions('a=5\nfor i in range(10):\n\tprint(a)')
+    print(res)

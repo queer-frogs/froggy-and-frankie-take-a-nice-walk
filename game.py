@@ -1,5 +1,6 @@
 import arcade
 import arcade.gui as gui
+#from uix import Input
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -30,8 +31,6 @@ class Entity(arcade.Sprite):
         # Set up classe parent
         super().__init__()
 
-        main_path = f"sprites/{name_folder}/{name_file}"
-
         # Set default values
         # Load different textures for different states of action
         # with main_path + _ + action + nb
@@ -60,30 +59,18 @@ class Game(arcade.Window):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
-        self.manager = gui.UIManager()
-        self.manager.enable()
+        # gui manager to create and add gui elements
+        self.manager = None
 
-        arcade.set_background_color(arcade.color.AMAZON)
+        # Set background color
+        arcade.set_background_color(arcade.color.BEAU_BLUE)
 
         # Track the current state of what key is pressed
         self.left_pressed = False
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
-        #self.jump_needs_reset = False
-
-        # Code Input
-        self.input_field = gui.UIInputText(color=arcade.color.DARK_BLUE_GRAY, font_size=10, width=200, multiline=True)
-        # Create a button
-        submit_button = gui.UIFlatButton(color=arcade.color.DARK_BLUE_GRAY, text='Submit', width=100)
-
-        self.box = gui.UIBoxLayout(vertical=True)
-        self.box.add(self.input_field)
-        self.box.add(submit_button)
-
-        self.padd = gui.UIPadding(bg_color=arcade.color.APRICOT, child=self.box, padding=(0.3, 0.3, 0.3, 0.3))
-
-        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=self.padd))
+        # self.jump_needs_reset = False
 
         # Our TileMap Object
         self.tile_map = None
@@ -125,6 +112,11 @@ class Game(arcade.Window):
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
+        # Gui elements
+        self.manager = gui.UIManager()
+        self.manager.enable()
+
+
         # Initialize Scene
         self.scene = arcade.Scene()
 
@@ -141,7 +133,7 @@ class Game(arcade.Window):
         self.scene.add_sprite("Player", self.player_sprite)
         self.scene.add_sprite_list("Walls", True, self.walls_list)
 
-        coordinate_list = [[50, 60], [150, 60], [300, 60], [500, 60], [700, 60]]
+        coordinate_list = [[50, 60], [150, 60],[300, 60], [500, 60], [700, 60]]
         for coordinate in coordinate_list:
             block = arcade.Sprite(":resources:images/tiles/mushroomRed.png")
             block.position = coordinate
@@ -228,6 +220,10 @@ class Game(arcade.Window):
             self.left_pressed = True
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = True
+
+
+        elif key == arcade.key.TAB :
+            self.i.input_field.text += "    "
 
         self.process_keychange()
 
