@@ -46,7 +46,3 @@ def user_instructions(code, forbidden):
             return f'/!\\ {error.__class__.__name__} : {custom_errors[error.__class__.__name__]}'
 
     return artificial_buffer
-
-
-res = user_instructions('print("hello world!")\na = 3\nfor i in range(1,10):\n\tprint(a)', [])
-print(res)
