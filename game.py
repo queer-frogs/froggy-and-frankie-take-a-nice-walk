@@ -299,6 +299,8 @@ class Game(arcade.Window):
             new_block.bottom += tile_size[1]
             if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10), self.scene["Platforms"]):
                 free = True
+            if new_block.bottom > SCREEN_HEIGHT:
+                raise ValueError("No room is avaible for this block at that position.")
 
         # Update sprite list and render the new sprite
         self.scene["Platforms"].append(new_block)
