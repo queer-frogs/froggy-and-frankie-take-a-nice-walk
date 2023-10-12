@@ -1,7 +1,7 @@
 import json
 
 
-def user_instructions(code, forbidden):
+def user_instructions(code, forbidden=[]):
     """
     Function checking, executing user input code and handling errors.
 
@@ -46,3 +46,8 @@ def user_instructions(code, forbidden):
             return f'/!\\ {error.__class__.__name__} : {custom_errors[error.__class__.__name__]}'
 
     return artificial_buffer
+
+
+if __name__ == "__main__":
+    res = user_instructions('a=5\nfor i in range(10):\n\tprint(a)')
+    print(res)

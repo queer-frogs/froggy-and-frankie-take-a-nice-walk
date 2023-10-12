@@ -1,4 +1,6 @@
 import arcade
+import arcade.gui as gui
+import multiprocessing
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -33,8 +35,6 @@ class Entity(arcade.Sprite):
         # Set up classe parent
         super().__init__()
 
-        main_path = f"sprites/{name_folder}/{name_file}"
-
         # Set default values
         # Load different textures for different states of action
         # with main_path + _ + action + nb
@@ -65,7 +65,11 @@ class Game(arcade.Window):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
-        arcade.set_background_color(arcade.color.AMAZON)
+        # gui manager to create and add gui elements
+        self.manager = None
+
+        # Set background color
+        arcade.set_background_color(arcade.color.BEAU_BLUE)
 
         # Track the current state of what key is pressed
         self.left_pressed = False
@@ -74,8 +78,6 @@ class Game(arcade.Window):
         self.down_pressed = False
         # self.jump_needs_reset = False
 
-        # TODO has to be removed - wip for testing place_block
-        self.n_pressed = False
 
         # Our TileMap Object
         self.tile_map = None
@@ -117,6 +119,7 @@ class Game(arcade.Window):
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
+
         # Initialize map
         map_path = "assets/tiled/tilemaps/sample.tmx"
         layer_options = {  # options specific to each layer
@@ -127,6 +130,10 @@ class Game(arcade.Window):
         self.tile_map = arcade.load_tilemap(map_path, TILE_SCALING, layer_options)
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
+
+        # Gui elements
+        self.manager = gui.UIManager()
+        self.manager.enable()
 
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -139,11 +146,7 @@ class Game(arcade.Window):
         self.player_sprite = arcade.Sprite(image_source)
         self.player_sprite.center_x = PLAYER_START_X
         self.player_sprite.center_y = PLAYER_START_Y
-
         self.scene.add_sprite("Player", self.player_sprite)
-        self.scene.add_sprite_list("Walls", True, self.walls_list)
-
-        # Initialize sprites and sprite lists here
 
         # Keep track of the score, make sure we keep the score if the player finishes a level
         if self.reset_score:
@@ -151,14 +154,9 @@ class Game(arcade.Window):
         self.reset_score = True
 
         # Create the physics engine
-        # self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
 
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
-
-        # wip - just testing the place_block() func
-
-
 
     def on_draw(self):
         """ Render the screen. """
@@ -172,6 +170,7 @@ class Game(arcade.Window):
         # Draw our Scene
 
         self.scene.draw()
+        self.manager.draw()
 
         # Activate the GUI camera before drawing GUI elements
         self.gui_camera.use()
@@ -222,6 +221,10 @@ class Game(arcade.Window):
         # TODO has to be removed - wip for testing place_block
         elif key == arcade.key.N:
             self.n_pressed = True
+
+
+        elif key == arcade.key.TAB :
+            self.i.input_field.text += "    "
 
         self.process_keychange()
 
@@ -310,11 +313,25 @@ class Game(arcade.Window):
 
 
 
-def main():
-    """ Main method """
+def run_arcade():
     game = Game()
     game.setup()
     arcade.run()
+
+
+def run_kivy():
+    from uix import Input
+    input_window = Input()
+    input_window.run()
+
+def main():
+    """ Main method """
+
+    arcade_process = multiprocessing.Process(target=run_arcade)
+    arcade_process.start()
+
+    kivy_process = multiprocessing.Process(target=run_kivy)
+    kivy_process.start()
 
 
 if __name__ == "__main__":
