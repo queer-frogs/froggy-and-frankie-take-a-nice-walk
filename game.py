@@ -78,7 +78,6 @@ class Game(arcade.Window):
         self.down_pressed = False
         # self.jump_needs_reset = False
 
-
         # Our TileMap Object
         self.tile_map = None
 
@@ -118,7 +117,6 @@ class Game(arcade.Window):
         # Set up the Cameras
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
-
 
         # Initialize map
         map_path = "assets/tiled/tilemaps/sample.tmx"
@@ -218,12 +216,8 @@ class Game(arcade.Window):
             self.left_pressed = True
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = True
-        # TODO has to be removed - wip for testing place_block
-        elif key == arcade.key.N:
-            self.n_pressed = True
 
-
-        elif key == arcade.key.TAB :
+        elif key == arcade.key.TAB:
             self.i.input_field.text += "    "
 
         self.process_keychange()
@@ -238,18 +232,11 @@ class Game(arcade.Window):
             self.left_pressed = False
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = False
-        # TODO has to be removed - wip for testing place_block
-        elif key == arcade.key.N:
-            self.n_pressed = False
 
         self.process_keychange()
 
     def process_keychange(self):
         """ Called when we change a key """
-
-        # TODO has to be removed - wip for testing place_block
-        if self.n_pressed:
-            self.place_block(3, "assets/tiled/tiles/sample_pack/Tiles/boxCoin.png")
 
         # Process jump
         if self.up_pressed and not self.down_pressed:
@@ -310,9 +297,6 @@ class Game(arcade.Window):
         self.scene["Platforms"].draw()
 
 
-
-
-
 def run_arcade():
     game = Game()
     game.setup()
@@ -323,6 +307,7 @@ def run_kivy():
     from uix import Input
     input_window = Input()
     input_window.run()
+
 
 def main():
     """ Main method """
