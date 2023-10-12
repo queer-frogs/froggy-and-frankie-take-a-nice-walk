@@ -1,6 +1,6 @@
 import arcade
 import arcade.gui as gui
-#from uix import Input
+import multiprocessing
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -259,11 +259,25 @@ class Game(arcade.Window):
             self.player_sprite.change_x = 0
 
 
-def main():
-    """ Main method """
+def run_arcade():
     game = Game()
     game.setup()
     arcade.run()
+
+
+def run_kivy():
+    from uix import Input
+    input_window = Input()
+    input_window.run()
+
+def main():
+    """ Main method """
+
+    arcade_process = multiprocessing.Process(target=run_arcade)
+    arcade_process.start()
+
+    kivy_process = multiprocessing.Process(target=run_kivy)
+    kivy_process.start()
 
 
 if __name__ == "__main__":
