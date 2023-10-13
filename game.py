@@ -104,7 +104,11 @@ class Game(arcade.Window):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
+
+        # Our textboxes
         self.textbox = None
+        self.show_textbox= False
+
         arcade.set_background_color(arcade.color.AMAZON)
 
         # Track the current state of what key is pressed
@@ -231,8 +235,7 @@ class Game(arcade.Window):
 
         #Draw the NPC textbox
 
-        if self.enter_pressed:
-            if dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
+        if self.show_textbox:
                 self.textbox = TextBox(400, 500, 700, 100, "Mais, vous savez, moi je ne crois pas qu’il y ait de bonne ou de mauvaise situation ^^ \nMoi, si je devais résumer ma vie aujourd’hui avec vous, \nje dirais que c’est d’abord des rencontres, des gens qui m’ont tendu la main")
                 self.textbox.show()
 
@@ -316,6 +319,11 @@ class Game(arcade.Window):
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
         else:
             self.player_sprite.change_x = 0
+        if self.enter_pressed:
+            if self.show_textbox:
+                self.show_textbox = False
+            elif dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
+                self.show_textbox = True
 
 
 
