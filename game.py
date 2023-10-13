@@ -1,9 +1,10 @@
 import arcade
-
+import math
 # Constants
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 650
 SCREEN_TITLE = "Game"
+LAYER_NAME_NPC = "Npc"
 
 # Player starting position
 PLAYER_START_X = 100
@@ -24,6 +25,9 @@ TILE_SCALING = 1
 # Constants used to track if the player is facing left or right
 RIGHT_FACING = 0
 LEFT_FACING = 1
+
+
+
 
 
 class Entity(arcade.Sprite):
@@ -57,6 +61,41 @@ class PlayerCharacter(Entity):
         # Update sprite based on state
         pass
 
+class Npc(Entity):
+    def __init__(self):
+
+        # Setup parent class
+        super().__init__("npc", "npc")
+
+
+
+class TextBox(arcade.Sprite):
+    def __init__(self, x, y, width, height, text):
+        super().__init__()
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
+        self.text = text
+
+    def show(self):
+        # Draw the background rectangle
+        liste_ligne=self.text.splitlines()
+        arcade.draw_rectangle_filled(self.x, self.y, self.width, self.height, arcade.color.WHITE)
+
+        # Draw the border
+        arcade.draw_rectangle_outline(self.x, self.y, self.width, self.height, arcade.color.BLACK)
+
+        # Draw the text
+        i=0
+        for ligne in liste_ligne:
+            arcade.draw_text(ligne, self.x - self.width/2 + 10,self.y+self.height/2-10-i, arcade.color.BLACK, 12, width=self.width - 20, align="left", anchor_x="left", anchor_y="top")
+            i+=20
+
+# A fonction to calculate the distance between two sprites
+
+def dist_between_sprites(sprite1, sprite2):
+    return math.sqrt((sprite1.center_x - sprite2.center_x)**2 + (sprite1.center_y - sprite2.center_y)**2)
 
 class Game(arcade.Window):
     """ Main application class. """
@@ -65,9 +104,11 @@ class Game(arcade.Window):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
+        self.textbox = None
         arcade.set_background_color(arcade.color.AMAZON)
 
         # Track the current state of what key is pressed
+        self.enter_pressed = False
         self.left_pressed = False
         self.right_pressed = False
         self.up_pressed = False
@@ -82,6 +123,7 @@ class Game(arcade.Window):
 
         # Create sprite lists here, and set them to None
         self.player_sprite = None
+        self.npc_sprite = None
         self.walls_list = None
 
         # Our 'physics' engine
@@ -106,6 +148,9 @@ class Game(arcade.Window):
         self.level = 1
 
         # Load sounds
+
+        # load collisions with npc
+        self.player_collision_list = None
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game."""
@@ -137,7 +182,14 @@ class Game(arcade.Window):
         self.player_sprite.center_x = PLAYER_START_X
         self.player_sprite.center_y = PLAYER_START_Y
 
+        # Initialize NPC sprite
+        image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
+        self.npc_sprite = arcade.Sprite(image_source)
+        self.npc_sprite.center_x = 740
+        self.npc_sprite.center_y = 315
+
         self.scene.add_sprite("Player", self.player_sprite)
+        self.scene.add_sprite("Npc",self.npc_sprite)
         self.scene.add_sprite_list("Walls", True, self.walls_list)
 
         # Initialize sprites and sprite lists here
@@ -146,6 +198,8 @@ class Game(arcade.Window):
         if self.reset_score:
             self.score = 0
         self.reset_score = True
+
+
 
         # Create the physics engine
         # self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
@@ -175,6 +229,14 @@ class Game(arcade.Window):
 
         # Draw score
 
+        #Draw the NPC textbox
+
+        if self.enter_pressed:
+            if dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
+                self.textbox = TextBox(400, 500, 700, 100, "Mais, vous savez, moi je ne crois pas qu’il y ait de bonne ou de mauvaise situation ^^ \nMoi, si je devais résumer ma vie aujourd’hui avec vous, \nje dirais que c’est d’abord des rencontres, des gens qui m’ont tendu la main")
+                self.textbox.show()
+
+
     def on_update(self, delta_time):
         """
         All the logic to move goes here.
@@ -190,6 +252,7 @@ class Game(arcade.Window):
             self.player_sprite.center_x = PLAYER_START_X
             self.player_sprite.center_y = PLAYER_START_Y
 
+
         # See if the user got to the end of the level
         if self.player_sprite.center_x >= self.end_of_map:
             # Advance to the next level
@@ -201,9 +264,12 @@ class Game(arcade.Window):
             # Load the next level
             self.setup()
 
+
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
 
+        if key == arcade.key.ENTER:
+            self.enter_pressed = True
         if key == arcade.key.UP or key == arcade.key.W:
             self.up_pressed = True
         elif key == arcade.key.DOWN or key == arcade.key.S:
@@ -213,10 +279,15 @@ class Game(arcade.Window):
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = True
 
+
+
         self.process_keychange()
 
     def on_key_release(self, key, key_modifiers):
         """ Called whenever the user lets off a previously pressed key. """
+
+        if key == arcade.key.ENTER:
+            self.enter_pressed = False
         if key == arcade.key.UP or key == arcade.key.W:
             self.up_pressed = False
         elif key == arcade.key.DOWN or key == arcade.key.S:
@@ -245,6 +316,8 @@ class Game(arcade.Window):
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
         else:
             self.player_sprite.change_x = 0
+
+
 
 
 def main():
