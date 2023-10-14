@@ -17,7 +17,7 @@ GRAVITY = 1.5
 PLAYER_JUMP_SPEED = 30
 
 # Tiled constants
-TILE_SCALING = 0.525 #TODO Function that calculate autaumaticly the scaling (seems exponential)
+TILE_SCALING = 0.3 #TODO Function that calculate autaumaticly the scaling (seems exponential)
 
 # Constants used to scale our sprites from their original size
 
