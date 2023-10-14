@@ -4,12 +4,12 @@ import multiprocessing
 
 # Constants
 SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 650
+SCREEN_HEIGHT = 563
 SCREEN_TITLE = "Game"
 
 # Player starting position
-PLAYER_START_X = 100
-PLAYER_START_Y = 240
+PLAYER_START_X = 10
+PLAYER_START_Y = 50
 
 # Movement speed of player, in pixels per frame
 PLAYER_MOVEMENT_SPEED = 7
@@ -17,7 +17,7 @@ GRAVITY = 1.5
 PLAYER_JUMP_SPEED = 30
 
 # Tiled constants
-TILE_SCALING = 1
+TILE_SCALING = 0.525 #TODO Function that calculate autaumaticly the scaling (seems exponential)
 
 # Constants used to scale our sprites from their original size
 
@@ -119,9 +119,12 @@ class Game(arcade.Window):
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         # Initialize map
-        map_path = "assets/tiled/tilemaps/sample.tmx"
+        map_path = "assets/tiled/tilemaps/level_1.tmx"
         layer_options = {  # options specific to each layer
             "Platforms": {
+                "use_spatial_hash": True,
+            },
+            "Background": {
                 "use_spatial_hash": True,
             },
         }
@@ -144,6 +147,7 @@ class Game(arcade.Window):
         self.player_sprite = arcade.Sprite(image_source)
         self.player_sprite.center_x = PLAYER_START_X
         self.player_sprite.center_y = PLAYER_START_Y
+        self.player_sprite.scale = 0.2
         self.scene.add_sprite("Player", self.player_sprite)
 
         # Keep track of the score, make sure we keep the score if the player finishes a level
