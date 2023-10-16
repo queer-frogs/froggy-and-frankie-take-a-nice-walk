@@ -12,11 +12,11 @@ PLAYER_START_X = 10
 PLAYER_START_Y = 50
 
 # Movement speed of player, in pixels per frame
-PLAYER_MOVEMENT_SPEED = 7
+PLAYER_MOVEMENT_SPEED = 15
 GRAVITY = 1.5
-PLAYER_JUMP_SPEED = 30
+PLAYER_JUMP_SPEED = 35
 
-# Tiled constants (for level 1:0.45 for level 2; 0.3415
+# Tiled constants (for level 1:0.45 for level 2: 0.3415
 TILE_SCALING = 0.3415 #TODO Function that calculate autaumaticly the scaling (seems exponential)
 
 # Constants used to scale our sprites from their original size
@@ -119,7 +119,7 @@ class Game(arcade.Window):
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         # Initialize map
-        map_path = "assets/tiled/tilemaps/level_3.tmx"
+        map_path = f"assets/tiled/tilemaps/level_{self.level}.tmx"
         layer_options = {  # options specific to each layer
             "Platforms": {
                 "use_spatial_hash": True,
