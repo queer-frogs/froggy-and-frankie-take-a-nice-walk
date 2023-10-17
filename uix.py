@@ -4,6 +4,7 @@ from kivy.uix.codeinput import CodeInput
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
+import time
 
 from kivy.lang import Builder
 from kivy.core.window import Window
@@ -12,10 +13,11 @@ from pygments.lexers import PythonLexer
 from code_input import user_instructions
 
 class Input(App):
-    def __init__(self, forbidden=[]):
+    def __init__(self, kivy_connection, forbidden=[]):
         super().__init__()
         self.code = None
         self.output = None
+        self.kivy_connection = kivy_connection
         self.forbidden = forbidden
 
         # Window parameters configuration
@@ -56,7 +58,12 @@ class Input(App):
         prints the result inside the output label
         """
 
-        res = user_instructions(self.code.text, self.forbidden)
+        # Send code input to arcade
+        self.kivy_connection.send(self.code.text)
+        # Wait for arcade to run the code
+        time.sleep(5)
+        # Receive the printable output and display it in the output label
+        res = self.kivy_connection.recv()
         self.output.text = res
 
     def reset(self,obj):
