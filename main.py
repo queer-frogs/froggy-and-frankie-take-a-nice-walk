@@ -1,11 +1,14 @@
 import multiprocessing
 
+global game_instance
 
-def run_arcade():
+
+def run_arcade(arcade_connection):
     import arcade
     from game import Game
-    game = Game()
-    game.setup()
+    global game_instance
+    game_instance = Game(arcade_connection)
+    game_instance.setup()
     arcade.run()
 
 
@@ -22,7 +25,7 @@ def main():
     # TODO pass the connections through run functions into the windows classes in order to send and receive info
 
     # Initialize and start arcade and kivy processes
-    arcade_process = multiprocessing.Process(target=run_arcade)
+    arcade_process = multiprocessing.Process(target=run_arcade, args=[arcade_connection])
     arcade_process.start()
 
     kivy_process = multiprocessing.Process(target=run_kivy(kivy_connection))
