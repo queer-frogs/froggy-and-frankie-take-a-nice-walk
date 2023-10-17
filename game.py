@@ -233,6 +233,7 @@ class Game(arcade.Window):
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = False
 
+
         self.process_keychange()
 
     def process_keychange(self):
@@ -295,33 +296,3 @@ class Game(arcade.Window):
         # Update sprite list and render the new sprite
         self.scene["Platforms"].append(new_block)
         self.scene["Platforms"].draw()
-
-
-def run_arcade():
-    game = Game()
-    game.setup()
-    arcade.run()
-
-
-def run_kivy():
-    from uix import Input
-    input_window = Input()
-    input_window.run()
-
-
-def main():
-    """ Main method """
-    # Initialize connection between Arcade and Kivy through a (duplex) pipe
-    arcade_connection, kivy_connection = multiprocessing.Pipe(duplex=True)
-    # TODO pass the connections through run functions into the windows classes in order to send and receive info
-
-    # Initialize and start arcade and kivy processes
-    arcade_process = multiprocessing.Process(target=run_arcade)
-    arcade_process.start()
-
-    kivy_process = multiprocessing.Process(target=run_kivy)
-    kivy_process.start()
-
-
-if __name__ == "__main__":
-    main()
