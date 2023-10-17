@@ -61,7 +61,6 @@ class Input(App):
         # Send code input to arcade
         self.kivy_connection.send(self.code.text)
         # Wait for arcade to run the code
-        time.sleep(5)
         # Receive the printable output and display it in the output label
         res = self.kivy_connection.recv()
         self.output.text = res

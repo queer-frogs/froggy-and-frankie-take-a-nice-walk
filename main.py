@@ -12,9 +12,9 @@ def run_arcade(arcade_connection):
     arcade.run()
 
 
-def run_kivy(connection):
+def run_kivy(kivy_connection):
     from uix import Input
-    input_window = Input(connection)
+    input_window = Input(kivy_connection)
     input_window.run()
 
 
@@ -28,7 +28,7 @@ def main():
     arcade_process = multiprocessing.Process(target=run_arcade, args=[arcade_connection])
     arcade_process.start()
 
-    kivy_process = multiprocessing.Process(target=run_kivy(kivy_connection))
+    kivy_process = multiprocessing.Process(target=run_kivy, args=[kivy_connection])
     kivy_process.start()
 
 
