@@ -62,8 +62,10 @@ class Input(App):
         self.kivy_connection.send(self.code.text)
         # Wait for arcade to run the code
         # Receive the printable output and display it in the output label
-        res = self.kivy_connection.recv()
-        self.output.text = res
+
+        if self.kivy_connection.poll(1) :
+            res = self.kivy_connection.recv()
+            self.output.text = res
 
     def reset(self,obj):
         """
@@ -71,7 +73,3 @@ class Input(App):
         """
         self.code.text = ""
         self.output.text = ""
-
-
-if __name__ == "__main__":
-    Input().run()

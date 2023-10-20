@@ -1,4 +1,5 @@
 import json
+from user_functions import place
 
 
 def user_instructions(code, forbidden=[]):

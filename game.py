@@ -139,7 +139,7 @@ class Game(arcade.Window):
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        # ⚠️to redefine with the correct value
+        # TODO redefine with the correct value
         self.end_of_map = 1000
 
         # Initialize Player Sprite
@@ -209,15 +209,14 @@ class Game(arcade.Window):
             self.setup()
 
         # Check if kivy sent something
-        try:
+
+        if self.connection.poll():
             kivy_message = self.connection.recv()
             # TODO json dictionary with forbidden functions for each lvl
             res = code_input.user_instructions(kivy_message, [])
             if res:
                 self.connection.send(res)
-        except EOFError:
-            # nothing to receive
-            pass
+
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""

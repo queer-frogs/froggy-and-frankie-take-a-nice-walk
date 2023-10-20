@@ -1,6 +1,5 @@
 import arcade
 import game
-import main
 
 
 def place(pos):
@@ -12,7 +11,8 @@ def place(pos):
     Returns:
 
     """
-    place_block(main.game_instance, "useless_block_type", pos)
+
+    place_block(game_instance, "assets/tiled/tiles/sample_pack/Tiles/switchBlue_pressed.png", pos)
 
 
 def place_block(arcade_game, block_type, pos):
