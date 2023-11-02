@@ -213,7 +213,9 @@ class Game(arcade.Window):
         if self.connection.poll():
             kivy_message = self.connection.recv()
             # TODO json dictionary with forbidden functions for each lvl
-            res = code_input.user_instructions(kivy_message, [])
+
+            # The self parameter allows us to have access to the game object inside the function user_instructions
+            res = code_input.user_instructions(self, kivy_message, [])
             if res:
                 self.connection.send(res)
 

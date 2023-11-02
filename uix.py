@@ -60,11 +60,14 @@ class Input(App):
 
         # Send code input to arcade
         self.kivy_connection.send(self.code.text)
-        # Wait for arcade to run the code
-        # Receive the printable output and display it in the output label
 
+        # If there is some information to receive then display the output label
         if self.kivy_connection.poll(1) :
             res = self.kivy_connection.recv()
+            if res.startswith("/!\\"):  # error output
+                self.output.color = "red"
+            else:
+                self.output.color = "black"
             self.output.text = res
 
     def reset(self,obj):

@@ -1,28 +1,14 @@
 import arcade
 import game
 
-
-def place(pos):
-    """
-
-    Args:
-        pos:
-
-    Returns:
-
-    """
-
-    place_block(game_instance, "assets/tiled/tiles/sample_pack/Tiles/switchBlue_pressed.png", pos)
-
-
-def place_block(arcade_game, block_type, pos):
+def place_block(arcade_game, pos, block_type="assets/tiled/tiles/sample_pack/Ground/Stone/stone.png"):
     """
     Places a block on the lowest slot avaible at the hoziontal position passed.
 
     Args:
         arcade_game: Game object target
-        block_type: type of the block that should be placed
         pos: horizontal position where the block should be placed, starts at 0
+        block_type: type of the block that should be placed
 
 
     Returns: None

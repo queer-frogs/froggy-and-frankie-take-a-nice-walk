@@ -1,12 +1,13 @@
 import json
-from user_functions import place
+from user_functions import place_block
 
+def user_instructions(game, code, forbidden=[]):
 
-def user_instructions(code, forbidden=[]):
     """
     Function checking, executing user input code and handling errors.
 
     Args:
+        game : Game object that can be called inside the exec function to be modified (adding blocks)
         code: str containing code performed by user,
         forbidden: list (refers to instructions denied in the current level).
     Returns: Buffer text or error.
@@ -28,6 +29,7 @@ def user_instructions(code, forbidden=[]):
 
     artificial_buffer = ""
     code = code.replace('print(', "artificial_buffer +=  '\\n' + str(")
+    code = code.replace('place_block(', 'place_block(game,')
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 

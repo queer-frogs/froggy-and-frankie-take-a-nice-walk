@@ -1,11 +1,8 @@
 import multiprocessing
 
-game_instance = "salut"
-
 def run_arcade(arcade_connection):
     import arcade
     from game import Game
-    global game_instance
     game_instance = Game(arcade_connection)
     game_instance.setup()
     arcade.run()
@@ -29,9 +26,6 @@ def main():
 
     kivy_process = multiprocessing.Process(target=run_kivy, args=[kivy_connection])
     kivy_process.start()
-
-    global game_instance
-    print(game_instance)
 
 
 if __name__ == "__main__":
