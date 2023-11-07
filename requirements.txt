@@ -182,3 +182,7 @@ six==1.16.0
 typing_extensions==4.7.1
 tzdata==2023.3
 urllib3==2.0.3
+
+
+Kivy~=2.2.1
+Pygments~=2.16.1

@@ -1,21 +1,22 @@
 import arcade
+
 # Constants
 SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 650
+SCREEN_HEIGHT = 563
 SCREEN_TITLE = "Game"
 LAYER_NAME_NPC = "Npc"
 
 # Player starting position
-PLAYER_START_X = 100
-PLAYER_START_Y = 240
+PLAYER_START_X = 10
+PLAYER_START_Y = 50
 
 # Movement speed of player, in pixels per frame
-PLAYER_MOVEMENT_SPEED = 7
+PLAYER_MOVEMENT_SPEED = 15
 GRAVITY = 1.5
-PLAYER_JUMP_SPEED = 30
+PLAYER_JUMP_SPEED = 35
 
-# Tiled constants
-TILE_SCALING = 1
+# Tiled constants (for level 1:0.45 for level 2: 0.3415
+TILE_SCALING = 0.3415 #TODO Function that calculate autaumaticly the scaling (seems exponential)
 
 # Constants used to scale our sprites from their original size
 
@@ -35,8 +36,6 @@ class Entity(arcade.Sprite):
     def __init__(self, name_folder, name_file, ):
         # Set up classe parent
         super().__init__()
-
-        main_path = f"sprites/{name_folder}/{name_file}"
 
         # Set default values
         # Load different textures for different states of action
@@ -68,12 +67,15 @@ class Game(arcade.Window):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
-
         # Our textboxes
         self.textbox = None
         self.show_textbox= False
 
-        arcade.set_background_color(arcade.color.AMAZON)
+        # gui manager to create and add gui elements
+        self.manager = None
+
+        # Set background color
+        arcade.set_background_color(arcade.color.BEAU_BLUE)
 
         # Track the current state of what key is pressed
         self.enter_pressed = False
@@ -128,15 +130,22 @@ class Game(arcade.Window):
         self.gui_camera = arcade.Camera(self.width, self.height)
 
         # Initialize map
-        map_path = "assets/tiled/tilemaps/sample.tmx"
+        map_path = f"assets/tiled/tilemaps/level_{self.level}.tmx"
         layer_options = {  # options specific to each layer
             "Platforms": {
+                "use_spatial_hash": True,
+            },
+            "Background": {
                 "use_spatial_hash": True,
             },
         }
         self.tile_map = arcade.load_tilemap(map_path, TILE_SCALING, layer_options)
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
+
+        # Gui elements
+        self.manager = gui.UIManager()
+        self.manager.enable()
 
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -160,8 +169,6 @@ class Game(arcade.Window):
         self.scene.add_sprite("Npc",self.npc_sprite)
         self.scene.add_sprite_list("Walls", True, self.walls_list)
 
-        # Initialize sprites and sprite lists here
-
         # Keep track of the score, make sure we keep the score if the player finishes a level
         if self.reset_score:
             self.score = 0
@@ -170,7 +177,6 @@ class Game(arcade.Window):
 
 
         # Create the physics engine
-        # self.physics_engine = arcade.PhysicsEngineSimple(self.player_sprite, self.walls_list)
 
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
@@ -187,6 +193,7 @@ class Game(arcade.Window):
         # Draw our Scene
 
         self.scene.draw()
+        self.manager.draw()
 
         # Activate the GUI camera before drawing GUI elements
         self.gui_camera.use()
@@ -246,8 +253,6 @@ class Game(arcade.Window):
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = True
 
-
-
         self.process_keychange()
 
     def on_key_release(self, key, key_modifiers):
@@ -269,8 +274,6 @@ class Game(arcade.Window):
     def process_keychange(self):
         """ Called when we change a key """
 
-        # Process up/down
-
         # Process jump
         if self.up_pressed and not self.down_pressed:
             if self.physics_engine.can_jump(y_distance=10):
@@ -291,12 +294,76 @@ class Game(arcade.Window):
 
 
 
+    def place_block(self, pos, block_type):
+        """
+        Places a block on the lowest slot avaible at the hoziontal position passed.
 
-def main():
-    """ Main method """
+        Args:
+            block_type: type of the block that should be placed
+            pos: horizontal position where the block should be placed, starts at 0
+
+
+        Returns: None
+
+        TODO add ressources management for the player's inventory?
+        TODO move to 'code_input.py' ; find a solution to have access to self variables (decorator?)
+        TODO include scaling ?
+        TODO add animation ?
+        """
+
+        # TODO should be defined earlier in code, or in the specific level
+        tile_size = (128, 128)  # size of one tile in the grid
+
+        # TODO for now we use block_type as a path to the png (wip)
+
+        # Initialize block
+        new_block = arcade.Sprite(block_type)
+        new_block.left = pos * tile_size[0]
+        if new_block.center_x > SCREEN_WIDTH:
+            raise ValueError("The position provided is out of the map borders.")
+
+        # Get first vertical slot available at that x position, add + 10 to make sure we detect round-cornered sprites
+        new_block.bottom = 0
+        if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10), self.scene["Platforms"]):
+            free = True
+        else:
+            free = False
+        while not free:
+            new_block.bottom += tile_size[1]
+            if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10), self.scene["Platforms"]):
+                free = True
+            if new_block.bottom > SCREEN_HEIGHT:
+                raise ValueError("No room is avaible for this block at that position.")
+
+        # Update sprite list and render the new sprite
+        self.scene["Platforms"].append(new_block)
+        self.scene["Platforms"].draw()
+
+
+def run_arcade():
     game = Game()
     game.setup()
     arcade.run()
+
+
+def run_kivy():
+    from uix import Input
+    input_window = Input()
+    input_window.run()
+
+
+def main():
+    """ Main method """
+    # Initialize connection between Arcade and Kivy through a (duplex) pipe
+    arcade_connection, kivy_connection = multiprocessing.Pipe(duplex=True)
+    # TODO pass the connections through run functions into the windows classes in order to send and receive info
+
+    # Initialize and start arcade and kivy processes
+    arcade_process = multiprocessing.Process(target=run_arcade)
+    arcade_process.start()
+
+    kivy_process = multiprocessing.Process(target=run_kivy)
+    kivy_process.start()
 
 
 if __name__ == "__main__":
