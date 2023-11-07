@@ -4,6 +4,7 @@ from kivy.uix.codeinput import CodeInput
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
+import time
 
 from kivy.lang import Builder
 from kivy.core.window import Window
@@ -12,10 +13,11 @@ from pygments.lexers import PythonLexer
 from code_input import user_instructions
 
 class Input(App):
-    def __init__(self, forbidden=[]):
+    def __init__(self, kivy_connection, forbidden=[]):
         super().__init__()
         self.code = None
         self.output = None
+        self.kivy_connection = kivy_connection
         self.forbidden = forbidden
 
         # Window parameters configuration
@@ -51,13 +53,22 @@ class Input(App):
 
     def submit(self, obj):
         """
-        Is called when the submit button is pressed
-        It uses the user_instruction() function to execute the code, and
-        prints the result inside the output label
-        """
+                Is called when the submit button is pressed
+                It uses the user_instruction() function to execute the code, and
+                prints the result inside the output label
+                """
 
-        res = user_instructions(self.code.text, self.forbidden)
-        self.output.text = res
+        # Send code input to arcade
+        self.kivy_connection.send(self.code.text)
+
+        # If there is some information to receive then display the output label
+        if self.kivy_connection.poll(1):
+            res = self.kivy_connection.recv()
+            if res.startswith("/!\\"):  # error output
+                self.output.color = "red"
+            else:
+                self.output.color = "black"
+            self.output.text = res
 
     def reset(self,obj):
         """
@@ -65,7 +76,3 @@ class Input(App):
         """
         self.code.text = ""
         self.output.text = ""
-
-
-if __name__ == "__main__":
-    Input().run()

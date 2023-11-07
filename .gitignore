@@ -2,6 +2,10 @@
 env
 .idea
 
+# cache
+__pycache__
+__pycache__/*
+
 # finder macOs
 .DS_Store
 assets/.DS_Store

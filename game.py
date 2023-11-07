@@ -1,4 +1,9 @@
 import arcade
+import math
+import arcade.gui as gui
+import json
+import code_input
+
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -25,9 +30,6 @@ TILE_SCALING = 0.3415 #TODO Function that calculate autaumaticly the scaling (se
 # Constants used to track if the player is facing left or right
 RIGHT_FACING = 0
 LEFT_FACING = 1
-
-
-
 
 
 class Entity(arcade.Sprite):
@@ -63,7 +65,7 @@ class PlayerCharacter(Entity):
 class Game(arcade.Window):
     """ Main application class. """
 
-    def __init__(self):
+    def __init__(self, connection):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
@@ -83,7 +85,7 @@ class Game(arcade.Window):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
-        # self.jump_needs_reset = False
+        # arcade_game.jump_needs_reset = False
 
         # Our TileMap Object
         self.tile_map = None
@@ -114,10 +116,16 @@ class Game(arcade.Window):
         # Where is the right edge of the map?
         self.end_of_map = 0
 
-        # Level
-        self.level = 1
-
         # Load sounds
+        self.connection = connection
+
+        with open('save.json', 'r') as read_save_file:
+            self.save = json.loads(read_save_file.read())
+
+        with open('assets/levels.json', 'r') as read_levels_file:
+            self.levels = json.loads(read_levels_file.read())
+
+        # TODO add close somewhere
 
         # load collisions with npc
         self.player_collision_list = None
@@ -129,8 +137,13 @@ class Game(arcade.Window):
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
+        # Load player save and levels data
+
+        level_data = self.levels[self.save["current_level"]]
+        map_path = level_data["tilemap_path"]
+
         # Initialize map
-        map_path = f"assets/tiled/tilemaps/level_{self.level}.tmx"
+
         layer_options = {  # options specific to each layer
             "Platforms": {
                 "use_spatial_hash": True,
@@ -139,7 +152,7 @@ class Game(arcade.Window):
                 "use_spatial_hash": True,
             },
         }
-        self.tile_map = arcade.load_tilemap(map_path, TILE_SCALING, layer_options)
+        self.tile_map = arcade.load_tilemap(map_path, level_data["scaling"], layer_options)
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
@@ -150,7 +163,7 @@ class Game(arcade.Window):
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        # ⚠️to redefine with the correct value
+        # TODO redefine with the correct value
         self.end_of_map = 1000
 
         # Initialize Player Sprite
@@ -199,7 +212,7 @@ class Game(arcade.Window):
         self.gui_camera.use()
 
         # Indicate level number
-        nb_level = f"Level: {self.level}"
+        nb_level = f"Level: {self.levels[self.save['current_level']]['name']}"
         arcade.draw_text(nb_level, 10, 600, arcade.csscolor.WHITE, 18)
 
         # Draw score
@@ -230,13 +243,24 @@ class Game(arcade.Window):
         # See if the user got to the end of the level
         if self.player_sprite.center_x >= self.end_of_map:
             # Advance to the next level
-            self.level += 1
+
+            self.save["current_level"] += 1
 
             # Make sure to keep the score from this level when setting up the next level
             self.reset_score = False
 
             # Load the next level
             self.setup()
+
+        # Check if kivy sent something
+
+        if self.connection.poll():
+            kivy_message = self.connection.recv()
+
+            # The self parameter allows us to have access to the game object inside the function user_instructions
+            res = code_input.user_instructions(self, kivy_message, [])
+            if res:
+                self.connection.send(res)
 
 
     def on_key_press(self, key, modifiers):
@@ -269,6 +293,7 @@ class Game(arcade.Window):
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = False
 
+
         self.process_keychange()
 
     def process_keychange(self):
@@ -286,85 +311,10 @@ class Game(arcade.Window):
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
         else:
             self.player_sprite.change_x = 0
+
         if self.enter_pressed:
             if self.show_textbox:
                 self.show_textbox = False
             elif dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
                 self.show_textbox = True
 
-
-
-    def place_block(self, pos, block_type):
-        """
-        Places a block on the lowest slot avaible at the hoziontal position passed.
-
-        Args:
-            block_type: type of the block that should be placed
-            pos: horizontal position where the block should be placed, starts at 0
-
-
-        Returns: None
-
-        TODO add ressources management for the player's inventory?
-        TODO move to 'code_input.py' ; find a solution to have access to self variables (decorator?)
-        TODO include scaling ?
-        TODO add animation ?
-        """
-
-        # TODO should be defined earlier in code, or in the specific level
-        tile_size = (128, 128)  # size of one tile in the grid
-
-        # TODO for now we use block_type as a path to the png (wip)
-
-        # Initialize block
-        new_block = arcade.Sprite(block_type)
-        new_block.left = pos * tile_size[0]
-        if new_block.center_x > SCREEN_WIDTH:
-            raise ValueError("The position provided is out of the map borders.")
-
-        # Get first vertical slot available at that x position, add + 10 to make sure we detect round-cornered sprites
-        new_block.bottom = 0
-        if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10), self.scene["Platforms"]):
-            free = True
-        else:
-            free = False
-        while not free:
-            new_block.bottom += tile_size[1]
-            if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10), self.scene["Platforms"]):
-                free = True
-            if new_block.bottom > SCREEN_HEIGHT:
-                raise ValueError("No room is avaible for this block at that position.")
-
-        # Update sprite list and render the new sprite
-        self.scene["Platforms"].append(new_block)
-        self.scene["Platforms"].draw()
-
-
-def run_arcade():
-    game = Game()
-    game.setup()
-    arcade.run()
-
-
-def run_kivy():
-    from uix import Input
-    input_window = Input()
-    input_window.run()
-
-
-def main():
-    """ Main method """
-    # Initialize connection between Arcade and Kivy through a (duplex) pipe
-    arcade_connection, kivy_connection = multiprocessing.Pipe(duplex=True)
-    # TODO pass the connections through run functions into the windows classes in order to send and receive info
-
-    # Initialize and start arcade and kivy processes
-    arcade_process = multiprocessing.Process(target=run_arcade)
-    arcade_process.start()
-
-    kivy_process = multiprocessing.Process(target=run_kivy)
-    kivy_process.start()
-
-
-if __name__ == "__main__":
-    main()
