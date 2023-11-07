@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="minecraft" tilewidth="16" tileheight="16" tilecount="133" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="minecraft" tilewidth="16" tileheight="16" tilecount="181" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="16" height="16" source="../tiles/Minecraft tiles/acacia_door_bottom.png"/>
@@ -399,5 +399,149 @@
  </tile>
  <tile id="132">
   <image width="16" height="16" source="../tiles/Minecraft tiles/crimson_nylium_side.png"/>
+ </tile>
+ <tile id="133">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jigsaw_top.png"/>
+ </tile>
+ <tile id="134">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jukebox_side.png"/>
+ </tile>
+ <tile id="135">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jukebox_top.png"/>
+ </tile>
+ <tile id="136">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_door_bottom.png"/>
+ </tile>
+ <tile id="137">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_door_top.png"/>
+ </tile>
+ <tile id="138">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_leaves.png"/>
+ </tile>
+ <tile id="139">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_log.png"/>
+ </tile>
+ <tile id="140">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_log_top.png"/>
+ </tile>
+ <tile id="141">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_planks.png"/>
+ </tile>
+ <tile id="142">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_sapling.png"/>
+ </tile>
+ <tile id="143">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/jungle_trapdoor.png"/>
+ </tile>
+ <tile id="146">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/ladder.png"/>
+ </tile>
+ <tile id="148">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lapis_block.png"/>
+ </tile>
+ <tile id="149">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lapis_ore.png"/>
+ </tile>
+ <tile id="150">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/large_amethyst_bud.png"/>
+ </tile>
+ <tile id="151">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/large_fern_bottom.png"/>
+ </tile>
+ <tile id="152">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/large_fern_top.png"/>
+ </tile>
+ <tile id="155">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lectern_base.png"/>
+ </tile>
+ <tile id="156">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lectern_front.png"/>
+ </tile>
+ <tile id="157">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lectern_sides.png"/>
+ </tile>
+ <tile id="158">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lectern_top.png"/>
+ </tile>
+ <tile id="159">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lever.png"/>
+ </tile>
+ <tile id="160">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_candle.png"/>
+ </tile>
+ <tile id="161">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_candle_lit.png"/>
+ </tile>
+ <tile id="162">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_concrete.png"/>
+ </tile>
+ <tile id="163">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_concrete_powder.png"/>
+ </tile>
+ <tile id="164">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_glazed_terracotta.png"/>
+ </tile>
+ <tile id="165">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_shulker_box.png"/>
+ </tile>
+ <tile id="166">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_stained_glass.png"/>
+ </tile>
+ <tile id="167">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_stained_glass_pane_top.png"/>
+ </tile>
+ <tile id="168">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_terracotta.png"/>
+ </tile>
+ <tile id="169">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_blue_wool.png"/>
+ </tile>
+ <tile id="170">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_candle.png"/>
+ </tile>
+ <tile id="171">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_candle_lit.png"/>
+ </tile>
+ <tile id="172">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_concrete.png"/>
+ </tile>
+ <tile id="173">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_concrete_powder.png"/>
+ </tile>
+ <tile id="174">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_glazed_terracotta.png"/>
+ </tile>
+ <tile id="175">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_shulker_box.png"/>
+ </tile>
+ <tile id="176">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_stained_glass.png"/>
+ </tile>
+ <tile id="177">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_stained_glass_pane_top.png"/>
+ </tile>
+ <tile id="178">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_terracotta.png"/>
+ </tile>
+ <tile id="179">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/light_gray_wool.png"/>
+ </tile>
+ <tile id="180">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lightning_rod.png"/>
+ </tile>
+ <tile id="181">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lightning_rod_on.png"/>
+ </tile>
+ <tile id="182">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lilac_bottom.png"/>
+ </tile>
+ <tile id="183">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lilac_top.png"/>
+ </tile>
+ <tile id="184">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lily_of_the_valley.png"/>
+ </tile>
+ <tile id="185">
+  <image width="16" height="16" source="../tiles/Minecraft tiles/lily_pad.png"/>
  </tile>
 </tileset>
