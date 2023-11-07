@@ -16,7 +16,7 @@ def user_instructions(game, code, forbidden=[]):
 
     # check for unsafe or context-forbidden instructions in code
 
-    with open("assets/text/config/unsafe_words.json", "r") as unsafe_json:
+    with open("assets/text/unsafe_words.json", "r") as unsafe_json:
         unsafe = json.loads(unsafe_json.read())     # load from json unsafe words
 
     forbidden += unsafe

@@ -53,16 +53,16 @@ class Input(App):
 
     def submit(self, obj):
         """
-        Is called when the submit button is pressed
-        It uses the user_instruction() function to execute the code, and
-        prints the result inside the output label
-        """
+                Is called when the submit button is pressed
+                It uses the user_instruction() function to execute the code, and
+                prints the result inside the output label
+                """
 
         # Send code input to arcade
         self.kivy_connection.send(self.code.text)
 
         # If there is some information to receive then display the output label
-        if self.kivy_connection.poll(1) :
+        if self.kivy_connection.poll(1):
             res = self.kivy_connection.recv()
             if res.startswith("/!\\"):  # error output
                 self.output.color = "red"

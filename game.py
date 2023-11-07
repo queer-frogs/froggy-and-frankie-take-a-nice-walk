@@ -1,6 +1,6 @@
 import arcade
 import arcade.gui as gui
-import multiprocessing
+import json
 
 import code_input
 
@@ -108,11 +108,16 @@ class Game(arcade.Window):
         # Where is the right edge of the map?
         self.end_of_map = 0
 
-        # Level
-        self.level = 1
-
         # Load sounds
         self.connection = connection
+
+        with open('save.json', 'r') as read_save_file:
+            self.save = json.loads(read_save_file.read())
+
+        with open('assets/levels.json', 'r') as read_levels_file:
+            self.levels = json.loads(read_levels_file.read())
+
+        # TODO add close somewhere
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game."""
@@ -121,14 +126,18 @@ class Game(arcade.Window):
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
+        # Load player save and levels data
+
+        level_data = self.levels[self.save["current_level"]]
+        map_path = level_data["tilemap_path"]
+
         # Initialize map
-        map_path = "assets/tiled/tilemaps/sample.tmx"
         layer_options = {  # options specific to each layer
             "Platforms": {
                 "use_spatial_hash": True,
             },
         }
-        self.tile_map = arcade.load_tilemap(map_path, TILE_SCALING, layer_options)
+        self.tile_map = arcade.load_tilemap(map_path, level_data["scaling"], layer_options)
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
@@ -177,7 +186,7 @@ class Game(arcade.Window):
         self.gui_camera.use()
 
         # Indicate level number
-        nb_level = f"Level: {self.level}"
+        nb_level = f"Level: {self.levels[self.save['current_level']]['name']}"
         arcade.draw_text(nb_level, 10, 600, arcade.csscolor.WHITE, 18)
 
         # Draw score
@@ -200,7 +209,8 @@ class Game(arcade.Window):
         # See if the user got to the end of the level
         if self.player_sprite.center_x >= self.end_of_map:
             # Advance to the next level
-            self.level += 1
+
+            self.save["current_level"] += 1
 
             # Make sure to keep the score from this level when setting up the next level
             self.reset_score = False
@@ -212,13 +222,11 @@ class Game(arcade.Window):
 
         if self.connection.poll():
             kivy_message = self.connection.recv()
-            # TODO json dictionary with forbidden functions for each lvl
 
             # The self parameter allows us to have access to the game object inside the function user_instructions
             res = code_input.user_instructions(self, kivy_message, [])
             if res:
                 self.connection.send(res)
-
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
@@ -266,4 +274,3 @@ class Game(arcade.Window):
             self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
         else:
             self.player_sprite.change_x = 0
-
