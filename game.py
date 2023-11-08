@@ -127,18 +127,19 @@ class Game(arcade.Window):
         self.end_of_map = 1000
 
         # Initialize Player Sprite
-        image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
+        image_source = "C:/Users/page/Documents/UTC/A23/TX Python/game/assets/characters/chara.png"
         self.player_sprite = arcade.Sprite(image_source)
-        self.player_sprite.scale = self.level_data["player_scaling"]
+        self.player_sprite.scale = self.level_data["player_scaling"]*2
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
 
         # Initialize NPC sprite TODO   v---- choose which level in string below
-        if self.level_data["name"] == "":
-            image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
+        if self.level_data["name"] == "La super maisonnette":
+            image_source = "C:/Users/page/Documents/UTC/A23/TX Python/game/assets/characters/npc_chara.png"
             self.npc_sprite = arcade.Sprite(image_source)
+            self.npc_sprite.scale = 1.5
             self.npc_sprite.center_x = 740
-            self.npc_sprite.center_y = 315
+            self.npc_sprite.center_y = 215
             self.scene.add_sprite("Npc", self.npc_sprite)
 
         self.scene.add_sprite("Player", self.player_sprite)
@@ -181,10 +182,10 @@ class Game(arcade.Window):
 
         if self.show_textbox:
             self.textbox = npc.TextBox(400, 500, 700, 100,
-                                       "Mais, vous savez, moi je ne crois pas qu’il y ait de bonne ou de mauvaise "
-                                       "situation ^^ \nMoi, si je devais résumer ma vie aujourd’hui avec vous, "
-                                       "\nje dirais que c’est d’abord des rencontres, des gens qui m’ont tendu la "
-                                       "main")
+                                       "Bienvenue dans cette demo pour apprendre les boucles en python ! ^^ "
+                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de décors ! "
+                                       "\nLa fonction place_block(y) fait tomber un bloc du ciel à la position y"
+                                       "\nUtilise les blocs du jeu comme repère pour placer les tiens !")
             self.textbox.show()
 
     def on_update(self, delta_time):

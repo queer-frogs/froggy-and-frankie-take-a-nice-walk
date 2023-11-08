@@ -1,5 +1,23 @@
 [
   {
+    "name" : "La super maisonnette",
+
+    "tilemap_path" : "assets/tiled/tilemaps/starting_scene.tmx",
+    "cutscene_path" : "",
+    "scaling" : 1.3,
+
+    "character_state" : 0,
+    "forbidden_functions" : [],
+    "max_lines" : 0,
+
+    "player_movement_speed" : 5,
+    "player_jump_speed" : 10,
+    "player_scaling": 0.6,
+    "spawn_x" : 50,
+    "spawn_y": 400
+  },
+
+  {
     "name" : "Introducing Mechanics",
 
     "tilemap_path" : "assets/tiled/tilemaps/intro.tmx",
@@ -11,8 +29,8 @@
     "max_lines" : 0,
 
     "player_movement_speed" : 5,
-    "player_jump_speed" : 1,
-    "player_scaling": 0.7,
+    "player_jump_speed" : 10,
+    "player_scaling": 0.6,
     "spawn_x" : 50,
     "spawn_y": 150
   }
