@@ -1,9 +1,10 @@
 import math
 import game
+import entities
 import arcade
 
 
-class Npc(game.Entity):
+class Npc(entities.Entity):
     def __init__(self):
 
         # Setup parent class

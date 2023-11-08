@@ -1,65 +1,20 @@
 import arcade
-import math
 import arcade.gui as gui
 import json
-import code_input
 
+import code_input
+import npc
 
 # Constants
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 563
 SCREEN_TITLE = "Game"
 LAYER_NAME_NPC = "Npc"
-
-# Player starting position
-PLAYER_START_X = 10
-PLAYER_START_Y = 50
-
-# Movement speed of player, in pixels per frame
-PLAYER_MOVEMENT_SPEED = 15
 GRAVITY = 1.5
-PLAYER_JUMP_SPEED = 35
-
-# Tiled constants (for level 1:0.45 for level 2: 0.3415
-TILE_SCALING = 0.3415 #TODO Function that calculate autaumaticly the scaling (seems exponential)
-
-# Constants used to scale our sprites from their original size
-
-# How many pixels to keep as a minimum margin between the character and the edge of the screen.
 
 # Constants used to track if the player is facing left or right
 RIGHT_FACING = 0
 LEFT_FACING = 1
-
-
-class Entity(arcade.Sprite):
-    """ Basic structure of every sprite """
-
-    def __init__(self, name_folder, name_file, ):
-        # Set up classe parent
-        super().__init__()
-
-        # Set default values
-        # Load different textures for different states of action
-        # with main_path + _ + action + nb
-
-        # Set initial texture
-        # Set hit boxes
-
-
-class PlayerCharacter(Entity):
-    """ Player Sprite """
-
-    def __init__(self):
-        super().__init__("player", "player")
-
-        # Track state
-        self.walking = False
-        self.jumping = False
-
-    def update_animation(self, delta_time: float = 1 / 60):
-        # Update sprite based on state
-        pass
 
 
 class Game(arcade.Window):
@@ -71,7 +26,7 @@ class Game(arcade.Window):
 
         # Our textboxes
         self.textbox = None
-        self.show_textbox= False
+        self.show_textbox = False
 
         # gui manager to create and add gui elements
         self.manager = None
@@ -119,13 +74,18 @@ class Game(arcade.Window):
         # Load sounds
         self.connection = connection
 
+        # Open save and level files
+
         with open('save.json', 'r') as read_save_file:
             self.save = json.loads(read_save_file.read())
 
         with open('assets/levels.json', 'r') as read_levels_file:
             self.levels = json.loads(read_levels_file.read())
 
-        # TODO add close somewhere
+        # TODO add save & close somewhere ; save unsuppported as of today
+
+        # Level data, loaded later on
+        self.level_data = None
 
         # load collisions with npc
         self.player_collision_list = None
@@ -139,8 +99,8 @@ class Game(arcade.Window):
 
         # Load player save and levels data
 
-        level_data = self.levels[self.save["current_level"]]
-        map_path = level_data["tilemap_path"]
+        self.level_data = self.levels[self.save["current_level"]]
+        map_path = self.level_data["tilemap_path"]
 
         # Initialize map
 
@@ -152,7 +112,7 @@ class Game(arcade.Window):
                 "use_spatial_hash": True,
             },
         }
-        self.tile_map = arcade.load_tilemap(map_path, level_data["scaling"], layer_options)
+        self.tile_map = arcade.load_tilemap(map_path, self.level_data["scaling"], layer_options)
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
 
@@ -169,25 +129,25 @@ class Game(arcade.Window):
         # Initialize Player Sprite
         image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
         self.player_sprite = arcade.Sprite(image_source)
-        self.player_sprite.center_x = PLAYER_START_X
-        self.player_sprite.center_y = PLAYER_START_Y
+        self.player_sprite.scale = self.level_data["player_scaling"]
+        self.player_sprite.center_x = self.level_data["spawn_x"]
+        self.player_sprite.center_y = self.level_data["spawn_y"]
 
-        # Initialize NPC sprite
-        image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
-        self.npc_sprite = arcade.Sprite(image_source)
-        self.npc_sprite.center_x = 740
-        self.npc_sprite.center_y = 315
+        # Initialize NPC sprite TODO   v---- choose which level in string below
+        if self.level_data["name"] == "":
+            image_source = ":resources:images/animated_characters/female_adventurer/femaleAdventurer_idle.png"
+            self.npc_sprite = arcade.Sprite(image_source)
+            self.npc_sprite.center_x = 740
+            self.npc_sprite.center_y = 315
+            self.scene.add_sprite("Npc", self.npc_sprite)
 
         self.scene.add_sprite("Player", self.player_sprite)
-        self.scene.add_sprite("Npc",self.npc_sprite)
         self.scene.add_sprite_list("Walls", True, self.walls_list)
 
         # Keep track of the score, make sure we keep the score if the player finishes a level
         if self.reset_score:
             self.score = 0
         self.reset_score = True
-
-
 
         # Create the physics engine
 
@@ -215,14 +175,17 @@ class Game(arcade.Window):
         nb_level = f"Level: {self.levels[self.save['current_level']]['name']}"
         arcade.draw_text(nb_level, 10, 600, arcade.csscolor.WHITE, 18)
 
-        # Draw score
+        # Draw score TODO
 
-        #Draw the NPC textbox
+        # Draw the NPC textbox
 
         if self.show_textbox:
-                self.textbox = TextBox(400, 500, 700, 100, "Mais, vous savez, moi je ne crois pas qu’il y ait de bonne ou de mauvaise situation ^^ \nMoi, si je devais résumer ma vie aujourd’hui avec vous, \nje dirais que c’est d’abord des rencontres, des gens qui m’ont tendu la main")
-                self.textbox.show()
-
+            self.textbox = npc.TextBox(400, 500, 700, 100,
+                                       "Mais, vous savez, moi je ne crois pas qu’il y ait de bonne ou de mauvaise "
+                                       "situation ^^ \nMoi, si je devais résumer ma vie aujourd’hui avec vous, "
+                                       "\nje dirais que c’est d’abord des rencontres, des gens qui m’ont tendu la "
+                                       "main")
+            self.textbox.show()
 
     def on_update(self, delta_time):
         """
@@ -236,9 +199,8 @@ class Game(arcade.Window):
 
         # Did the player fall off the map?
         if self.player_sprite.center_y < -100:
-            self.player_sprite.center_x = PLAYER_START_X
-            self.player_sprite.center_y = PLAYER_START_Y
-
+            self.player_sprite.center_x = self.level_data["spawn_x"]
+            self.player_sprite.center_y = self.level_data["spawn_y"]
 
         # See if the user got to the end of the level
         if self.player_sprite.center_x >= self.end_of_map:
@@ -261,7 +223,6 @@ class Game(arcade.Window):
             res = code_input.user_instructions(self, kivy_message, [])
             if res:
                 self.connection.send(res)
-
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
@@ -293,7 +254,6 @@ class Game(arcade.Window):
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = False
 
-
         self.process_keychange()
 
     def process_keychange(self):
@@ -302,19 +262,18 @@ class Game(arcade.Window):
         # Process jump
         if self.up_pressed and not self.down_pressed:
             if self.physics_engine.can_jump(y_distance=10):
-                self.player_sprite.change_y = PLAYER_JUMP_SPEED
+                self.player_sprite.change_y = self.level_data["player_jump_speed"] # todo fix this
 
         # Process left/right
         if self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_x = -self.level_data["player_movement_speed"]
         elif self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = PLAYER_MOVEMENT_SPEED
+            self.player_sprite.change_x = self.level_data["player_movement_speed"]
         else:
             self.player_sprite.change_x = 0
 
         if self.enter_pressed:
             if self.show_textbox:
                 self.show_textbox = False
-            elif dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
+            elif npc.dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
                 self.show_textbox = True
-

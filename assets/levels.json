@@ -1,31 +1,19 @@
 [
   {
-    "name" : "Level 0",
+    "name" : "Introducing Mechanics",
 
-    "tilemap_path" : "assets/tiled/tilemaps/sample.tmx",
+    "tilemap_path" : "assets/tiled/tilemaps/intro.tmx",
     "cutscene_path" : "",
-    "scaling" : 1,
+    "scaling" : 1.8,
 
     "character_state" : 0,
     "forbidden_functions" : [],
     "max_lines" : 0,
 
-    "player_speed" : 1,
-    "player_jump_speed" : 0
-  },
-
-  {
-    "name" : "Level 1",
-
-    "tilemap_path" : "assets/tiled/tilemaps/sample.tmx",
-    "cutscene_path" : "",
-
-    "character_state" : 0,
-    "forbidden_functions" : [],
-    "max_lines" : 0,
-
-    "player_speed" : 1,
-    "player_jump_speed" : 0,
-    "scaling" : 1
+    "player_movement_speed" : 5,
+    "player_jump_speed" : 1,
+    "player_scaling": 0.7,
+    "spawn_x" : 50,
+    "spawn_y": 150
   }
 ]

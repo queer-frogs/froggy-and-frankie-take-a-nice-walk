@@ -1,6 +1,7 @@
 import arcade
 import game
 
+
 def place_block(arcade_game, pos, block_type="assets/tiled/tiles/sample_pack/Ground/Stone/stone.png"):
     """
     Places a block on the lowest slot avaible at the hoziontal position passed.
