@@ -10,9 +10,11 @@
     "forbidden_functions" : [],
     "max_lines" : 0,
 
+    "offset" : -1,
+
     "player_movement_speed" : 5,
     "player_jump_speed" : 10,
-    "player_scaling": 0.6,
+    "player_scaling": 1,
     "spawn_x" : 50,
     "spawn_y": 400
   },
@@ -26,11 +28,13 @@
 
     "character_state" : 0,
     "forbidden_functions" : [],
-    "max_lines" : 0,
+    "max_lines" : 4,
+
+    "offset" : 6,
 
     "player_movement_speed" : 5,
     "player_jump_speed" : 10,
-    "player_scaling": 0.6,
+    "player_scaling": 1,
     "spawn_x" : 50,
     "spawn_y": 150
   }

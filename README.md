@@ -19,13 +19,13 @@ Install all the requirements of the project :
 
 - On **windows or linux** :
 
-```python 
+```bash 
 pip install -r requirements_win.txt
 ```
 
 - On **macOs** :
 
-```python 
+```bash 
 pip install -r requirements_macos.txt
 ```
 

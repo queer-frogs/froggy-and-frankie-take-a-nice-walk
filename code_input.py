@@ -1,8 +1,8 @@
 import json
 from user_functions import place_block
 
-def user_instructions(game, code, forbidden=[]):
 
+def user_instructions(game, code, forbidden=[]):
     """
     Function checking, executing user input code and handling errors.
 
@@ -16,8 +16,11 @@ def user_instructions(game, code, forbidden=[]):
 
     # check for unsafe or context-forbidden instructions in code
 
+    if code.count("\n") > game.level_data["max_lines"] or game.level_data["max_lines"] == 0:
+        return f"/!\\ Erreur : le nombre maximum de lignes de code dans ce niveau est {game.level_data['max_lines']}."
+
     with open("assets/text/unsafe_words.json", "r") as unsafe_json:
-        unsafe = json.loads(unsafe_json.read())     # load from json unsafe words
+        unsafe = json.loads(unsafe_json.read())  # load from json unsafe words
 
     forbidden += unsafe
 
@@ -28,8 +31,10 @@ def user_instructions(game, code, forbidden=[]):
     # artificial buffer + code modification
 
     artificial_buffer = ""
+    # code = "import time\n" + code
     code = code.replace('print(', "artificial_buffer +=  '\\n' + str(")
     code = code.replace('place_block(', 'place_block(game,')
+    # code = code.replace("\n", "\ntime.sleep(1)\n")
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 
@@ -38,6 +43,7 @@ def user_instructions(game, code, forbidden=[]):
     # execution
 
     try:
+        game.setup()
         exec(code, globals(), local_variables)
         artificial_buffer = local_variables['artificial_buffer']
 

@@ -11,6 +11,7 @@ SCREEN_HEIGHT = 563
 SCREEN_TITLE = "Game"
 LAYER_NAME_NPC = "Npc"
 GRAVITY = 1.5
+TILE_SIZE = 16
 
 # Constants used to track if the player is facing left or right
 RIGHT_FACING = 0
@@ -127,15 +128,15 @@ class Game(arcade.Window):
         self.end_of_map = 1000
 
         # Initialize Player Sprite
-        image_source = "C:/Users/page/Documents/UTC/A23/TX Python/game/assets/characters/chara.png"
+        image_source = "assets/characters/chara.png"
         self.player_sprite = arcade.Sprite(image_source)
-        self.player_sprite.scale = self.level_data["player_scaling"]*2
+        self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
 
         # Initialize NPC sprite TODO   v---- choose which level in string below
         if self.level_data["name"] == "La super maisonnette":
-            image_source = "C:/Users/page/Documents/UTC/A23/TX Python/game/assets/characters/npc_chara.png"
+            image_source = "assets/characters/npc_chara.png"
             self.npc_sprite = arcade.Sprite(image_source)
             self.npc_sprite.scale = 1.5
             self.npc_sprite.center_x = 740
@@ -144,6 +145,14 @@ class Game(arcade.Window):
 
         self.scene.add_sprite("Player", self.player_sprite)
         self.scene.add_sprite_list("Walls", True, self.walls_list)
+
+        # Blue tile showing the place_block() offset to the player
+        if self.level_data["offset"] != -1:
+            offset_block = arcade.Sprite("assets/tiled/tiles/Minecraft tiles/beacon.png")
+            offset_block.width = offset_block.height = TILE_SIZE * self.level_data["scaling"]
+            offset_block.left = self.level_data["offset"] * TILE_SIZE * self.level_data["scaling"]
+            offset_block.bottom = 0
+            self.scene["Background"].append(offset_block)
 
         # Keep track of the score, make sure we keep the score if the player finishes a level
         if self.reset_score:
