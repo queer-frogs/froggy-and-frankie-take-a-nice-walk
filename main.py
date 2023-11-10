@@ -1,5 +1,6 @@
 import multiprocessing
 
+
 def run_arcade(arcade_connection):
     import arcade
     from game import Game

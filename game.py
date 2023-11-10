@@ -41,6 +41,9 @@ class Game(arcade.Window):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
+
+        self.l_pressed = False
+
         # arcade_game.jump_needs_reset = False
 
         # Our TileMap Object
@@ -72,8 +75,11 @@ class Game(arcade.Window):
         # Where is the right edge of the map?
         self.end_of_map = 0
 
-        # Load sounds
+        # Connection to kivy interface
         self.connection = connection
+
+        # List of the number of blocks placed at each x position of the map by the player using place_block()
+        self.already_placed = []
 
         # Open save and level files
 
@@ -164,6 +170,9 @@ class Game(arcade.Window):
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
 
+        # Reset already_placed list for the upcoming level
+        self.already_placed = []
+
     def on_draw(self):
         """ Render the screen. """
 
@@ -192,7 +201,7 @@ class Game(arcade.Window):
         if self.show_textbox:
             self.textbox = npc.TextBox(400, 500, 700, 100,
                                        "Bienvenue dans cette demo pour apprendre les boucles en python ! ^^ "
-                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de décors ! "
+                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de décors !"
                                        "\nLa fonction place_block(y) fait tomber un bloc du ciel à la position y"
                                        "\nUtilise les blocs du jeu comme repère pour placer les tiens !")
             self.textbox.show()
@@ -247,6 +256,8 @@ class Game(arcade.Window):
             self.left_pressed = True
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = True
+        elif key == arcade.key.L:
+            self.l_pressed = True
 
         self.process_keychange()
 
@@ -263,6 +274,8 @@ class Game(arcade.Window):
             self.left_pressed = False
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = False
+        elif key == arcade.key.L:
+            self.l_pressed = False
 
         self.process_keychange()
 
@@ -287,3 +300,94 @@ class Game(arcade.Window):
                 self.show_textbox = False
             elif npc.dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
                 self.show_textbox = True
+
+        if self.l_pressed:
+            # TODO CODE ----------------------------------------------------------------------
+            for i in range(100):
+                for j in range(i):
+                    print("a")
+                    place_block(self, i)
+
+            """
+                for j in range(i):
+                    print("a")
+                    place_block(self, i)
+                    """
+
+
+
+def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft tiles/acacia_planks.png"):
+    """
+    Places a block on the lowest slot avaible at the hoziontal position passed.
+
+    Args:
+        arcade_game: Game object target
+        x_pos: horizontal position where the block should be placed, starts at 0, counted in tiles
+        block_type: type of the block that should be placed
+
+
+    Returns: None
+
+    TODO add ressources management for the player's inventory, different tiles?
+    TODO add animation ?
+    """
+
+    # Size of one tile in the grid, adapted to current level scaling
+    tile_size = 16 * arcade_game.level_data["scaling"]
+
+    # Position zero for x is not the same in every level
+    x_pos += arcade_game.level_data["offset"]
+    y_pos = 0
+
+    # Initialize block
+    new_block = arcade.Sprite(block_type)
+    new_block.width = new_block.height = tile_size
+    new_block.left = x_pos * tile_size
+    new_block.bottom = 0
+
+    # Check if blocks were precedently placed at that x_pos, allowing us to directly get the y coords of the next block
+    try:
+        if arcade_game.already_placed[x_pos] != 0:
+            y_pos = arcade_game.already_placed[x_pos] + 1
+            arcade_game.already_placed[x_pos] = y_pos
+            new_block.bottom = y_pos * tile_size
+            skip_check = True
+        else:
+            skip_check = False
+    except IndexError:
+        skip_check = False
+        for i in range(x_pos - len(arcade_game.already_placed) + 1):
+            arcade_game.already_placed.append(0)
+
+    if new_block.center_x > SCREEN_WIDTH:
+        raise ValueError("The position provided is out of the map borders.")
+
+    if not skip_check:
+        # Get first vertical slot available at that x position
+        if not arcade.get_sprites_at_point((new_block.left + 1, new_block.bottom + 1), arcade_game.scene["Platforms"]):
+            free = True
+        else:
+            free = False
+        while not free:
+            new_block.bottom += tile_size * arcade_game.level_data["scaling"]
+            y_pos += 1
+            if not arcade.get_sprites_at_point((new_block.left + 1, new_block.bottom + 1),
+                                               arcade_game.scene["Platforms"]):
+                free = True
+
+    if new_block.bottom > SCREEN_HEIGHT:
+        raise ValueError("No room is avaible for this block at that position.")
+
+    # Update sprite list and render the new sprite
+    arcade_game.scene["Platforms"].append(new_block)
+    arcade_game.scene["Platforms"].draw()
+
+    # Keep in memory last y_pos at which a block was placed at x_pos
+    arcade_game.already_placed[x_pos] = y_pos
+
+
+import multiprocessing
+arcade_connection, kivy_connection = multiprocessing.Pipe(duplex=True)
+game_instance = Game(arcade_connection)
+game_instance.setup()
+arcade.run()
