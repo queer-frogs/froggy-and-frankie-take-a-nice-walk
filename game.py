@@ -120,6 +120,12 @@ class Game(arcade.Window):
         self.manager = gui.UIManager()
         self.manager.enable()
 
+        # reset button
+        reset_button = gui.UIFlatButton(color=arcade.color.DARK_BLUE_GRAY, text='Reset level', width=100)
+        reset_button.on_click = self.on_click_reset
+        padd = gui.UIPadding(bg_color=arcade.color.APRICOT, child=reset_button, padding=(0.3, 0.3, 0.3, 0.3))
+        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=padd))
+
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
@@ -277,3 +283,7 @@ class Game(arcade.Window):
                 self.show_textbox = False
             elif npc.dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
                 self.show_textbox = True
+
+    def on_click_reset(self, event):
+        # garder coordonnées joueur
+        self.setup()
