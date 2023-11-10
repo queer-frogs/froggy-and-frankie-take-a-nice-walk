@@ -34,7 +34,7 @@
     "offset" : 6,
 
     "player_movement_speed" : 5,
-    "player_jump_speed" : 10,
+    "player_jump_speed" : 9,
     "player_scaling": 0.65,
     "spawn_x" : 50,
     "spawn_y": 150
