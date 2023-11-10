@@ -41,6 +41,7 @@ class Game(arcade.Window):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
+
         # arcade_game.jump_needs_reset = False
 
         # Our TileMap Object
@@ -72,8 +73,11 @@ class Game(arcade.Window):
         # Where is the right edge of the map?
         self.end_of_map = 0
 
-        # Load sounds
+        # Connection to kivy interface
         self.connection = connection
+
+        # List of the number of blocks placed at each x position of the map by the player using place_block()
+        self.already_placed = []
 
         # Open save and level files
 
@@ -170,6 +174,9 @@ class Game(arcade.Window):
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
 
+        # Reset already_placed list for the upcoming level
+        self.already_placed = []
+
     def on_draw(self):
         """ Render the screen. """
 
@@ -198,7 +205,7 @@ class Game(arcade.Window):
         if self.show_textbox:
             self.textbox = npc.TextBox(400, 500, 700, 100,
                                        "Bienvenue dans cette demo pour apprendre les boucles en python ! ^^ "
-                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de décors ! "
+                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de décors !"
                                        "\nLa fonction place_block(y) fait tomber un bloc du ciel à la position y"
                                        "\nUtilise les blocs du jeu comme repère pour placer les tiens !")
             self.textbox.show()

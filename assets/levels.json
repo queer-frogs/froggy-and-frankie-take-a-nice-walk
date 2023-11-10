@@ -33,6 +33,7 @@
 
     "offset" : 6,
 
+
     "player_movement_speed" : 5,
     "player_jump_speed" : 9,
     "player_scaling": 0.65,
@@ -152,33 +153,13 @@
     "forbidden_functions" : [],
     "max_lines" : 4,
 
-    "offset" : 2,
+    "offset" : 0,
 
     "player_movement_speed" : 2,
     "player_jump_speed" : 2,
     "player_scaling": 0.5,
     "spawn_x" : 5,
     "spawn_y": 90
-  },
-
-  {
-    "name" : "introducing the new and fun while",
-
-    "tilemap_path" : "assets/tiled/tilemaps/level_6.tmx",
-    "cutscene_path" : "",
-    "scaling" : 0.363,
-
-    "character_state" : 0,
-    "forbidden_functions" : [],
-    "max_lines" : 4,
-
-    "offset" : 1,
-
-    "player_movement_speed" : 5,
-    "player_jump_speed" : 10,
-    "player_scaling": 1,
-    "spawn_x" : 2,
-    "spawn_y": 10
   },
 
   {
