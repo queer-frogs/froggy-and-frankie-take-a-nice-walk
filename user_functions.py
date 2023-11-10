@@ -1,5 +1,5 @@
 import arcade
-
+import game
 
 def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft tiles/acacia_planks.png"):
     """
@@ -44,7 +44,7 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
         for i in range(x_pos - len(arcade_game.already_placed) + 1):
             arcade_game.already_placed.append(0)
 
-    if new_block.center_x > arcade_game.SCREEN_WIDTH:
+    if new_block.center_x > game.SCREEN_WIDTH:
         raise ValueError("The position provided is out of the map borders.")
 
     if not skip_check:
@@ -62,7 +62,7 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
                                                arcade_game.scene["Platforms"]):
                 free = True
 
-    if new_block.bottom > arcade_game.SCREEN_HEIGHT:
+    if new_block.bottom > game.SCREEN_HEIGHT:
         raise ValueError("No room is avaible for this block at that position.")
 
     # Update sprite list and render the new sprite
