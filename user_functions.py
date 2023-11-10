@@ -2,7 +2,7 @@ import arcade
 import game
 
 
-def place_block(arcade_game, pos, block_type="assets/tiled/tiles/sample_pack/Ground/Stone/stone.png"):
+def place_block(arcade_game, pos, block_type="assets/tiled/tiles/Minecraft tiles/acacia_planks.png"):
     """
     Places a block on the lowest slot avaible at the hoziontal position passed.
 
@@ -20,25 +20,26 @@ def place_block(arcade_game, pos, block_type="assets/tiled/tiles/sample_pack/Gro
     TODO add animation ?
     """
 
-    # TODO should be defined earlier in code, or in the specific level
-    tile_size = (128, 128)  # size of one tile in the grid
+    tile_size = 16 * arcade_game.level_data["scaling"]  # size of one tile in the grid
+    pos += arcade_game.level_data["offset"]     # Position zero is not the same in every level
 
     # TODO for now we use block_type as a path to the png (wip)
     # Initialize block
     new_block = arcade.Sprite(block_type)
-    new_block.left = pos * tile_size[0]
+    new_block.width = new_block.height = tile_size  # TODO trouver la formule mathématique
+    new_block.left = pos * tile_size     # * arcade_game.level_data["scaling"]
+    new_block.bottom = 0
 
     if new_block.center_x > game.SCREEN_WIDTH:
         raise ValueError("The position provided is out of the map borders.")
 
     # Get first vertical slot available at that x position, add + 10 to make sure we detect round-cornered sprites
-    new_block.bottom = 0
     if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10), arcade_game.scene["Platforms"]):
         free = True
     else:
         free = False
     while not free:
-        new_block.bottom += tile_size[1]
+        new_block.bottom += tile_size
         if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10),
                                            arcade_game.scene["Platforms"]):
             free = True
