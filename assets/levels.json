@@ -11,7 +11,7 @@
     "forbidden_functions" : [],
     "max_lines" : 0,
 
-    "offset" : -1,
+    "offset" : 0,
 
     "player_movement_speed" : 5,
     "player_jump_speed" : 10,
@@ -213,7 +213,7 @@
     "forbidden_functions" : [],
     "max_lines" : 0,
 
-    "offset" : -1,
+    "offset" : 0,
 
     "player_movement_speed" : 5,
     "player_jump_speed" : 10,

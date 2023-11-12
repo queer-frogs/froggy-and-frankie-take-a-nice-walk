@@ -6,7 +6,7 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
     Places a block on the lowest slot avaible at the hoziontal position passed.
 
     Args:
-        arcade_game: Game object target
+        arcade_game: Game obqqject target
         x_pos: horizontal position where the block should be placed, starts at 0, counted in tiles
         block_type: type of the block that should be placed
 
@@ -18,7 +18,7 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
     """
 
     # Size of one tile in the grid, adapted to current level scaling
-    tile_size = 16 * arcade_game.level_data["scaling"]
+    tile_size = arcade_game.tile_size * arcade_game.level_data["scaling"]
 
     # Position zero for x is not the same in every level
     x_pos += 0  # + arcade_game.level_data["offset"]

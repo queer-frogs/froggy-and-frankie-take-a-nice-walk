@@ -5,6 +5,8 @@ import json
 import code_input
 import npc
 
+import utils
+
 # Constants
 SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 563
@@ -24,6 +26,9 @@ class Game(arcade.Window):
     def __init__(self, connection):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+
+        # TODO Delete this
+        self.p_pressed = False
 
         # Our textboxes
         self.textbox = None
@@ -78,6 +83,12 @@ class Game(arcade.Window):
 
         # List of the number of blocks placed at each x position of the map by the player using place_block()
         self.already_placed = []
+
+        # Screen resolution
+        self.screen_resolution = (SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        # Default tile size
+        self.tile_size = TILE_SIZE
 
         # Open save and level files
 
@@ -260,6 +271,8 @@ class Game(arcade.Window):
             self.left_pressed = True
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = True
+        elif key == arcade.key.P:
+            self.p_pressed = True
 
         self.process_keychange()
 
@@ -276,6 +289,8 @@ class Game(arcade.Window):
             self.left_pressed = False
         elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.right_pressed = False
+        elif key == arcade.key.P:
+            self.p_pressed = False
 
         self.process_keychange()
 
@@ -300,6 +315,11 @@ class Game(arcade.Window):
                 self.show_textbox = False
             elif npc.dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
                 self.show_textbox = True
+
+        if self.p_pressed:
+            utils.save_free_slots(self)
+
+
 
     def on_click_reset(self, event):
         # garder coordonnées joueur
