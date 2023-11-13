@@ -81,22 +81,18 @@ class Game(arcade.Window):
         # Connection to kivy interface
         self.connection = connection
 
-        # List of the number of blocks placed at each x position of the map by the player using place_block()
-        self.already_placed = []
-
         # Screen resolution
         self.screen_resolution = (SCREEN_WIDTH, SCREEN_HEIGHT)
 
         # Default tile size
         self.tile_size = TILE_SIZE
 
-        # Open save and level files
+        # Open save file
 
         with open('save.json', 'r') as read_save_file:
             self.save = json.loads(read_save_file.read())
 
-        with open('assets/levels.json', 'r') as read_levels_file:
-            self.levels = json.loads(read_levels_file.read())
+        self.levels = {}
 
         # TODO add save & close somewhere ; save unsuppported as of today
 
@@ -113,7 +109,11 @@ class Game(arcade.Window):
         self.camera = arcade.Camera(self.width, self.height)
         self.gui_camera = arcade.Camera(self.width, self.height)
 
-        # Load player save and levels data
+        # Reload level data
+
+        # Reset positions available to precomputed values
+        with open("assets/levels.json", "r") as read_levels_file:
+            self.levels = json.loads(read_levels_file.read())
 
         self.level_data = self.levels[self.save["current_level"]]
         map_path = self.level_data["tilemap_path"]
@@ -185,8 +185,8 @@ class Game(arcade.Window):
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
 
-        # Reset already_placed list for the upcoming level
-        self.already_placed = []
+
+
 
     def on_draw(self):
         """ Render the screen. """
