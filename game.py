@@ -27,9 +27,6 @@ class Game(arcade.Window):
         """ Initializer for the game"""
         super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
 
-        # TODO Delete this
-        self.p_pressed = False
-
         # Our textboxes
         self.textbox = None
         self.show_textbox = False
@@ -46,6 +43,7 @@ class Game(arcade.Window):
         self.right_pressed = False
         self.up_pressed = False
         self.down_pressed = False
+        self.p_pressed = False
 
         # arcade_game.jump_needs_reset = False
 
@@ -145,7 +143,7 @@ class Game(arcade.Window):
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
 
-        # TODO redefine with the correct value
+        # End of map value
         self.end_of_map = 1000
 
         # Initialize Player Sprite
@@ -155,7 +153,7 @@ class Game(arcade.Window):
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
 
-        # Initialize NPC sprite TODO   v---- choose which level in string below
+        # Initialize NPC sprite
         if self.level_data["name"] == "La super maisonnette":
             image_source = "assets/characters/npc_chara.png"
             self.npc_sprite = arcade.Sprite(image_source)
@@ -208,8 +206,6 @@ class Game(arcade.Window):
         # Indicate level number
         nb_level = f"Level: {self.levels[self.save['current_level']]['name']}"
         arcade.draw_text(nb_level, 10, 600, arcade.csscolor.WHITE, 18)
-
-        # Draw score TODO
 
         # Draw the NPC textbox
 
@@ -320,8 +316,6 @@ class Game(arcade.Window):
 
         if self.p_pressed:
             utils.save_free_slots(self)
-
-
 
     def on_click_reset(self, event):
         # garder coordonnées joueur

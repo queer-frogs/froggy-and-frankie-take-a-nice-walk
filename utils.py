@@ -30,7 +30,6 @@ def compute_first_free_slots(arcade_game):
         row_coord = current_row * tile_size
 
         # Check if the first row is immediately free
-        # TODO add check on platforms background layer
         if not (arcade.get_sprites_at_point(
                     (column_coord + 1, row_coord + 1), arcade_game.scene["Platforms"])
                 or
