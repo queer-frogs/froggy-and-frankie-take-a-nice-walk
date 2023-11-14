@@ -216,9 +216,11 @@ class Game(arcade.Window):
         if self.show_textbox:
             self.textbox = npc.TextBox(400, 500, 700, 100,
                                        "Bienvenue dans cette demo pour apprendre les boucles en python ! ^^ "
-                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de décors !"
-                                       "\nLa fonction place_block(y) fait tomber un bloc du ciel à la position y"
-                                       "\nUtilise les blocs du jeu comme repère pour placer les tiens !")
+                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de "
+                                       "décors !"
+                                       "\nLa fonction place_block(x) fait tomber un bloc du ciel à la position x. "
+                                       "Tu peux les empiler !"
+                                       "\nUtilise les blocs du jeu comme repère pour placer les tiens ! ")
             self.textbox.show()
 
     def on_update(self, delta_time):
@@ -300,13 +302,13 @@ class Game(arcade.Window):
         # Process jump
         if self.up_pressed and not self.down_pressed:
             if self.physics_engine.can_jump(y_distance=10):
-                self.player_sprite.change_y = self.level_data["player_jump_speed"] # todo fix this
+                self.player_sprite.change_y = self.level_data["player_jump_speed"]
 
         # Process left/right
         if self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = -self.level_data["player_movement_speed"]
+            self.player_sprite.change_x = (-self.level_data["player_movement_speed"] * self.level_data["scaling"])
         elif self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = self.level_data["player_movement_speed"]
+            self.player_sprite.change_x = (self.level_data["player_movement_speed"] * self.level_data["scaling"])
         else:
             self.player_sprite.change_x = 0
 
