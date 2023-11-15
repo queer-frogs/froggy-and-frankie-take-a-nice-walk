@@ -1,5 +1,8 @@
 import json
+
+# used in exec(), do not remove
 from user_functions import place_block
+from user_functions import is_empty
 
 
 def user_instructions(game, code, forbidden=[]):
@@ -31,10 +34,9 @@ def user_instructions(game, code, forbidden=[]):
     # artificial buffer + code modification
 
     artificial_buffer = ""
-    # code = "import time\n" + code
     code = code.replace('print(', "artificial_buffer +=  '\\n' + str(")
     code = code.replace('place_block(', 'place_block(game,')
-    # code = code.replace("\n", "\ntime.sleep(1)\n")
+    code = code.replace('is_empty(', 'is_empty(game,')
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 
