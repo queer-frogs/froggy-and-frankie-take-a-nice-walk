@@ -7,7 +7,7 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
     Places a block on the lowest slot avaible at the hoziontal position passed.
 
     Args:
-        arcade_game: Game obqqject target
+        arcade_game: Game object target
         x_pos: horizontal position where the block should be placed, starts at 0, counted in tiles
         block_type: type of the block that should be placed
 
@@ -38,5 +38,3 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
     # Update sprite list and render the new sprite
     arcade_game.scene["Platforms"].append(new_block)
     arcade_game.scene["Platforms"].draw()
-
-    print(new_block.left, new_block.bottom)

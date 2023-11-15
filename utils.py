@@ -51,12 +51,6 @@ def compute_first_free_slots(arcade_game):
                         (column_coord + 1, row_coord + 1), arcade_game.scene["BackgroundPlatforms"])):
                 free = True
 
-        '''probably useless
-        # Check if the position is on the screen
-        if row_coord > arcade_game.screen_resolution[1]:
-            current_row = -1
-        '''
-
         first_free_slots.append(current_row)
 
     return first_free_slots
