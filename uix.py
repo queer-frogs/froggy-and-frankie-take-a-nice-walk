@@ -21,13 +21,13 @@ class Input(App):
         self.forbidden = forbidden
 
         # Window parameters configuration
-        Window.size = (400, 650)
+        Window.size = (500, 700)
         Window.clearcolor = (1, 1, 1, 1)
 
     def build(self):
 
         # Buttons layout
-        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.3,1))
+        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.1,1))
         submit = Button(text="Submit", on_press=self.submit, size_hint=(1,0.5), background_color=(0, 1, 1, 1))
         reset = Button(text="Reset", on_press=self.reset, size_hint=(1,0.5), background_color =(1, 1, 1, 1))
         buttons.add_widget(submit)
