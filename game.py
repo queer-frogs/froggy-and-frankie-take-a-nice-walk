@@ -1,11 +1,13 @@
 import arcade
 import arcade.gui as gui
+
 import json
+import timeit
 
 import code_input
 import npc
-
 import utils
+import entities
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -86,7 +88,6 @@ class Game(arcade.Window):
         self.tile_size = TILE_SIZE
 
         # Open save file
-
         with open('save.json', 'r') as read_save_file:
             self.save = json.loads(read_save_file.read())
 
@@ -97,8 +98,12 @@ class Game(arcade.Window):
         # Level data, loaded later on
         self.level_data = None
 
-        # load collisions with npc
+        # Load collisions with npc
         self.player_collision_list = None
+
+        # Initialize fall timer, used for fall damage
+        self.fall_timer = 0.
+        self.show_timer = False     # If true, prints the timer at every update, useful for setting up levels
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game."""
@@ -148,7 +153,7 @@ class Game(arcade.Window):
 
         # Initialize Player Sprite
         image_source = "assets/characters/chara.png"
-        self.player_sprite = arcade.Sprite(image_source)
+        self.player_sprite = entities.PlayerCharacter(image_source)
         self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
@@ -182,9 +187,6 @@ class Game(arcade.Window):
 
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
-
-
-
 
     def on_draw(self):
         """ Render the screen. """
@@ -229,6 +231,22 @@ class Game(arcade.Window):
 
         # Update animations
 
+        # Check if the player is (still) jumping
+        if self.player_sprite.jumping:
+            if self.physics_engine.can_jump():
+                self.player_sprite.jumping = False
+                # Has he fallen for too long ?
+                # if max_fall_time == -1, it means the level has no fall damage
+                if self.level_data["max_fall_time"] != -1 and self.fall_timer >= self.level_data['max_fall_time']:
+                    self.setup()    # reset the level
+                self.fall_timer = 0
+            else:
+                self.fall_timer += delta_time
+
+        # TODO remove this
+        if self.show_timer:
+            print(self.fall_timer)
+
         # Did the player fall off the map?
         if self.player_sprite.center_y < -100:
             self.player_sprite.center_x = self.level_data["spawn_x"]
@@ -237,7 +255,6 @@ class Game(arcade.Window):
         # See if the user got to the end of the level
         if self.player_sprite.center_x >= self.end_of_map:
             # Advance to the next level
-
             self.save["current_level"] += 1
 
             # Make sure to keep the score from this level when setting up the next level
@@ -247,7 +264,6 @@ class Game(arcade.Window):
             self.setup()
 
         # Check if kivy sent something
-
         if self.connection.poll():
             kivy_message = self.connection.recv()
 
@@ -299,6 +315,7 @@ class Game(arcade.Window):
         if self.up_pressed and not self.down_pressed:
             if self.physics_engine.can_jump(y_distance=10):
                 self.player_sprite.change_y = self.level_data["player_jump_speed"]
+                self.player_sprite.jumping = True
 
         # Process left/right
         if self.left_pressed and not self.right_pressed:
