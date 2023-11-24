@@ -231,19 +231,22 @@ class Game(arcade.Window):
 
         # Update animations
 
-        # Check if the player is (still) jumping
+        # Check if the player is still jumping
         if self.player_sprite.jumping:
             if self.physics_engine.can_jump():
                 self.player_sprite.jumping = False
                 # Has he fallen for too long ?
-                # if max_fall_time == -1, it means the level has no fall damage
+                # max_fall_time == -1 means the level has no fall damage
                 if self.level_data["max_fall_time"] != -1 and self.fall_timer >= self.level_data['max_fall_time']:
                     self.setup()    # reset the level
                 self.fall_timer = 0
             else:
                 self.fall_timer += delta_time
 
-        # TODO remove this
+        # Update the jumping state
+        self.player_sprite.jumping = not self.physics_engine.can_jump()
+
+        # If debug option enabled, show the jump timer in console
         if self.show_timer:
             print(self.fall_timer)
 
@@ -315,7 +318,6 @@ class Game(arcade.Window):
         if self.up_pressed and not self.down_pressed:
             if self.physics_engine.can_jump(y_distance=10):
                 self.player_sprite.change_y = self.level_data["player_jump_speed"]
-                self.player_sprite.jumping = True
 
         # Process left/right
         if self.left_pressed and not self.right_pressed:

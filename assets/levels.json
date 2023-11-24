@@ -12,7 +12,7 @@
     "player_jump_speed": 10,
     "player_scaling": 1,
     "spawn_x": 50,
-    "spawn_y": 400,
+    "spawn_y": 220,
     "first_free_slots": [
       9,
       9,
