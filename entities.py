@@ -4,9 +4,9 @@ import arcade
 class Entity(arcade.Sprite):
     """ Basic structure of every sprite """
 
-    def __init__(self, name_folder, name_file, ):
+    def __init__(self, image_source):
         # Set up classe parent
-        super().__init__()
+        super().__init__(image_source)
 
         # Set default values
         # Load different textures for different states of action
@@ -19,8 +19,8 @@ class Entity(arcade.Sprite):
 class PlayerCharacter(Entity):
     """ Player Sprite """
 
-    def __init__(self):
-        super().__init__("player", "player")
+    def __init__(self, image_source):
+        super().__init__(image_source)
 
         # Track state
         self.walking = False

@@ -12,7 +12,7 @@
     "player_jump_speed": 10,
     "player_scaling": 1,
     "spawn_x": 50,
-    "spawn_y": 400,
+    "spawn_y": 220,
     "first_free_slots": [
       9,
       9,
@@ -62,8 +62,9 @@
       10,
       10,
       9
-    ]
-  },
+    ],
+  "max_fall_time" : 0.2
+},
   {
     "name": "Introducing Mechanics",
     "tilemap_path": "assets/tiled/tilemaps/intro.tmx",
@@ -107,8 +108,9 @@
       2,
       3,
       3
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "10 block hole",
     "tilemap_path": "assets/tiled/tilemaps/level_0.tmx",
@@ -152,8 +154,9 @@
       5,
       4,
       4
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "big big hole",
     "tilemap_path": "assets/tiled/tilemaps/level_1.tmx",
@@ -272,8 +275,9 @@
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 50,
-    "spawn_y": 150
-  },
+    "spawn_y": 150,
+    "max_fall_time" : -1
+},
   {
     "name": "big big stairs",
     "tilemap_path": "assets/tiled/tilemaps/level_2.tmx",
@@ -470,8 +474,9 @@
       88,
       88,
       88
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "big stairs not starting at 0",
     "tilemap_path": "assets/tiled/tilemaps/level_3.tmx",
@@ -668,8 +673,9 @@
       0,
       0,
       0
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "big big stairs down",
     "tilemap_path": "assets/tiled/tilemaps/level_4.tmx",
@@ -866,8 +872,9 @@
       26,
       26,
       26
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "des batonnets de fromage",
     "tilemap_path": "assets/tiled/tilemaps/level_5.tmx",
@@ -984,8 +991,9 @@
       8,
       0,
       8
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "introducing the new and fun while",
     "tilemap_path": "assets/tiled/tilemaps/level_6.tmx",
@@ -1172,8 +1180,9 @@
       2,
       2,
       2
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "it's not an info exercice withou a fibo",
     "tilemap_path": "assets/tiled/tilemaps/level_7.tmx",
@@ -1358,8 +1367,9 @@
       74,
       75,
       75
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "thanks for making it here",
     "tilemap_path": "assets/tiled/tilemaps/level_final.tmx",
@@ -1542,8 +1552,9 @@
       3,
       1,
       1
-    ]
-  },
+    ],
+  "max_fall_time" : -1
+},
   {
     "name": "La super maisonnette",
     "tilemap_path": "assets/tiled/tilemaps/starting_scene.tmx",
@@ -1607,6 +1618,7 @@
       10,
       10,
       9
-    ]
-  }
+    ],
+  "max_fall_time" : -1
+}
 ]
