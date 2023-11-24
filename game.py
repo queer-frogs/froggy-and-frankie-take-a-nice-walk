@@ -246,8 +246,11 @@ class Game(arcade.Window):
             # Load the next level
             self.setup()
 
-        # Check if kivy sent something
+        # Trigger auto-jump if needed
+        if (self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.change_x == 0:
+            self.player_sprite.change_y = self.level_data["player_jump_speed"]
 
+        # Check if kivy sent something
         if self.connection.poll():
             kivy_message = self.connection.recv()
 

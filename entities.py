@@ -23,7 +23,8 @@ class PlayerCharacter(Entity):
         super().__init__("player", "player")
 
         # Track state
-        self.walking = False
+        self.walking_right = False
+        self.walking_left = False
         self.jumping = False
 
     def update_animation(self, delta_time: float = 1 / 60):
