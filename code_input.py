@@ -1,6 +1,6 @@
 import json
 
-# used in exec(), do not remove
+# Might be used in exec(code), do not remove !
 from user_functions import place_block
 from user_functions import is_empty
 
@@ -20,7 +20,7 @@ def user_instructions(game, code, forbidden=[]):
     # check for unsafe or context-forbidden instructions in code
 
     if code.count("\n") > game.level_data["max_lines"] or game.level_data["max_lines"] == 0:
-        return f"/!\\ Erreur : le nombre maximum de lignes de code dans ce niveau est {game.level_data['max_lines']}."
+        return f"/!\\ Error : the maximum of lines of code in this level is {game.level_data['max_lines']}."
 
     with open("assets/text/unsafe_words.json", "r") as unsafe_json:
         unsafe = json.loads(unsafe_json.read())  # load from json unsafe words
@@ -29,7 +29,7 @@ def user_instructions(game, code, forbidden=[]):
 
     for word in forbidden:
         if word in code:
-            return f"Unsafe instruction ('{word}') found in code input by user."
+            return f"/!\\ Error : Forbidden instruction ('{word}') found in code."
 
     # artificial buffer + code modification
 
@@ -54,8 +54,8 @@ def user_instructions(game, code, forbidden=[]):
     except Exception as error:
         with open("assets/text/errors.json") as custom_errors_json:
             custom_errors = json.loads(custom_errors_json.read())
-            try :
-                return f'/!\\ {error.__class__.__name__} : {custom_errors[error.__class__.__name__]}\nDebug : {error}'
+            try:
+                return f'/!\\ {error.__class__.__name__} : {error}'
             except KeyError:
                 return str(error)
 
