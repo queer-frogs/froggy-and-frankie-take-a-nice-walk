@@ -26,6 +26,8 @@ class PlayerCharacter(Entity):
         self.walking_right = False
         self.walking_left = False
         self.jumping = False
+        self.current_pos = (0, 0)
+        self.last_pos = (0, 0)
 
     def update_animation(self, delta_time: float = 1 / 60):
         # Update sprite based on state

@@ -228,6 +228,7 @@ class Game(arcade.Window):
         """
         # Move the player with the physics engine
         self.physics_engine.update()
+        self.player_sprite.current_pos = (self.player_sprite.center_x, self.player_sprite.center_y)
 
         # Update animations
 
@@ -267,7 +268,7 @@ class Game(arcade.Window):
             self.setup()
 
         # Trigger auto-jump if needed
-        if (self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.change_x == 0:
+        if (self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.last_pos == self.player_sprite.current_pos:
             self.player_sprite.change_y = self.level_data["player_jump_speed"]
 
         # Check if kivy sent something
@@ -278,6 +279,8 @@ class Game(arcade.Window):
             res = code_input.user_instructions(self, kivy_message, [])
             if res:
                 self.connection.send(res)
+
+        self.player_sprite.last_pos = self.player_sprite.current_pos
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
@@ -302,8 +305,8 @@ class Game(arcade.Window):
 
         if key == arcade.key.ENTER:
             self.enter_pressed = False
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.up_pressed = False
+        # if key == arcade.key.UP or key == arcade.key.W:
+            # self.up_pressed = False
         elif key == arcade.key.DOWN or key == arcade.key.S:
             self.down_pressed = False
         elif key == arcade.key.LEFT or key == arcade.key.A:
@@ -318,18 +321,24 @@ class Game(arcade.Window):
     def process_keychange(self):
         """ Called when we change a key """
 
-        # Process jump
+        # Process jump — unused now
+        """
         if self.up_pressed and not self.down_pressed:
             if self.physics_engine.can_jump(y_distance=10):
                 self.player_sprite.change_y = self.level_data["player_jump_speed"]
+                """
 
         # Process left/right
         if self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = (-self.level_data["player_movement_speed"] * self.level_data["scaling"])
+            self.player_sprite.walking_right = True
         elif self.right_pressed and not self.left_pressed:
             self.player_sprite.change_x = (self.level_data["player_movement_speed"] * self.level_data["scaling"])
+            self.player_sprite.walking_right = True
         else:
             self.player_sprite.change_x = 0
+            self.player_sprite.walking_right = False
+            self.player_sprite.walking_left = False
 
         if self.enter_pressed:
             if self.show_textbox:
