@@ -213,12 +213,11 @@ class Game(arcade.Window):
 
         if self.show_textbox:
             self.textbox = npc.TextBox(400, 500, 700, 100,
-                                       "Bienvenue dans cette demo pour apprendre les boucles en python ! ^^ "
-                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de "
-                                       "décors !"
-                                       "\nLa fonction place_block(x) fait tomber un bloc du ciel à la position x. "
-                                       "Tu peux les empiler !"
-                                       "\nUtilise les blocs du jeu comme repère pour placer les tiens ! ")
+                                       "Welcome to our game ! It aims to teach loops in Python ! ^^ "
+                                       "\nUse the other window to change elements of the game !"
+                                       "\nThe function place_block(x) make fall a block from the sky at the x coordinate. "
+                                       "\nYou can stack them ! "
+                                       "Use the blocks in game to place yours ! ")
             self.textbox.show()
 
     def on_update(self, delta_time):
