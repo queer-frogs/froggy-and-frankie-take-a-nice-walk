@@ -54,9 +54,7 @@ def user_instructions(game, code, forbidden=[]):
     except Exception as error:
         with open("assets/text/errors.json") as custom_errors_json:
             custom_errors = json.loads(custom_errors_json.read())
-            try:
-                return f'/!\\ {error.__class__.__name__} : {error}'
-            except KeyError:
-                return str(error)
+            game.setup()
+            return f'/!\\ {error.__class__.__name__} : {error}'
 
     return artificial_buffer
