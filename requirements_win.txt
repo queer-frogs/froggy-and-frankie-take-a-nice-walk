@@ -34,5 +34,5 @@ tzdata==2023.3
 urllib3==2.0.3
 
 
-Kivy~=2.2.1
-Pygments~=2.16.1
+Kivy==2.2.1
+Pygments==2.16.1
