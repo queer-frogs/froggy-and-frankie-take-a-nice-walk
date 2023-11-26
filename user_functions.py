@@ -56,4 +56,5 @@ def is_empty(arcade_game, x_pos, y_pos):
     """
     tile_size = arcade_game.level_data["scaling"] * arcade_game.tile_size
     coords = (x_pos + arcade_game.level_data["offset"]) * tile_size + 1, y_pos * tile_size + 1
-    return arcade.get_sprites_at_point(coords, arcade_game.scene["Platforms"]) == []
+    return arcade.get_sprites_at_point(coords, arcade_game.scene["Platforms"]) == []\
+        and arcade.get_sprites_at_point(coords, arcade_game.scene["BackgroundPlatforms"]) == []
