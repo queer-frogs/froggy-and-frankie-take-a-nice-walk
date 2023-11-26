@@ -17,6 +17,8 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
     TODO add ressources management for the player's inventory, different tiles?
     TODO add animation ?
     """
+    if x_pos < 0:
+        raise ValueError("The value must be positive.")
 
     # Size of one tile in the grid, adapted to current level scaling
     tile_size = arcade_game.tile_size * arcade_game.level_data["scaling"]

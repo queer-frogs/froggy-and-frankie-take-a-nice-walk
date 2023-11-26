@@ -4,7 +4,7 @@ from kivy.uix.codeinput import CodeInput
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-import time
+from kivy.config import Config
 
 from kivy.lang import Builder
 from kivy.core.window import Window
@@ -25,6 +25,8 @@ class Input(App):
         Window.clearcolor = (1, 1, 1, 1)
 
     def build(self):
+        # Config to avoid orange dots on right click
+        Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
         # Buttons layout
         buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.1,1))
