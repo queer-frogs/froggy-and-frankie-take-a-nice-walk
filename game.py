@@ -2,7 +2,6 @@ import arcade
 import arcade.gui as gui
 
 import json
-import timeit
 
 import code_input
 import npc

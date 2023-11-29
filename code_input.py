@@ -1,11 +1,12 @@
 import json
+import signal
 
 # Might be used in exec(code), do not remove !
 from user_functions import place_block
 from user_functions import is_empty
 
 
-def user_instructions(game, code, forbidden=[]):
+def user_instructions(game, code, forbidden=[], timeout=15):
     """
     Function checking, executing user input code and handling errors.
 
@@ -13,6 +14,7 @@ def user_instructions(game, code, forbidden=[]):
         game : Game object that can be called inside the exec function to be modified (adding blocks)
         code: str containing code performed by user,
         forbidden: list (refers to instructions denied in the current level).
+        timeout: time limit for the code to run, in seconds. default = 5
     Returns: Buffer text or error.
     Raises: Environment error if forbidden code is detected.
     """
@@ -42,8 +44,11 @@ def user_instructions(game, code, forbidden=[]):
 
     local_variables = locals()
 
-    # execution
+    # signal alarm for timeout
+    signal.signal(signal.SIGALRM, timeout_handler)
+    signal.alarm(timeout)
 
+    # execution
     try:
         game.setup()
         exec(code, globals(), local_variables)
@@ -57,4 +62,11 @@ def user_instructions(game, code, forbidden=[]):
             game.setup()
             return f'/!\\ {error.__class__.__name__} : {error}'
 
+    finally:
+        signal.alarm(0)
+
     return artificial_buffer
+
+
+def timeout_handler(signum, frame):
+    raise TimeoutError("The code was too long to run. hint : look for infinite loops.")
