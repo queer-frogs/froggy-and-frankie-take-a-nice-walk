@@ -4,13 +4,9 @@ from kivy.uix.codeinput import CodeInput
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-import time
-
-from kivy.lang import Builder
 from kivy.core.window import Window
 from pygments.lexers import PythonLexer
 
-from code_input import user_instructions
 
 class Input(App):
     def __init__(self, kivy_connection, forbidden=[]):
@@ -27,7 +23,7 @@ class Input(App):
     def build(self):
 
         # Buttons layout
-        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.1,1))
+        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.3,1))
         submit = Button(text="Submit", on_press=self.submit, size_hint=(1,0.5), background_color=(0, 1, 1, 1))
         reset = Button(text="Reset", on_press=self.reset, size_hint=(1,0.5), background_color =(1, 1, 1, 1))
         buttons.add_widget(submit)

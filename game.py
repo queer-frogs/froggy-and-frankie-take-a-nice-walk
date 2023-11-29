@@ -20,12 +20,56 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 
 
-class Game(arcade.Window):
+class MenuView(arcade.View):
+    """Main menu view class."""
+    def __init__(self, main_view):
+        super().__init__()
+        self.manager = arcade.gui.UIManager()
+        self.main_view = main_view
+
+    def on_hide_view(self):
+        # Disable the UIManager when the view is hidden.
+        self.manager.disable()
+
+    def on_show_view(self):
+        """ This is run once when we switch to this view """
+        # Makes the background darker
+        arcade.set_background_color([rgb - 50 for rgb in arcade.color.DARK_BLUE_GRAY])
+        self.manager.enable()
+
+    def on_draw(self):
+        """ Render the screen. """
+
+        # Clear the screen
+        self.clear()
+        self.manager.draw()
+
+class MainMenu(arcade.View):
+    """Class that manages the 'menu' view."""
+    def __init__(self, connection):
+        super().__init__()
+        self.connection = connection
+
+    def on_show_view(self):
+        """Called when switching to this view."""
+        arcade.set_background_color(arcade.color.WHITE)
+
+    def on_draw(self):
+        """Draw the menu"""
+        self.clear()
+        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x="center")
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """Use a mouse press to advance to the 'game' view."""
+        game_view = Game(self.connection)
+        self.window.show_view(game_view)
+
+class Game(arcade.View):
     """ Main application class. """
 
     def __init__(self, connection):
         """ Initializer for the game"""
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+        super().__init__()
 
         # Our textboxes
         self.textbox = None
@@ -104,8 +148,8 @@ class Game(arcade.Window):
         """ Set up the game here. Call this function to restart the game."""
 
         # Set up the Cameras
-        self.camera = arcade.Camera(self.width, self.height)
-        self.gui_camera = arcade.Camera(self.width, self.height)
+        self.camera = arcade.Camera(self.window.width, self.window.height)
+        self.gui_camera = arcade.Camera(self.window.width, self.window.height)
 
         # Reload level data
 
@@ -137,8 +181,16 @@ class Game(arcade.Window):
         # reset button
         reset_button = gui.UIFlatButton(color=arcade.color.DARK_BLUE_GRAY, text='Reset level', width=100)
         reset_button.on_click = self.on_click_reset
-        padd = gui.UIPadding(bg_color=arcade.color.APRICOT, child=reset_button, padding=(0.3, 0.3, 0.3, 0.3))
-        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=padd))
+        pad = gui.UIPadding(bg_color=arcade.color.APRICOT, child=reset_button, padding=(0.3, 0.3, 0.3, 0.3))
+        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=pad))
+
+        # Menu
+        switch_menu_button = arcade.gui.UIFlatButton(text="Pause", width=100)
+        switch_menu_button.on_click = self.on_click_menu
+        pad2 = gui.UIPadding(bg_color=arcade.color.APRICOT, child=switch_menu_button, padding=(0.3, 0.3, 0.3, 0.3))
+        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="center", anchor_y="top", child=pad2))
+
+
 
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -183,8 +235,12 @@ class Game(arcade.Window):
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
 
+    def on_show_view(self):
+        self.setup()
 
-
+    def on_hide_view(self):
+        # Disable the UIManager when the view is hidden.
+        self.manager.disable()
 
     def on_draw(self):
         """ Render the screen. """
@@ -318,5 +374,9 @@ class Game(arcade.Window):
             utils.save_free_slots(self)
 
     def on_click_reset(self, event):
-        # garder coordonnées joueur
         self.setup()
+
+    def on_click_menu(self, event):
+        # Passing the main view into menu view as an argument.
+        menu_view = MenuView(self)
+        self.window.show_view(menu_view)
