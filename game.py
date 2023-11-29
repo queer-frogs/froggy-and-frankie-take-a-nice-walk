@@ -351,3 +351,7 @@ class Game(arcade.Window):
     def on_click_reset(self, event):
         # garder coordonnées joueur
         self.setup()
+
+    def save_and_quit(self):
+        utils.write_save(self)
+        self.on_close()
