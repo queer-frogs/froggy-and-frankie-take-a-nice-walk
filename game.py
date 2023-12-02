@@ -2,7 +2,6 @@ import arcade
 import arcade.gui as gui
 
 import json
-import timeit
 
 import code_input
 import npc
@@ -351,3 +350,7 @@ class Game(arcade.Window):
     def on_click_reset(self, event):
         # garder coordonnées joueur
         self.setup()
+
+    def save_and_quit(self):
+        utils.write_save(self)
+        self.on_close()
