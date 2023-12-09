@@ -1,7 +1,6 @@
 import multiprocessing
-SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 563
-SCREEN_TITLE = "Game"
+from game import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
+
 
 def run_arcade(arcade_connection):
     import arcade
@@ -18,8 +17,6 @@ def run_arcade(arcade_connection):
     game_instance.setup()
     arcade.run()
     """
-
-
 
 def run_kivy(kivy_connection):
     from uix import Input

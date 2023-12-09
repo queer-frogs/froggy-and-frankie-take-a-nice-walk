@@ -1,11 +1,11 @@
 import arcade
 import arcade.gui as gui
 import json
-
 import code_input
 import npc
-
 import utils
+
+from main_menu import MenuView
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -20,30 +20,6 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 
 
-class MenuView(arcade.View):
-    """Main menu view class."""
-    def __init__(self, main_view):
-        super().__init__()
-        self.manager = arcade.gui.UIManager()
-        self.main_view = main_view
-
-    def on_hide_view(self):
-        # Disable the UIManager when the view is hidden.
-        self.manager.disable()
-
-    def on_show_view(self):
-        """ This is run once when we switch to this view """
-        # Makes the background darker
-        arcade.set_background_color([rgb - 50 for rgb in arcade.color.DARK_BLUE_GRAY])
-        self.manager.enable()
-
-    def on_draw(self):
-        """ Render the screen. """
-
-        # Clear the screen
-        self.clear()
-        self.manager.draw()
-
 class MainMenu(arcade.View):
     """Class that manages the 'menu' view."""
     def __init__(self, connection):
@@ -57,11 +33,12 @@ class MainMenu(arcade.View):
     def on_draw(self):
         """Draw the menu"""
         self.clear()
-        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x="center")
+        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x='center')
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Use a mouse press to advance to the 'game' view."""
         game_view = Game(self.connection)
+        game_view.setup()
         self.window.show_view(game_view)
 
 class Game(arcade.View):
@@ -77,9 +54,6 @@ class Game(arcade.View):
 
         # gui manager to create and add gui elements
         self.manager = None
-
-        # Set background color
-        arcade.set_background_color(arcade.color.BEAU_BLUE)
 
         # Track the current state of what key is pressed
         self.enter_pressed = False
@@ -173,6 +147,8 @@ class Game(arcade.View):
         self.tile_map = arcade.load_tilemap(map_path, self.level_data["scaling"], layer_options)
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
+        else:
+            arcade.set_background_color(arcade.color.BEAU_BLUE)
 
         # Gui elements
         self.manager = gui.UIManager()
@@ -182,13 +158,13 @@ class Game(arcade.View):
         reset_button = gui.UIFlatButton(color=arcade.color.DARK_BLUE_GRAY, text='Reset level', width=100)
         reset_button.on_click = self.on_click_reset
         pad = gui.UIPadding(bg_color=arcade.color.APRICOT, child=reset_button, padding=(0.3, 0.3, 0.3, 0.3))
-        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=pad))
+        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=pad))
 
         # Menu
-        switch_menu_button = arcade.gui.UIFlatButton(text="Pause", width=100)
+        switch_menu_button = gui.UIFlatButton(text="Pause", width=100)
         switch_menu_button.on_click = self.on_click_menu
         pad2 = gui.UIPadding(bg_color=arcade.color.APRICOT, child=switch_menu_button, padding=(0.3, 0.3, 0.3, 0.3))
-        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="center", anchor_y="top", child=pad2))
+        self.manager.add(gui.UIAnchorWidget(anchor_x="center", anchor_y="top", child=pad2))
 
 
 
@@ -236,7 +212,7 @@ class Game(arcade.View):
                                                              gravity_constant=GRAVITY)
 
     def on_show_view(self):
-        self.setup()
+        self.manager.enable()
 
     def on_hide_view(self):
         # Disable the UIManager when the view is hidden.
@@ -304,13 +280,17 @@ class Game(arcade.View):
 
         # Check if kivy sent something
 
-        if self.connection.poll():
-            kivy_message = self.connection.recv()
+        try:
+            if self.connection.poll():
+                kivy_message = self.connection.recv()
 
-            # The self parameter allows us to have access to the game object inside the function user_instructions
-            res = code_input.user_instructions(self, kivy_message, [])
-            if res:
-                self.connection.send(res)
+                # The self parameter allows us to have access to the game object inside the function user_instructions
+                res = code_input.user_instructions(self, kivy_message, [])
+                if res:
+                    self.connection.send(res)
+        except EOFError as e:
+            print(e)
+            #save and quit
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
