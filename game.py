@@ -5,7 +5,7 @@ import code_input
 import npc
 import utils
 
-from main_menu import MenuView
+from main_menu import MenuView, HelpView
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -154,19 +154,24 @@ class Game(arcade.View):
         self.manager = gui.UIManager()
         self.manager.enable()
 
-        # reset button
-        reset_button = gui.UIFlatButton(color=arcade.color.DARK_BLUE_GRAY, text='Reset level', width=100)
-        reset_button.on_click = self.on_click_reset
-        pad = gui.UIPadding(bg_color=arcade.color.APRICOT, child=reset_button, padding=(0.3, 0.3, 0.3, 0.3))
-        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=pad))
-
         # Menu
-        switch_menu_button = gui.UIFlatButton(text="Pause", width=100)
+        reset = arcade.load_texture("assets/tiled/tiles/own/Reset.png")
+        reset_button = gui.UITextureButton(texture=reset, scale=2)
+        reset_button.on_click = self.on_click_reset
+
+        help = arcade.load_texture("assets/tiled/tiles/own/Help.png")
+        help_button = gui.UITextureButton(texture=help, scale=2)
+        help_button.on_click = self.on_click_help
+
+        pause = arcade.load_texture("assets/tiled/tiles/own/Stop.png")
+        switch_menu_button = gui.UITextureButton(texture=pause, scale=2)
         switch_menu_button.on_click = self.on_click_menu
-        pad2 = gui.UIPadding(bg_color=arcade.color.APRICOT, child=switch_menu_button, padding=(0.3, 0.3, 0.3, 0.3))
-        self.manager.add(gui.UIAnchorWidget(anchor_x="center", anchor_y="top", child=pad2))
 
+        settings = arcade.load_texture("assets/tiled/tiles/own/Settings.png")
+        settings_button = gui.UITextureButton(texture=settings, scale=2)
 
+        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button, switch_menu_button, settings_button])
+        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=self.box))
 
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -355,6 +360,10 @@ class Game(arcade.View):
 
     def on_click_reset(self, event):
         self.setup()
+
+    def on_click_help(self,event):
+        help_view = HelpView(self)
+        self.window.show_view(help_view)
 
     def on_click_menu(self, event):
         # Passing the main view into menu view as an argument.
