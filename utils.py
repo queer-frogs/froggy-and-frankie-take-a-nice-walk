@@ -19,6 +19,7 @@ def compute_first_free_slots(arcade_game):
     tile_size = arcade_game.tile_size * arcade_game.level_data["scaling"]
     offset = arcade_game.level_data["offset"]
 
+
     # Caculate the number of rows of blocks in the level
     columns_num = int(arcade_game.screen_resolution[0] // tile_size)
 
