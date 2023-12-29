@@ -13,9 +13,6 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
 
 
     Returns: None
-
-    TODO add ressources management for the player's inventory, different tiles?
-    TODO add animation ?
     """
     if x_pos < 0:
         raise ValueError("The value must be positive.")

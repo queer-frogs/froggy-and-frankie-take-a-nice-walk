@@ -21,62 +21,6 @@ RIGHT_FACING = 0
 LEFT_FACING = 1
 
 
-class TextBox(arcade.Sprite):
-    def __init__(self, x, y, width, height, text):
-        super().__init__()
-        self.x = x
-        self.y = y
-        self.width = width
-        self.height = height
-        self.text = text
-
-    def show(self):
-        # Draw the background rectangle
-        liste_ligne=self.text.splitlines()
-        arcade.draw_rectangle_filled(self.x, self.y, self.width, self.height, arcade.color.WHITE)
-
-        # Draw the border
-        arcade.draw_rectangle_outline(self.x, self.y, self.width, self.height, arcade.color.BLACK)
-
-        # Draw the text
-        i=0
-        for ligne in liste_ligne:
-            arcade.draw_text(ligne, self.x - self.width/2 + 10,self.y+self.height/2-10-i, arcade.color.BLACK, 12, width= int(self.width/1 - 20), align="left", anchor_x="left", anchor_y="top")
-            i+=20
-
-# A fonction to calculate the distance between two sprites
-
-
-class Entity(arcade.Sprite):
-    """ Basic structure of every sprite """
-
-    def __init__(self, name_folder, name_file, ):
-        # Set up classe parent
-        super().__init__()
-
-        # Set default values
-        # Load different textures for different states of action
-        # with main_path + _ + action + nb
-
-        # Set initial texture
-        # Set hit boxes
-
-
-class PlayerCharacter(Entity):
-    """ Player Sprite """
-
-    def __init__(self):
-        super().__init__("player", "player")
-
-        # Track state
-        self.walking = False
-        self.jumping = False
-
-    def update_animation(self, delta_time: float = 1 / 60):
-        # Update sprite based on state
-        pass
-
-
 class Game(arcade.Window):
     """ Main application class. """
 
@@ -158,7 +102,7 @@ class Game(arcade.Window):
 
         # Initialize fall timer, used for fall damage
         self.fall_timer = 0.
-        self.show_timer = False     # If true, prints the timer at every update, useful for setting up levels
+        self.show_timer = False  # If true, prints the timer at every update, useful for setting up levels
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game."""
@@ -293,7 +237,7 @@ class Game(arcade.Window):
                 # Has he fallen for too long ?
                 # max_fall_time == -1 means the level has no fall damage
                 if self.level_data["max_fall_time"] != -1 and self.fall_timer >= self.level_data['max_fall_time']:
-                    self.setup()    # reset the level
+                    self.setup()  # reset the level
                 self.fall_timer = 0
             else:
                 self.fall_timer += delta_time
@@ -322,7 +266,8 @@ class Game(arcade.Window):
             self.setup()
 
         # Trigger auto-jump if needed
-        if (self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.last_pos == self.player_sprite.current_pos:
+        if (
+                self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.last_pos == self.player_sprite.current_pos:
             self.player_sprite.change_y = self.level_data["player_jump_speed"]
 
         # Check if kivy sent something
@@ -360,7 +305,7 @@ class Game(arcade.Window):
         if key == arcade.key.ENTER:
             self.enter_pressed = False
         # if key == arcade.key.UP or key == arcade.key.W:
-            # self.up_pressed = False
+        # self.up_pressed = False
         elif key == arcade.key.DOWN or key == arcade.key.S:
             self.down_pressed = False
         elif key == arcade.key.LEFT or key == arcade.key.A:
