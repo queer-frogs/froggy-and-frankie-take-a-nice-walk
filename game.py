@@ -167,10 +167,7 @@ class Game(arcade.View):
         switch_menu_button = gui.UITextureButton(texture=pause, scale=2)
         switch_menu_button.on_click = self.on_click_menu
 
-        settings = arcade.load_texture("assets/tiled/tiles/own/Settings.png")
-        settings_button = gui.UITextureButton(texture=settings, scale=2)
-
-        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button, switch_menu_button, settings_button])
+        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button, switch_menu_button])
         self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=self.box))
 
         # Initialize Scene
