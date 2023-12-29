@@ -1,5 +1,6 @@
 import arcade
 import json
+import math
 
 
 def compute_first_free_slots(arcade_game):
@@ -92,3 +93,7 @@ def write_save(arcade_game):
     """
     with open("save.json", "w") as save_file:
         json.dump(arcade_game.save, save_file, indent=2)
+
+
+def dist_between_sprites(sprite1, sprite2):
+    return math.sqrt((sprite1.center_x - sprite2.center_x)**2 + (sprite1.center_y - sprite2.center_y)**2)
