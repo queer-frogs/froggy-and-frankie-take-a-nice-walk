@@ -8,5 +8,5 @@
   "IndentationError" : "Your code has some identation problems. Make sure everything is aligned and clean.",
   "NameError" : "La variable n'est pas définie.",
   "ValueError": "Il n'y a plus de place disponible à cet emplacement pour ajouter un bloc.",
-  "TypeError": "Le nombre de paramètre requis pour l'appel de la fonction place_block n'est pas satisfait"
+  "TypeError": "Erreur de type."
 }

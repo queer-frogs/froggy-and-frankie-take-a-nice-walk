@@ -1,0 +1,34 @@
+import arcade
+
+
+class Entity(arcade.Sprite):
+    """ Basic structure of every sprite """
+
+    def __init__(self, image_source):
+        # Set up classe parent
+        super().__init__(image_source)
+
+        # Set default values
+        # Load different textures for different states of action
+        # with main_path + _ + action + nb
+
+        # Set initial texture
+        # Set hit boxes
+
+
+class PlayerCharacter(Entity):
+    """ Player Sprite """
+
+    def __init__(self, image_source):
+        super().__init__(image_source)
+
+        # Track state
+        self.walking_right = False
+        self.walking_left = False
+        self.jumping = False
+        self.current_pos = (0, 0)
+        self.last_pos = (0, 0)
+
+    def update_animation(self, delta_time: float = 1 / 60):
+        # Update sprite based on state
+        pass

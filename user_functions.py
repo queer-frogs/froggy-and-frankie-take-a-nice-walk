@@ -1,49 +1,60 @@
 import arcade
 import game
 
-def place_block(arcade_game, pos, block_type="assets/tiled/tiles/sample_pack/Ground/Stone/stone.png"):
+
+def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft tiles/acacia_planks.png"):
     """
     Places a block on the lowest slot avaible at the hoziontal position passed.
 
     Args:
         arcade_game: Game object target
-        pos: horizontal position where the block should be placed, starts at 0
+        x_pos: horizontal position where the block should be placed, starts at 0, counted in tiles
         block_type: type of the block that should be placed
 
 
     Returns: None
 
-    TODO add ressources management for the player's inventory?
-    TODO move to 'code_input.py' ; find a solution to have access to arcade_game variables (decorator?)
-    TODO include scaling ?
+    TODO add ressources management for the player's inventory, different tiles?
     TODO add animation ?
     """
+    if x_pos < 0:
+        raise ValueError("The value must be positive.")
 
-    # TODO should be defined earlier in code, or in the specific level
-    tile_size = (128, 128)  # size of one tile in the grid
+    # Size of one tile in the grid, adapted to current level scaling
+    tile_size = arcade_game.tile_size * arcade_game.level_data["scaling"]
 
-    # TODO for now we use block_type as a path to the png (wip)
     # Initialize block
     new_block = arcade.Sprite(block_type)
-    new_block.left = pos * tile_size[0]
+    new_block.width = new_block.height = tile_size
+    new_block.left = (x_pos + arcade_game.level_data["offset"]) * tile_size
 
-    if new_block.center_x > game.SCREEN_WIDTH:
-        raise ValueError("The position provided is out of the map borders.")
+    # y coord of the block is the first free available
+    new_block.bottom = arcade_game.level_data["first_free_slots"][x_pos] * tile_size
 
-    # Get first vertical slot available at that x position, add + 10 to make sure we detect round-cornered sprites
-    new_block.bottom = 0
-    if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10), arcade_game.scene["Platforms"]):
-        free = True
-    else:
-        free = False
-    while not free:
-        new_block.bottom += tile_size[1]
-        if not arcade.get_sprites_at_point((new_block.left + 10, new_block.bottom + 10),
-                                           arcade_game.scene["Platforms"]):
-            free = True
-        if new_block.bottom > game.SCREEN_HEIGHT:
-            raise ValueError("No room is avaible for this block at that position.")
+    # Increment the first row available in the modified column
+    arcade_game.level_data["first_free_slots"][x_pos] += 1
+
+    if new_block.bottom > game.SCREEN_HEIGHT:
+        raise ValueError("No room is avaible for this block at that position.")
 
     # Update sprite list and render the new sprite
     arcade_game.scene["Platforms"].append(new_block)
     arcade_game.scene["Platforms"].draw()
+
+
+def is_empty(arcade_game, x_pos, y_pos):
+    """
+    Checks if there is a plotform at the (x_pos, y_pos) position.
+
+    Args:
+        arcade_game: arcade game instance
+        x_pos: x position (int) checked
+        y_pos: y position (int) checked
+
+    Returns:
+
+    """
+    tile_size = arcade_game.level_data["scaling"] * arcade_game.tile_size
+    coords = (x_pos + arcade_game.level_data["offset"]) * tile_size + 1, y_pos * tile_size + 1
+    return arcade.get_sprites_at_point(coords, arcade_game.scene["Platforms"]) == []\
+        and arcade.get_sprites_at_point(coords, arcade_game.scene["BackgroundPlatforms"]) == []
