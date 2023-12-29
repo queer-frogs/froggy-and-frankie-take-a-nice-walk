@@ -20,7 +20,6 @@ def compute_first_free_slots(arcade_game):
     tile_size = arcade_game.tile_size * arcade_game.level_data["scaling"]
     offset = arcade_game.level_data["offset"]
 
-
     # Caculate the number of rows of blocks in the level
     columns_num = int(arcade_game.screen_resolution[0] // tile_size)
 
@@ -33,7 +32,7 @@ def compute_first_free_slots(arcade_game):
 
         # Check if the first row is immediately free
         if not (arcade.get_sprites_at_point(
-                    (column_coord + 1, row_coord + 1), arcade_game.scene["Platforms"])
+                (column_coord + 1, row_coord + 1), arcade_game.scene["Platforms"])
                 or
                 arcade.get_sprites_at_point(
                     (column_coord + 1, row_coord + 1), arcade_game.scene["BackgroundPlatforms"])):
@@ -93,7 +92,3 @@ def write_save(arcade_game):
     """
     with open("save.json", "w") as save_file:
         json.dump(arcade_game.save, save_file, indent=2)
-
-
-def dist_between_sprites(sprite1, sprite2):
-    return math.sqrt((sprite1.center_x - sprite2.center_x)**2 + (sprite1.center_y - sprite2.center_y)**2)

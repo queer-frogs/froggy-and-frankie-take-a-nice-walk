@@ -12,6 +12,7 @@ from pygments.lexers import PythonLexer
 
 from code_input import user_instructions
 
+
 class Input(App):
     def __init__(self, kivy_connection, forbidden=[]):
         super().__init__()
@@ -29,23 +30,23 @@ class Input(App):
         Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
         # Buttons layout
-        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.1,1))
-        submit = Button(text="Submit", on_press=self.submit, size_hint=(1,0.5), background_color=(0, 1, 1, 1))
-        reset = Button(text="Reset", on_press=self.reset, size_hint=(1,0.5), background_color =(1, 1, 1, 1))
+        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.1, 1))
+        submit = Button(text="Submit", on_press=self.submit, size_hint=(1, 0.5), background_color=(0, 1, 1, 1))
+        reset = Button(text="Reset", on_press=self.reset, size_hint=(1, 0.5), background_color=(1, 1, 1, 1))
         buttons.add_widget(submit)
         buttons.add_widget(reset)
 
         # Code layout with submit/reset buttons
-        saisie = BoxLayout(orientation="horizontal", spacing=20, size_hint=(1,.65))
+        saisie = BoxLayout(orientation="horizontal", spacing=20, size_hint=(1, .65))
         self.code = CodeInput(multiline=True, hint_text="Enter code here ...", lexer=PythonLexer(), size_hint=(.7, 1))
         saisie.add_widget(self.code)
         saisie.add_widget(buttons)
 
         # Global layout with all the elements of the window
-        layout = BoxLayout(orientation="vertical", spacing=10, padding=20, size=(600, 1200), size_hint=(1,1))
-        label = Label(text="Output :", halign='left', valign='top', size_hint=(1, .03), color=(0,0,0,1))
+        layout = BoxLayout(orientation="vertical", spacing=10, padding=20, size=(600, 1200), size_hint=(1, 1))
+        label = Label(text="Output :", halign='left', valign='top', size_hint=(1, .03), color=(0, 0, 0, 1))
         label.bind(size=label.setter('text_size'))
-        self.output = Label(text="", halign='left', valign='top', size_hint=(1, .32), color=(0,0,0,1))
+        self.output = Label(text="", halign='left', valign='top', size_hint=(1, .32), color=(0, 0, 0, 1))
         self.output.bind(size=self.output.setter('text_size'))
         layout.add_widget(saisie)
         layout.add_widget(label)
@@ -72,7 +73,7 @@ class Input(App):
                 self.output.color = "black"
             self.output.text = res
 
-    def reset(self,obj):
+    def reset(self, obj):
         """
         Clear the input window and the output label
         """
