@@ -1,26 +1,57 @@
 import arcade
 
+# Constants used to track if the player is facing left or right
+RIGHT_FACING = 0
+LEFT_FACING = 1
+
+# How fast to run the animation
+UPDATES_PER_FRAME = 5
+
+
+def load_texture_pair(filename):
+    """
+    Load a texture pair, with the second being a mirror image.
+    """
+    return [
+        arcade.load_texture(filename),
+        arcade.load_texture(filename, flipped_horizontally=True),
+    ]
+
 
 class Entity(arcade.Sprite):
     """ Basic structure of every sprite """
 
-    def __init__(self, image_source):
+    def __init__(self):
         # Set up classe parent
-        super().__init__(image_source)
+        super().__init__()
 
         # Set default values
-        # Load different textures for different states of action
-        # with main_path + _ + action + nb
+        # Default to facing right
+        self.facing_direction = RIGHT_FACING
 
-        # Set initial texture
-        # Set hit boxes
+        # Used for image sequences
+        self.cur_texture = 0
+
+        main_path = f"assets/characters"
+        self.idle_texture_pair = load_texture_pair(f"{main_path}/Personnage.png")
+
+        # Load textures for walking
+        self.walk_textures = []
+        for i in range(8):
+            texture = load_texture_pair(f"{main_path}/walk/char_walk_{i}.png")
+            self.walk_textures.append(texture)
+
+        # Set the initial texture
+        self.texture = self.idle_texture_pair[0]
+        # Hit box will be set based on the first image used
+        self.set_hit_box(self.texture.hit_box_points)
 
 
 class PlayerCharacter(Entity):
     """ Player Sprite """
 
-    def __init__(self, image_source):
-        super().__init__(image_source)
+    def __init__(self):
+        super().__init__()
 
         # Track state
         self.walking_right = False
@@ -31,8 +62,24 @@ class PlayerCharacter(Entity):
 
     def update_animation(self, delta_time: float = 1 / 60):
         # Update sprite based on state
-        pass
 
+        # Figure out if we need to flip face left or right
+        if self.change_x < 0 and self.facing_direction == RIGHT_FACING:
+            self.facing_direction = LEFT_FACING
+        elif self.change_x > 0 and self.facing_direction == LEFT_FACING:
+            self.facing_direction = RIGHT_FACING
+
+        # Walking animation
+        self.cur_texture += 1
+        if self.cur_texture > 7 * UPDATES_PER_FRAME:
+            self.cur_texture = 0
+        frame = self.cur_texture // UPDATES_PER_FRAME
+        self.texture = self.walk_textures[frame][self.facing_direction]
+
+        # Idle animation
+        if self.change_x == 0:
+            self.texture = self.idle_texture_pair[self.facing_direction]
+            return
 
 class TextBox(arcade.Sprite):
     def __init__(self, x, y, width, height, text):
