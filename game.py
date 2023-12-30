@@ -16,10 +16,6 @@ LAYER_NAME_NPC = "Npc"
 GRAVITY = 1.5
 TILE_SIZE = 16
 
-# Constants used to track if the player is facing left or right
-RIGHT_FACING = 0
-LEFT_FACING = 1
-
 
 class Game(arcade.Window):
     """ Main application class. """
@@ -57,7 +53,6 @@ class Game(arcade.Window):
         # Create sprite lists here, and set them to None
         self.player_sprite = None
         self.npc_sprite = None
-        self.walls_list = None
 
         # Our 'physics' engine
         self.physics_engine = None
@@ -152,7 +147,7 @@ class Game(arcade.Window):
 
         # Initialize Player Sprite
         image_source = "assets/characters/chara.png"
-        self.player_sprite = entities.PlayerCharacter(image_source)
+        self.player_sprite = entities.PlayerCharacter()
         self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
@@ -167,7 +162,6 @@ class Game(arcade.Window):
             self.scene.add_sprite("Npc", self.npc_sprite)
 
         self.scene.add_sprite("Player", self.player_sprite)
-        self.scene.add_sprite_list("Walls", True, self.walls_list)
 
         # Blue tile showing the place_block() offset to the player
         if self.level_data["offset"] != -1:
@@ -218,6 +212,9 @@ class Game(arcade.Window):
                                        "\nYou can stack them ! "
                                        "Use the blocks in game to place yours ! ")
             self.textbox.show()
+
+        # Draw hit boxes.
+        #self.player_sprite.draw_hit_box(arcade.color.BLUE, 3)
 
     def on_update(self, delta_time):
         """
@@ -280,6 +277,9 @@ class Game(arcade.Window):
                 self.connection.send(res)
 
         self.player_sprite.last_pos = self.player_sprite.current_pos
+
+        # Update the players animation
+        self.scene.update_animation(delta_time)
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
