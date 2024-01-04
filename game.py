@@ -251,7 +251,12 @@ class Game(arcade.View):
                                        "\nLa fonction place_block(x) fait tomber un bloc du ciel à la position x. "
                                        "Tu peux les empiler !"
                                        "\nUtilise les blocs du jeu comme repère pour placer les tiens ! ")
-            self.textbox.show()
+            for ligne in liste_ligne:
+                arcade.draw_text(ligne, self.x - self.width / 2 + 10, self.y + self.height / 2 - 10 - i,
+                                 arcade.color.BLACK, 12,
+                                 width=int(self.width - 20), align="left", anchor_x="left", anchor_y="top")
+                i += 20
+
 
     def on_update(self, delta_time):
         """

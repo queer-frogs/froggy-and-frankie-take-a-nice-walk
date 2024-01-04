@@ -1,6 +1,9 @@
 import arcade
 import arcade.gui as gui
 
+import npc
+
+
 class MenuView(arcade.View):
     """Main menu view class."""
     def __init__(self, game_view):
@@ -47,10 +50,10 @@ class MenuView(arcade.View):
 
 class HelpView(arcade.View):
     """Main menu view class."""
-    def __init__(self, menu_view):
+    def __init__(self, game_view):
         super().__init__()
         self.manager = gui.UIManager()
-        self.menu_view = menu_view
+        self.game_view = game_view
 
         retour = arcade.load_texture("assets/tiled/tiles/own/Retour.png")
         retour_button = gui.UITextureButton(texture=retour, scale=2)
@@ -69,7 +72,7 @@ class HelpView(arcade.View):
 
         @retour_button.event("on_click")
         def on_click_retour_button(event):
-            self.window.show_view(self.menu_view)
+            self.window.show_view(self.game_view)
 
     def on_hide_view(self):
         # Disable the UIManager when the view is hidden.
@@ -88,3 +91,48 @@ class HelpView(arcade.View):
         self.clear()
         self.scene.draw()
         self.manager.draw()
+        i=0
+        self.foncts =             "     place_block(x)    "\
+                                  "\nplace a block at the x columns on the screen " \
+                                  "\n(the 0 is signified by the special tile). " \
+                                  "\nYou can stack them"\
+                                  "\n\n    is_empty(x,y)"\
+                                  "\n return True if the block at the x,y coordinate " \
+                                  "\nin the level are empty," \
+                                  "\n return false if it isn’t the case"\
+                                  "\n\nPython loops :  \n "\
+                                  "\n For i in range (X):"\
+                                  "\nThe “for loop” is used in order to repeat X time" \
+                                  "\n the instructions. Placed in it (here place block)," \
+                                  "\n i goes from 0 to X-1 "\
+                                  "\n\n  For j in range(i): "\
+                                  "\n The interlocked loops can be used to automate" \
+                                  "\n a large number of actions"\
+                                  "\n\nWhile (condition) : "\
+                                  "\n    place_block(0) "\
+                                  "\n\nWhile loops check if the condition is true," \
+                                  "\n if it’s the case, it execute the instruction "
+        liste_ligne = self.foncts.splitlines()
+        for ligne in liste_ligne:
+            arcade.draw_text(ligne, 210,500-i, arcade.color.BLACK, 10,
+                             width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top",font_name=(
+                             "Times New Roman",  # Comes with Windows
+                             "Times",  # MacOS may sometimes have this variant
+                             "Liberation Serif"  # Common on Linux systems)
+                ))
+            i += 15
+        i=0
+        arcade.draw_text("HINT OF THE LEVEL", 550, 480 - i, arcade.color.BLACK, 10,
+                         width=int(1000 - 20),bold=True , align="left", anchor_x="left", anchor_y="top", font_name=(
+                "Times New Roman",  # Comes with Windows
+                "Times",  # MacOS may sometimes have this variant
+                "Liberation Serif"  # Common on Linux systems)
+            ))
+        for hint in self.game_view.level_data["hints"]:
+            arcade.draw_text(hint, 550, 460 - i, arcade.color.BLACK, 10,
+                             width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top", font_name=(
+                    "Times New Roman",  # Comes with Windows
+                    "Times",  # MacOS may sometimes have this variant
+                    "Liberation Serif"  # Common on Linux systems)
+                ))
+            i += 15
