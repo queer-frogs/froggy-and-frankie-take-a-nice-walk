@@ -12,7 +12,7 @@
     "player_jump_speed": 10,
     "player_scaling": 1,
     "spawn_x": 50,
-    "spawn_y": 300,
+    "spawn_y": 250,
     "hints": [
       "Try just placing a block at the 0 coordinate",
       "\nwith the function place_block(0)",
@@ -90,6 +90,7 @@
       "\n"
     ],
     "first_free_slots": [
+      0,
       2,
       2,
       3,
@@ -129,7 +130,7 @@
     "character_state": 0,
     "forbidden_functions": [],
     "max_lines": 4,
-    "offset": 6,
+    "offset": 3,
     "player_movement_speed": 3,
     "player_jump_speed": 10,
     "player_scaling": 0.65,
@@ -291,7 +292,7 @@
       1,
       1
     ],
-    "player_movement_speed": 3,
+    "player_movement_speed": 5,
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 50,
@@ -638,11 +639,10 @@
     "spawn_x": 2,
     "spawn_y": 10,
     "hints": [
-      " If you don’t know how big this hole is ",
+      " If you don\u00e2\u20ac\u2122t know how big this hole is ",
       "\ntry using the while loop",
       "\ntry using the while loop",
       "\nand the is_empty(x,y) function"
-
     ],
     "first_free_slots": [
       0,
@@ -1212,6 +1212,11 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 450,
+    "hints": [
+      "In this level, the number of block y",
+      "\nyou must place in each x column",
+      "\nis proportional to y=25-x**2"
+    ],
     "first_free_slots": [
       0,
       1,
@@ -1281,6 +1286,15 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 50,
+    "hints": [
+      "This level is quite hard,",
+      "\nthis hole isn\u00e2\u20ac\u2122t proportional to anything",
+      "\nbut you must go up and right 30 blocks.",
+      "\n By using your previous code to do a staircase,",
+      "\nthe is_empty(x,y) function and an If statement ",
+      "\nyou should be able to do it,",
+      "\n\ngood luck :)\n"
+    ],
     "first_free_slots": [
       0,
       0,
@@ -1350,6 +1364,13 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 500,
+    "hints": [
+      "This hole isn\u00e2\u20ac\u2122t proportional either.",
+      "\nThe height is 25.",
+      "\n Adapt yout code from the previous level ",
+      "\n in order to cross a gap",
+      "\n\ngood luck :)\n"
+    ],
     "first_free_slots": [
       0,
       0,
@@ -1419,6 +1440,13 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 50,
+    "hints": [
+      " Here you must go up 20 blocks and right 30,",
+      "\ntry using your codes from the 2 previous levels",
+      "\nin order to create a stairs",
+      "\n and then walk to the end.",
+      "\n\ngood luck :)\n"
+    ],
     "first_free_slots": [
       0,
       0,
