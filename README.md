@@ -7,8 +7,8 @@ beginners.
 Contrary to most coding games, the player controls its avatar using his keyboard arrows. The code they produce allow
 them to modify their environment (e.g. by building bridges).
 It was originally made during a university project by three UTC (Université de Technologie de Compiègne) students. If
-you can read french, here is the full project report : . If you are looking for technical documentation, you'll find it
-here, in english.
+you can read french, here is the full project report : .
+You can also read (in english) the [full technical documentation](https://google.com).
 
 ## How does it work ?
 
