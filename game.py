@@ -1,9 +1,11 @@
 import arcade
 import arcade.gui as gui
+
 import json
 import code_input
 import npc
 import utils
+import entities
 
 from main_menu import MenuView, HelpView
 
@@ -104,7 +106,6 @@ class Game(arcade.View):
         self.tile_size = TILE_SIZE
 
         # Open save file
-
         with open('save.json', 'r') as read_save_file:
             self.save = json.loads(read_save_file.read())
 
@@ -115,8 +116,12 @@ class Game(arcade.View):
         # Level data, loaded later on
         self.level_data = None
 
-        # load collisions with npc
+        # Load collisions with npc
         self.player_collision_list = None
+
+        # Initialize fall timer, used for fall damage
+        self.fall_timer = 0.
+        self.show_timer = False  # If true, prints the timer at every update, useful for setting up levels
 
     def setup(self):
         """ Set up the game here. Call this function to restart the game."""
@@ -178,7 +183,7 @@ class Game(arcade.View):
 
         # Initialize Player Sprite
         image_source = "assets/characters/chara.png"
-        self.player_sprite = arcade.Sprite(image_source)
+        self.player_sprite = entities.PlayerCharacter(image_source)
         self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
@@ -220,6 +225,7 @@ class Game(arcade.View):
         # Disable the UIManager when the view is hidden.
         self.manager.disable()
 
+
     def on_draw(self):
         """ Render the screen. """
 
@@ -245,17 +251,13 @@ class Game(arcade.View):
 
         if self.show_textbox:
             self.textbox = npc.TextBox(400, 500, 700, 100,
-                                       "Bienvenue dans cette demo pour apprendre les boucles en python ! ^^ "
-                                       "\nUtilise la deuxième fenêtre ouverte pour faire apparaitre des éléments de "
-                                       "décors !"
-                                       "\nLa fonction place_block(x) fait tomber un bloc du ciel à la position x. "
-                                       "Tu peux les empiler !"
-                                       "\nUtilise les blocs du jeu comme repère pour placer les tiens ! ")
-            for ligne in liste_ligne:
-                arcade.draw_text(ligne, self.x - self.width / 2 + 10, self.y + self.height / 2 - 10 - i,
-                                 arcade.color.BLACK, 12,
-                                 width=int(self.width - 20), align="left", anchor_x="left", anchor_y="top")
-                i += 20
+                                        "Welcome to our game ! It aims to teach loops in Python ! ^^ "
+                                       "\nUse the other window to change elements of the game !"
+                                       "\nThe function place_block(x) make fall a block from the sky at the x coordinate. "
+                                       "\nYou can stack them ! "
+                                       "Use the blocks in game to place yours ! ")
+
+            self.textbox.show()
 
 
     def on_update(self, delta_time):
@@ -265,8 +267,28 @@ class Game(arcade.View):
         """
         # Move the player with the physics engine
         self.physics_engine.update()
+        self.player_sprite.current_pos = (self.player_sprite.center_x, self.player_sprite.center_y)
 
         # Update animations
+
+        # Check if the player is still jumping
+        if self.player_sprite.jumping:
+            if self.physics_engine.can_jump():
+                self.player_sprite.jumping = False
+                # Has he fallen for too long ?
+                # max_fall_time == -1 means the level has no fall damage
+                if self.level_data["max_fall_time"] != -1 and self.fall_timer >= self.level_data['max_fall_time']:
+                    self.setup()  # reset the level
+                self.fall_timer = 0
+            else:
+                self.fall_timer += delta_time
+
+        # Update the jumping state
+        self.player_sprite.jumping = not self.physics_engine.can_jump()
+
+        # If debug option enabled, show the jump timer in console
+        if self.show_timer:
+            print(self.fall_timer)
 
         # Did the player fall off the map?
         if self.player_sprite.center_y < -100:
@@ -276,7 +298,6 @@ class Game(arcade.View):
         # See if the user got to the end of the level
         if self.player_sprite.center_x >= self.end_of_map:
             # Advance to the next level
-
             self.save["current_level"] += 1
 
             # Make sure to keep the score from this level when setting up the next level
@@ -285,7 +306,11 @@ class Game(arcade.View):
             # Load the next level
             self.setup()
 
-        # Check if kivy sent something
+        # Trigger auto-jump if needed
+        if (
+                self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.last_pos == self.player_sprite.current_pos:
+            self.player_sprite.change_y = self.level_data["player_jump_speed"]
+
 
         try:
             if self.connection.poll():
@@ -297,7 +322,9 @@ class Game(arcade.View):
                     self.connection.send(res)
         except EOFError as e:
             print(e)
-            #save and quit
+            # save and quit
+
+        self.player_sprite.last_pos = self.player_sprite.current_pos
 
     def on_key_press(self, key, modifiers):
         """ Called whenever a key is pressed."""
@@ -322,8 +349,8 @@ class Game(arcade.View):
 
         if key == arcade.key.ENTER:
             self.enter_pressed = False
-        if key == arcade.key.UP or key == arcade.key.W:
-            self.up_pressed = False
+        # if key == arcade.key.UP or key == arcade.key.W:
+        # self.up_pressed = False
         elif key == arcade.key.DOWN or key == arcade.key.S:
             self.down_pressed = False
         elif key == arcade.key.LEFT or key == arcade.key.A:
@@ -338,18 +365,24 @@ class Game(arcade.View):
     def process_keychange(self):
         """ Called when we change a key """
 
-        # Process jump
+        # Process jump — unused now
+        """
         if self.up_pressed and not self.down_pressed:
             if self.physics_engine.can_jump(y_distance=10):
                 self.player_sprite.change_y = self.level_data["player_jump_speed"]
+                """
 
         # Process left/right
         if self.left_pressed and not self.right_pressed:
             self.player_sprite.change_x = (-self.level_data["player_movement_speed"] * self.level_data["scaling"])
+            self.player_sprite.walking_right = True
         elif self.right_pressed and not self.left_pressed:
             self.player_sprite.change_x = (self.level_data["player_movement_speed"] * self.level_data["scaling"])
+            self.player_sprite.walking_right = True
         else:
             self.player_sprite.change_x = 0
+            self.player_sprite.walking_right = False
+            self.player_sprite.walking_left = False
 
         if self.enter_pressed:
             if self.show_textbox:
@@ -371,3 +404,7 @@ class Game(arcade.View):
         # Passing the main view into menu view as an argument.
         menu_view = MenuView(self)
         self.window.show_view(menu_view)
+    def save_and_quit(self):
+        utils.write_save(self)
+        self.on_close()
+

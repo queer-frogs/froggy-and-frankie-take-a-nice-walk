@@ -2,7 +2,7 @@ import arcade
 import game
 
 
-def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft tiles/acacia_planks.png"):
+def place_block(arcade_game, x_pos, block_type="assets/backgrounds/Bois2.png"):
     """
     Places a block on the lowest slot avaible at the hoziontal position passed.
 
@@ -13,10 +13,9 @@ def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft til
 
 
     Returns: None
-
-    TODO add ressources management for the player's inventory, different tiles?
-    TODO add animation ?
     """
+    if x_pos < 0:
+        raise ValueError("The value must be positive.")
 
     # Size of one tile in the grid, adapted to current level scaling
     tile_size = arcade_game.tile_size * arcade_game.level_data["scaling"]
@@ -54,4 +53,5 @@ def is_empty(arcade_game, x_pos, y_pos):
     """
     tile_size = arcade_game.level_data["scaling"] * arcade_game.tile_size
     coords = (x_pos + arcade_game.level_data["offset"]) * tile_size + 1, y_pos * tile_size + 1
-    return arcade.get_sprites_at_point(coords, arcade_game.scene["Platforms"]) == []
+    return arcade.get_sprites_at_point(coords, arcade_game.scene["Platforms"]) == [] \
+        and arcade.get_sprites_at_point(coords, arcade_game.scene["BackgroundPlatforms"]) == []

@@ -1,5 +1,6 @@
 import arcade
 import json
+import math
 
 
 def compute_first_free_slots(arcade_game):
@@ -31,7 +32,7 @@ def compute_first_free_slots(arcade_game):
 
         # Check if the first row is immediately free
         if not (arcade.get_sprites_at_point(
-                    (column_coord + 1, row_coord + 1), arcade_game.scene["Platforms"])
+                (column_coord + 1, row_coord + 1), arcade_game.scene["Platforms"])
                 or
                 arcade.get_sprites_at_point(
                     (column_coord + 1, row_coord + 1), arcade_game.scene["BackgroundPlatforms"])):
@@ -78,3 +79,16 @@ def save_free_slots(arcade_game):
 
     with open("assets/levels.json", "w") as levels_file:
         json.dump(arcade_game.levels, levels_file, indent=2)
+
+
+def write_save(arcade_game):
+    """
+    Writes in the save.json file the new save file. Called when the game is closed.
+
+    Args:
+        arcade_game: arcade game instance object
+
+    Returns:
+    """
+    with open("save.json", "w") as save_file:
+        json.dump(arcade_game.save, save_file, indent=2)
