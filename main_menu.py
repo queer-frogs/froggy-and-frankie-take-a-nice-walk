@@ -1,5 +1,6 @@
 import arcade
 import arcade.gui as gui
+from utils import write_save
 
 import npc
 
@@ -24,6 +25,7 @@ class MenuView(arcade.View):
         @exit_button.event("on_click")
         def on_click_exit_button(event):
             arcade.exit()
+            write_save(self.game_view)
 
         @resume_button.event("on_click")
         def on_click_resume_button(event):
