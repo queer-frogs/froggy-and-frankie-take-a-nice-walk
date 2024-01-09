@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="original_sprites" tilewidth="32" tileheight="64" tilecount="20" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="original_sprites" tilewidth="32" tileheight="64" tilecount="39" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="35">
   <image width="16" height="16" source="../../backgrounds/Bois2.png"/>
@@ -60,5 +60,62 @@
  </tile>
  <tile id="57">
   <image width="16" height="16" source="../../backgrounds/herbe debut-1.png(1).png"/>
+ </tile>
+ <tile id="58">
+  <image width="16" height="16" source="../../backgrounds/cloud_1.png"/>
+ </tile>
+ <tile id="59">
+  <image width="16" height="16" source="../../backgrounds/cloud_5.png"/>
+ </tile>
+ <tile id="60">
+  <image width="16" height="16" source="../../backgrounds/cloud_9.png.png"/>
+ </tile>
+ <tile id="61">
+  <image width="16" height="16" source="../../backgrounds/cloud_10.png.png"/>
+ </tile>
+ <tile id="62">
+  <image width="16" height="16" source="../../backgrounds/frog.png"/>
+ </tile>
+ <tile id="63">
+  <image width="16" height="16" source="../../backgrounds/New Piskel-9.png(1).png"/>
+ </tile>
+ <tile id="64">
+  <image width="16" height="16" source="../../backgrounds/Panneau_10.png"/>
+ </tile>
+ <tile id="65">
+  <image width="16" height="16" source="../../backgrounds/Panneau_20.png"/>
+ </tile>
+ <tile id="66">
+  <image width="16" height="16" source="../../backgrounds/Panneau_30.png"/>
+ </tile>
+ <tile id="67">
+  <image width="16" height="16" source="../../backgrounds/Panneau_50.png"/>
+ </tile>
+ <tile id="68">
+  <image width="16" height="16" source="../../backgrounds/tronc_0.png"/>
+ </tile>
+ <tile id="69">
+  <image width="16" height="16" source="../../backgrounds/tronc_1.png"/>
+ </tile>
+ <tile id="70">
+  <image width="16" height="16" source="../../backgrounds/tronc_2.png"/>
+ </tile>
+ <tile id="71">
+  <image width="16" height="16" source="../../backgrounds/tronc_3.png"/>
+ </tile>
+ <tile id="72">
+  <image width="16" height="16" source="../../backgrounds/tronc_4.png"/>
+ </tile>
+ <tile id="73">
+  <image width="16" height="16" source="../../backgrounds/tronc_5.png"/>
+ </tile>
+ <tile id="74">
+  <image width="16" height="16" source="../../backgrounds/tronc_6.png"/>
+ </tile>
+ <tile id="75">
+  <image width="16" height="16" source="../../backgrounds/New Piskel-1.png.png"/>
+ </tile>
+ <tile id="76">
+  <image width="16" height="16" source="../../backgrounds/cloud_0.png"/>
  </tile>
 </tileset>
