@@ -14,10 +14,25 @@
     "spawn_x": 50,
     "spawn_y": 250,
     "hints": [
-      "Try just placing a block at the 0 coordinate",
+      "Try placing a block at the 0 coordinate",
       "\nwith the function place_block(0)",
       "\n"
     ],
+    "npc": [
+      {
+        "x": 740,
+        "y": 215,
+        "scale": 4,
+        "sprite_path": "assets/tiled/tiles/own/frog.png"
+      }
+    ],
+    "textbox": {
+          "x": 400,
+          "y": 500,
+          "w": 575,
+          "h": 120,
+          "text": "Welcome to our game ! It aims to teach loops in Python ! ^^\nUse the other window to change elements of the game !\nThe function place_block(x) make fall a block from the sky at the x coordinate. \nYou can stack them !\nUse the blocks in game to place yours !"
+        },
     "first_free_slots": [
       10,
       11,

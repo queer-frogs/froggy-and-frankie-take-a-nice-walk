@@ -4,12 +4,6 @@ import entities
 import arcade
 
 
-class Npc(entities.Entity):
-    def __init__(self):
-        # Setup parent class
-        super().__init__("npc", "npc")
-
-
 class TextBox(arcade.Sprite):
     def __init__(self, x, y, width, height, text):
         super().__init__()

@@ -46,9 +46,10 @@ class Game(arcade.View):
         """ Initializer for the game"""
         super().__init__()
 
-        # Our textboxes
+        # Textboxes
         self.textbox = None
         self.show_textbox = False
+        self.textbox_npc = False    # NPC corresponding to the level texbox
 
         # gui manager to create and add gui elements
         self.manager = None
@@ -183,7 +184,22 @@ class Game(arcade.View):
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
 
-        # Initialize NPC sprite
+        # Initialize NPCs of the level ; TODO currently only the last npc added to the json has the level textbox
+        for npc_index in range(len(self.level_data["npc"])):
+            npc_data = self.level_data["npc"][npc_index]
+            npc_sprite = arcade.Sprite(npc_data["sprite_path"])
+            npc_sprite.scale = npc_data["scale"]
+            npc_sprite.center_x = npc_data["x"]
+            npc_sprite.center_y = npc_data["y"]
+            self.scene.add_sprite(f"NPC {npc_index}", npc_sprite)
+            self.textbox_npc = npc_sprite
+
+        # Initialize the TextBox of the level ; will be displayed when pressed enter next to an NPC
+        textbox_data = self.level_data["textbox"]
+        self.textbox = npc.TextBox(textbox_data["x"], textbox_data["y"], textbox_data["w"], textbox_data["h"],
+                                   textbox_data["text"])
+
+        ''' TODO remove
         if self.level_data["name"] == "La super maisonnette":
             image_source = "assets/characters/npc_chara.png"
             self.npc_sprite = arcade.Sprite(image_source)
@@ -191,11 +207,13 @@ class Game(arcade.View):
             self.npc_sprite.center_x = 740
             self.npc_sprite.center_y = 215
             self.scene.add_sprite("Npc", self.npc_sprite)
+        '''
 
+        # Add player to the scene
         self.scene.add_sprite("Player", self.player_sprite)
 
         # Blue tile showing the place_block() offset to the player
-        if self.level_data["offset"] != -1:
+        if self.level_data["offset"] != -1:     # else offset no tile should be placed by convention
             offset_block = arcade.Sprite("assets/tiled/tiles/Minecraft tiles/beacon.png")
             offset_block.width = offset_block.height = TILE_SIZE * self.level_data["scaling"]
             offset_block.left = self.level_data["offset"] * TILE_SIZE * self.level_data["scaling"]
@@ -231,7 +249,7 @@ class Game(arcade.View):
 
         # Draw our Scene
 
-        self.scene.draw()
+        self.scene.draw(pixelated=True)
         self.manager.draw()
 
         # Activate the GUI camera before drawing GUI elements
@@ -244,17 +262,10 @@ class Game(arcade.View):
         # Draw the NPC textbox
 
         if self.show_textbox:
-            self.textbox = npc.TextBox(400, 500, 700, 100,
-                                        "Welcome to our game ! It aims to teach loops in Python ! ^^ "
-                                       "\nUse the other window to change elements of the game !"
-                                       "\nThe function place_block(x) make fall a block from the sky at the x coordinate. "
-                                       "\nYou can stack them ! "
-                                       "Use the blocks in game to place yours ! ")
-
             self.textbox.show()
 
         # Draw hit boxes.
-        #self.player_sprite.draw_hit_box(arcade.color.BLUE, 3)
+        # self.player_sprite.draw_hit_box(arcade.color.BLUE, 3)
 
 
     def on_update(self, delta_time):
@@ -384,10 +395,11 @@ class Game(arcade.View):
             self.player_sprite.walking_right = False
             self.player_sprite.walking_left = False
 
+        # TODO
         if self.enter_pressed:
             if self.show_textbox:
                 self.show_textbox = False
-            elif npc.dist_between_sprites(self.player_sprite, self.npc_sprite) < 100:
+            elif npc.dist_between_sprites(self.player_sprite, self.textbox_npc) < 100:
                 self.show_textbox = True
 
         if self.p_pressed:
