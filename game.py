@@ -23,15 +23,43 @@ class MainMenu(arcade.View):
     def __init__(self, connection):
         super().__init__()
         self.connection = connection
+        self.background = arcade.load_texture("assets/backgrounds/starting_image.png")
+        self.scene = arcade.Scene()
+        image_character = "assets/backgrounds/Character.png"
+        self.character_menu = arcade.Sprite(image_character)
+        self.character_menu.scale = 2.3
+        self.character_menu.center_x = 50
+        self.character_menu.center_y = 270
+        self.scene.add_sprite("character_menu", self.character_menu)
+        image_character = "assets/backgrounds/frog.png"
+        self.frog = arcade.Sprite(image_character)
+        self.frog.scale = 4
+        self.frog.center_x = 170
+        self.frog.center_y = 180
+        self.scene.add_sprite("frog", self.frog)
 
     def on_show_view(self):
         """Called when switching to this view."""
         arcade.set_background_color(arcade.color.WHITE)
 
-    def on_draw(self):
+    def on_draw(self, pixelated=True):
         """Draw the menu"""
         self.clear()
-        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x='center')
+        arcade.draw_texture_rectangle(500, 280, 1000,
+                                      563, self.background)
+        arcade.draw_text("Froggie and Frankie take a nice walk", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+220, arcade.color.BLACK, font_size=30,
+                         anchor_x='center', italic=True, font_name=(
+                "Times New Roman",  # Comes with Windows
+                "Times",  # MacOS may sometimes have this variant
+                "Liberation Serif"  # Common on Linux systems)
+            ))
+        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x='center', bold=True, font_name=(
+                "Times New Roman",  # Comes with Windows
+                "Times",  # MacOS may sometimes have this variant
+                "Liberation Serif"  # Common on Linux systems)
+            ))
+        self.scene.draw()
+
 
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """Use a mouse press to advance to the 'game' view."""
