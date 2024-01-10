@@ -324,7 +324,6 @@
     ],
     "spawn_y": 100,
     "first_free_slots": [
-      1,
       0,
       0,
       0,
@@ -345,6 +344,7 @@
       0,
       0,
       0,
+      20,
       20,
       20,
       19,
@@ -640,9 +640,9 @@
     "player_jump_speed": 10,
     "player_scaling": 1,
     "spawn_x": 2,
-    "spawn_y": 10,
+    "spawn_y": 15,
     "hints": [
-      " If you don\u00e2\u20ac\u2122t know how big this hole is ",
+      "If you don't know how big this hole is ",
       "\ntry using the while loop",
       "\ntry using the while loop",
       "\nand the is_empty(x,y) function"
