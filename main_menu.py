@@ -91,7 +91,7 @@ class HelpView(arcade.View):
         """ Render the screen. """
         # Clear the screen
         self.clear()
-        self.scene.draw()
+        self.scene.draw(pixelated=True)
         self.manager.draw()
         i=0
         self.foncts =             "     place_block(x)    "\
