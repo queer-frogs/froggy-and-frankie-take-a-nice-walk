@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="original_sprites" tilewidth="32" tileheight="64" tilecount="39" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="original_sprites" tilewidth="32" tileheight="64" tilecount="40" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="35">
   <image width="16" height="16" source="../../backgrounds/Bois2.png"/>
@@ -117,5 +117,8 @@
  </tile>
  <tile id="76">
   <image width="16" height="16" source="../../backgrounds/cloud_0.png"/>
+ </tile>
+ <tile id="77">
+  <image width="16" height="16" source="../../backgrounds/Panneau-100.png"/>
  </tile>
 </tileset>
