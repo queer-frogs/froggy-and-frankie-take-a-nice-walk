@@ -23,21 +23,28 @@ class MainMenu(arcade.View):
     def __init__(self, connection):
         super().__init__()
         self.connection = connection
+        self.manager = gui.UIManager()
+
+        play = arcade.load_texture("assets/tiled/tiles/own/Play.png")
+        play_button = gui.UITextureButton(texture=play, scale=4)
+        self.manager.add(gui.UIAnchorWidget(anchor_x='center', anchor_y='center', child=play_button))
+
+        @play_button.event("on_click")
+        def on_click_play_button(event):
+            """Use a click button to advance to the 'game' view."""
+            game_view = Game(self.connection)
+            game_view.setup()
+            self.window.show_view(game_view)
 
     def on_show_view(self):
         """Called when switching to this view."""
         arcade.set_background_color(arcade.color.WHITE)
+        self.manager.enable()
 
     def on_draw(self):
         """Draw the menu"""
         self.clear()
-        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x='center')
-
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        """Use a mouse press to advance to the 'game' view."""
-        game_view = Game(self.connection)
-        game_view.setup()
-        self.window.show_view(game_view)
+        self.manager.draw()
 
 class Game(arcade.View):
     """ Main application class. """
