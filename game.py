@@ -2,11 +2,12 @@ import arcade
 import arcade.gui as gui
 
 import json
-
 import code_input
 import npc
 import utils
 import entities
+
+from main_menu import MenuView, HelpView
 
 # Constants
 SCREEN_WIDTH = 1000
@@ -17,12 +18,33 @@ GRAVITY = 1.5
 TILE_SIZE = 16
 
 
-class Game(arcade.Window):
+class MainMenu(arcade.View):
+    """Class that manages the 'menu' view."""
+    def __init__(self, connection):
+        super().__init__()
+        self.connection = connection
+
+    def on_show_view(self):
+        """Called when switching to this view."""
+        arcade.set_background_color(arcade.color.WHITE)
+
+    def on_draw(self):
+        """Draw the menu"""
+        self.clear()
+        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x='center')
+
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """Use a mouse press to advance to the 'game' view."""
+        game_view = Game(self.connection)
+        game_view.setup()
+        self.window.show_view(game_view)
+
+class Game(arcade.View):
     """ Main application class. """
 
     def __init__(self, connection):
         """ Initializer for the game"""
-        super().__init__(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+        super().__init__()
 
         # Our textboxes
         self.textbox = None
@@ -30,9 +52,6 @@ class Game(arcade.Window):
 
         # gui manager to create and add gui elements
         self.manager = None
-
-        # Set background color
-        arcade.set_background_color(arcade.color.BEAU_BLUE)
 
         # Track the current state of what key is pressed
         self.enter_pressed = False
@@ -103,8 +122,8 @@ class Game(arcade.Window):
         """ Set up the game here. Call this function to restart the game."""
 
         # Set up the Cameras
-        self.camera = arcade.Camera(self.width, self.height)
-        self.gui_camera = arcade.Camera(self.width, self.height)
+        self.camera = arcade.Camera(self.window.width, self.window.height)
+        self.gui_camera = arcade.Camera(self.window.width, self.window.height)
 
         # Reload level data
 
@@ -128,16 +147,28 @@ class Game(arcade.Window):
         self.tile_map = arcade.load_tilemap(map_path, self.level_data["scaling"], layer_options)
         if self.tile_map.background_color:
             arcade.set_background_color(self.tile_map.background_color)
+        else:
+            arcade.set_background_color(arcade.color.BEAU_BLUE)
 
         # Gui elements
         self.manager = gui.UIManager()
         self.manager.enable()
 
-        # reset button
-        reset_button = gui.UIFlatButton(color=arcade.color.DARK_BLUE_GRAY, text='Reset level', width=100)
+        # Menu
+        reset = arcade.load_texture("assets/tiled/tiles/own/Reset.png")
+        reset_button = gui.UITextureButton(texture=reset, scale=2)
         reset_button.on_click = self.on_click_reset
-        padd = gui.UIPadding(bg_color=arcade.color.APRICOT, child=reset_button, padding=(0.3, 0.3, 0.3, 0.3))
-        self.manager.add(arcade.gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=padd))
+
+        help = arcade.load_texture("assets/tiled/tiles/own/Help.png")
+        help_button = gui.UITextureButton(texture=help, scale=2)
+        help_button.on_click = self.on_click_help
+
+        pause = arcade.load_texture("assets/tiled/tiles/own/Stop.png")
+        switch_menu_button = gui.UITextureButton(texture=pause, scale=2)
+        switch_menu_button.on_click = self.on_click_menu
+
+        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button, switch_menu_button])
+        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=self.box))
 
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -181,6 +212,14 @@ class Game(arcade.Window):
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
 
+    def on_show_view(self):
+        self.manager.enable()
+
+    def on_hide_view(self):
+        # Disable the UIManager when the view is hidden.
+        self.manager.disable()
+
+
     def on_draw(self):
         """ Render the screen. """
 
@@ -206,15 +245,17 @@ class Game(arcade.Window):
 
         if self.show_textbox:
             self.textbox = npc.TextBox(400, 500, 700, 100,
-                                       "Welcome to our game ! It aims to teach loops in Python ! ^^ "
+                                        "Welcome to our game ! It aims to teach loops in Python ! ^^ "
                                        "\nUse the other window to change elements of the game !"
                                        "\nThe function place_block(x) make fall a block from the sky at the x coordinate. "
                                        "\nYou can stack them ! "
                                        "Use the blocks in game to place yours ! ")
+
             self.textbox.show()
 
         # Draw hit boxes.
         #self.player_sprite.draw_hit_box(arcade.color.BLUE, 3)
+
 
     def on_update(self, delta_time):
         """
@@ -267,14 +308,18 @@ class Game(arcade.Window):
                 self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.last_pos == self.player_sprite.current_pos:
             self.player_sprite.change_y = self.level_data["player_jump_speed"]
 
-        # Check if kivy sent something
-        if self.connection.poll():
-            kivy_message = self.connection.recv()
 
-            # The self parameter allows us to have access to the game object inside the function user_instructions
-            res = code_input.user_instructions(self, kivy_message, [])
-            if res:
-                self.connection.send(res)
+        try:
+            if self.connection.poll():
+                kivy_message = self.connection.recv()
+
+                # The self parameter allows us to have access to the game object inside the function user_instructions
+                res = code_input.user_instructions(self, kivy_message, [])
+                if res:
+                    self.connection.send(res)
+        except EOFError as e:
+            print(e)
+            # save and quit
 
         self.player_sprite.last_pos = self.player_sprite.current_pos
 
@@ -349,9 +394,17 @@ class Game(arcade.Window):
             utils.save_free_slots(self)
 
     def on_click_reset(self, event):
-        # garder coordonnées joueur
         self.setup()
 
+    def on_click_help(self,event):
+        help_view = HelpView(self)
+        self.window.show_view(help_view)
+
+    def on_click_menu(self, event):
+        # Passing the main view into menu view as an argument.
+        menu_view = MenuView(self)
+        self.window.show_view(menu_view)
     def save_and_quit(self):
         utils.write_save(self)
         self.on_close()
+

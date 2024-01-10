@@ -4,13 +4,13 @@ from kivy.uix.codeinput import CodeInput
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
+
 from kivy.config import Config
 
 from kivy.lang import Builder
 from kivy.core.window import Window
 from pygments.lexers import PythonLexer
 
-from code_input import user_instructions
 
 
 class Input(App):
@@ -30,11 +30,13 @@ class Input(App):
         Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
         # Buttons layout
-        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.1, 1))
-        submit = Button(text="Submit", on_press=self.submit, size_hint=(1, 0.5), background_color=(0, 1, 1, 1))
-        reset = Button(text="Reset", on_press=self.reset, size_hint=(1, 0.5), background_color=(1, 1, 1, 1))
+        buttons = BoxLayout(orientation="vertical", spacing=20, size_hint=(0.3,1))
+        submit = Button(text="Submit", on_press=self.submit, size_hint=(1,0.3), background_color=(0, 1, 1, 1))
+        reset = Button(text="Reset", on_press=self.reset, size_hint=(1,0.3), background_color=(1, 1, 1, 1))
+        close = Button(text="Exit", on_press=self.close, size_hint=(1, 0.3), background_color=(1,0,1,1))
         buttons.add_widget(submit)
         buttons.add_widget(reset)
+        buttons.add_widget(close)
 
         # Code layout with submit/reset buttons
         saisie = BoxLayout(orientation="horizontal", spacing=20, size_hint=(1, .65))
@@ -56,10 +58,10 @@ class Input(App):
 
     def submit(self, obj):
         """
-                Is called when the submit button is pressed
-                It uses the user_instruction() function to execute the code, and
-                prints the result inside the output label
-                """
+        Is called when the submit button is pressed
+        It uses the user_instruction() function to execute the code, and
+        prints the result inside the output label
+        """
 
         # Send code input to arcade
         self.kivy_connection.send(self.code.text)
@@ -79,3 +81,10 @@ class Input(App):
         """
         self.code.text = ""
         self.output.text = ""
+
+    def close(self, obj):
+        # closing application
+        App.get_running_app().stop()
+        # removing window
+        Window.close()
+

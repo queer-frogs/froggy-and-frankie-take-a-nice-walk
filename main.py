@@ -1,13 +1,22 @@
 import multiprocessing
+from game import SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE
 
 
 def run_arcade(arcade_connection):
     import arcade
+    from game import MainMenu
+
+    window = arcade.Window(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_TITLE)
+    menu_view = MainMenu(arcade_connection)
+    window.show_view(menu_view)
+    arcade.run()
+
+    """
     from game import Game
     game_instance = Game(arcade_connection)
     game_instance.setup()
     arcade.run()
-
+    """
 
 def run_kivy(kivy_connection):
     from uix import Input

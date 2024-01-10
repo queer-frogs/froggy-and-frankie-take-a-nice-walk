@@ -2,7 +2,7 @@ import arcade
 import game
 
 
-def place_block(arcade_game, x_pos, block_type="assets/tiled/tiles/Minecraft tiles/acacia_planks.png"):
+def place_block(arcade_game, x_pos, block_type="assets/backgrounds/Bois2.png"):
     """
     Places a block on the lowest slot avaible at the hoziontal position passed.
 

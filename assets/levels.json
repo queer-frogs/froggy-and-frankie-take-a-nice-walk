@@ -11,8 +11,13 @@
     "player_movement_speed": 3,
     "player_jump_speed": 10,
     "player_scaling": 1,
-    "spawn_x": 60,
-    "spawn_y": 230,
+    "spawn_x": 50,
+    "spawn_y": 250,
+    "hints": [
+      "Try just placing a block at the 0 coordinate",
+      "\nwith the function place_block(0)",
+      "\n"
+    ],
     "first_free_slots": [
       10,
       11,
@@ -79,7 +84,13 @@
     "player_scaling": 0.65,
     "spawn_x": 50,
     "spawn_y": 150,
+    "hints": [
+      "Try just placing a block at the 0 coordinate",
+      "\nwith the function place_block(0)",
+      "\n"
+    ],
     "first_free_slots": [
+      0,
       2,
       2,
       3,
@@ -119,13 +130,21 @@
     "character_state": 0,
     "forbidden_functions": [],
     "max_lines": 4,
-    "offset": 6,
+    "offset": 3,
     "player_movement_speed": 3,
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 50,
     "spawn_y": 150,
+    "hints": [
+      "This hole is 10 blocks long, try using a \"for\" loop",
+      "\nand the function place_block(i)",
+      "\n"
+    ],
     "first_free_slots": [
+      0,
+      0,
+      0,
       0,
       0,
       0,
@@ -166,6 +185,11 @@
     "forbidden_functions": [],
     "max_lines": 4,
     "offset": 10,
+    "hints": [
+      "This hole is 100 blocks long,",
+      "\ntry adapting your code from the previous level",
+      "\n"
+    ],
     "first_free_slots": [
       0,
       0,
@@ -271,7 +295,7 @@
       1,
       1
     ],
-    "player_movement_speed": 3,
+    "player_movement_speed": 5,
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 50,
@@ -291,6 +315,13 @@
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 2,
+    "hints": [
+      "In order to build a staircase, ",
+      "\ntry using the interlocked loops",
+      "For exemple :",
+      "\nfor i in range (20):",
+      "\n   for j in range (i):"
+    ],
     "spawn_y": 100,
     "first_free_slots": [
       1,
@@ -352,6 +383,13 @@
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 2,
+    "hints": [
+      "The 5 first steps of the staircase are already built ! ",
+      "\nDid you know that you can start a for loop",
+      "at something other than 0 using the synthaxe :",
+      "\n",
+      "\nfor i in range (x, y,1):"
+    ],
     "spawn_y": 50,
     "first_free_slots": [
       1,
@@ -413,7 +451,14 @@
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 2,
-    "spawn_y": 500,
+    "spawn_y": 650,
+    "hints": [
+      "You must create a stairway down, ",
+      "\nloops can use negative steps",
+      "\nFor exemple :",
+      "\n",
+      "\nfor i in range (x, y,-1):"
+    ],
     "first_free_slots": [
       0,
       0,
@@ -473,6 +518,10 @@
     "player_scaling": 0.5,
     "spawn_x": 5,
     "spawn_y": 90,
+    "hints": [
+      "For this level, ",
+      "\ntry changing the step of the for loop"
+    ],
     "first_free_slots": [
       8,
       0,
@@ -592,6 +641,12 @@
     "player_scaling": 1,
     "spawn_x": 2,
     "spawn_y": 10,
+    "hints": [
+      " If you don\u00e2\u20ac\u2122t know how big this hole is ",
+      "\ntry using the while loop",
+      "\ntry using the while loop",
+      "\nand the is_empty(x,y) function"
+    ],
     "first_free_slots": [
       0,
       0,
@@ -781,6 +836,13 @@
     "player_scaling": 0.65,
     "spawn_x": 5,
     "spawn_y": 650,
+    "hints": [
+      "This hole is proportional to the Fibonacci Sequence,",
+      "\nplace at each column the corresponding number",
+      "\nof blocks in the Fibonacci Sequence.",
+      "\nIn the Fibonacci Sequence, each number is the sum",
+      "\n of the two preceding ones.F0=0 and F1=1"
+    ],
     "first_free_slots": [
       88,
       88,
@@ -1153,6 +1215,11 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 450,
+    "hints": [
+      "In this level, the number of block y",
+      "\nyou must place in each x column",
+      "\nis proportional to y=25-x**2"
+    ],
     "first_free_slots": [
       0,
       1,
@@ -1222,6 +1289,15 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 50,
+    "hints": [
+      "This level is quite hard,",
+      "\nthis hole isn\u00e2\u20ac\u2122t proportional to anything",
+      "\nbut you must go up and right 30 blocks.",
+      "\n By using your previous code to do a staircase,",
+      "\nthe is_empty(x,y) function and an If statement ",
+      "\nyou should be able to do it,",
+      "\n\ngood luck :)\n"
+    ],
     "first_free_slots": [
       0,
       0,
@@ -1291,6 +1367,13 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 500,
+    "hints": [
+      "This hole isn\u00e2\u20ac\u2122t proportional either.",
+      "\nThe height is 25.",
+      "\n Adapt yout code from the previous level ",
+      "\n in order to cross a gap",
+      "\n\ngood luck :)\n"
+    ],
     "first_free_slots": [
       0,
       0,
@@ -1360,6 +1443,13 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 50,
+    "hints": [
+      " Here you must go up 20 blocks and right 30,",
+      "\ntry using your codes from the 2 previous levels",
+      "\nin order to create a stairs",
+      "\n and then walk to the end.",
+      "\n\ngood luck :)\n"
+    ],
     "first_free_slots": [
       0,
       0,
