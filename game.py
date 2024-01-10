@@ -61,7 +61,7 @@ class Game(arcade.View):
         self.down_pressed = False
         self.p_pressed = False
 
-        # arcade_game.jump_needs_reset = False
+        self.frog = False
 
         # Our TileMap Object
         self.tile_map = None
@@ -177,8 +177,7 @@ class Game(arcade.View):
         self.end_of_map = 1000
 
         # Initialize Player Sprite
-        image_source = "assets/characters/chara.png"
-        self.player_sprite = entities.PlayerCharacter()
+        self.player_sprite = entities.PlayerCharacter(self.frog)
         self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
