@@ -25,7 +25,7 @@ class MainMenu(arcade.View):
         self.connection = connection
         self.manager = gui.UIManager()
 
-        play = arcade.load_texture("assets/tiled/tiles/own/Play.png")
+        play = arcade.load_texture("assets/tiled/tiles/own/PLAY_mm.png")
         play_button = gui.UITextureButton(texture=play, scale=4)
         self.manager.add(gui.UIAnchorWidget(anchor_x='center', anchor_y='center', child=play_button))
 
