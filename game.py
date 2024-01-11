@@ -228,7 +228,7 @@ class Game(arcade.View):
 
         # Blue tile showing the place_block() offset to the player
         if self.level_data["offset"] != -1:
-            offset_block = arcade.Sprite("assets/tiled/tiles/Minecraft tiles/beacon.png")
+            offset_block = arcade.Sprite("assets/backgrounds/start.png")
             offset_block.width = offset_block.height = TILE_SIZE * self.level_data["scaling"]
             offset_block.left = self.level_data["offset"] * TILE_SIZE * self.level_data["scaling"]
             offset_block.bottom = 0
@@ -263,7 +263,7 @@ class Game(arcade.View):
 
         # Draw our Scene
 
-        self.scene.draw()
+        self.scene.draw(pixelated=True)
         self.manager.draw()
 
         # Activate the GUI camera before drawing GUI elements
