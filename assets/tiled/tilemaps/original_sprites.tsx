@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.2" name="original_sprites" tilewidth="32" tileheight="64" tilecount="40" columns="0">
+<tileset version="1.10" tiledversion="1.10.2" name="original_sprites" tilewidth="64" tileheight="64" tilecount="49" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="35">
   <image width="16" height="16" source="../../backgrounds/Bois2.png"/>
@@ -120,5 +120,32 @@
  </tile>
  <tile id="77">
   <image width="16" height="16" source="../../backgrounds/Panneau-100.png"/>
+ </tile>
+ <tile id="78">
+  <image width="64" height="64" source="../../backgrounds/sprite_06.png"/>
+ </tile>
+ <tile id="79">
+  <image width="64" height="64" source="../../backgrounds/sprite_07.png"/>
+ </tile>
+ <tile id="80">
+  <image width="64" height="64" source="../../backgrounds/sprite_08.png"/>
+ </tile>
+ <tile id="81">
+  <image width="64" height="64" source="../../backgrounds/sprite_09.png"/>
+ </tile>
+ <tile id="82">
+  <image width="64" height="64" source="../../backgrounds/sprite_10.png"/>
+ </tile>
+ <tile id="83">
+  <image width="64" height="64" source="../../backgrounds/sprite_11.png"/>
+ </tile>
+ <tile id="84">
+  <image width="64" height="64" source="../../backgrounds/sprite_03.png"/>
+ </tile>
+ <tile id="85">
+  <image width="64" height="64" source="../../backgrounds/sprite_04.png"/>
+ </tile>
+ <tile id="86">
+  <image width="64" height="64" source="../../backgrounds/sprite_05.png"/>
  </tile>
 </tileset>
