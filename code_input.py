@@ -63,7 +63,7 @@ def user_instructions(game, code, forbidden=[], timeout=15):
         with open("assets/text/errors.json") as custom_errors_json:
             custom_errors = json.loads(custom_errors_json.read())
             game.setup()
-            return f'/!\\ {error.__class__.__name__} : {error}'
+            return f'/!\\ {error.__class__.__name__} : {error}\n{artificial_buffer}'
 
     #finally:
     #    signal.alarm(0)

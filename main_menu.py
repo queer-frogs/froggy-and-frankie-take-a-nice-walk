@@ -91,7 +91,7 @@ class HelpView(arcade.View):
         """ Render the screen. """
         # Clear the screen
         self.clear()
-        self.scene.draw()
+        self.scene.draw(pixelated=True)
         self.manager.draw()
         i=0
         # Print the description of the is_empty function in the hint book

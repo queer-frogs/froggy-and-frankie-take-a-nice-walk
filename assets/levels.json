@@ -324,7 +324,6 @@
     ],
     "spawn_y": 100,
     "first_free_slots": [
-      1,
       0,
       0,
       0,
@@ -345,6 +344,7 @@
       0,
       0,
       0,
+      20,
       20,
       20,
       19,
@@ -640,9 +640,9 @@
     "player_jump_speed": 10,
     "player_scaling": 1,
     "spawn_x": 2,
-    "spawn_y": 10,
+    "spawn_y": 15,
     "hints": [
-      " If you don\u00e2\u20ac\u2122t know how big this hole is ",
+      "If you don't know how big this hole is ",
       "\ntry using the while loop",
       "\ntry using the while loop",
       "\nand the is_empty(x,y) function"
@@ -832,7 +832,7 @@
     "max_lines": 10,
     "offset": 2,
     "player_movement_speed": 3,
-    "player_jump_speed": 10,
+    "player_jump_speed": 5,
     "player_scaling": 0.65,
     "spawn_x": 5,
     "spawn_y": 650,
@@ -1291,7 +1291,7 @@
     "spawn_y": 50,
     "hints": [
       "This level is quite hard,",
-      "\nthis hole isn\u00e2\u20ac\u2122t proportional to anything",
+      "\nthis hole does'nt follow any function",
       "\nbut you must go up and right 30 blocks.",
       "\n By using your previous code to do a staircase,",
       "\nthe is_empty(x,y) function and an If statement ",
@@ -1368,7 +1368,7 @@
     "spawn_x": 10,
     "spawn_y": 500,
     "hints": [
-      "This hole isnt proportional either.",
+      "This hole does not follow any function either.",
       "\nThe height is 25.",
       "\n Adapt yout code from the previous level ",
       "\n in order to cross a gap",
@@ -1436,7 +1436,7 @@
     "scaling": 1.41,
     "character_state": 0,
     "forbidden_functions": [],
-    "max_lines": 4,
+    "max_lines": 25,
     "offset": 10,
     "player_movement_speed": 3,
     "player_jump_speed": 10,
