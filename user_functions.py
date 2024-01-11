@@ -55,3 +55,15 @@ def is_empty(arcade_game, x_pos, y_pos):
     coords = (x_pos + arcade_game.level_data["offset"]) * tile_size + 1, y_pos * tile_size + 1
     return arcade.get_sprites_at_point(coords, arcade_game.scene["Platforms"]) == [] \
         and arcade.get_sprites_at_point(coords, arcade_game.scene["BackgroundPlatforms"]) == []
+
+
+def frog(arcade_game):
+    """
+    Turns the character into the frog.
+
+    :param arcade_game:
+    :return: Nothing
+    """
+
+    arcade_game.frog = True
+    arcade_game.setup()

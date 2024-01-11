@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>main_menu module &mdash; game (not the definitive name, as you might have guessed) 1.0 documentation</title>
+  <title>main_menu module &mdash; Froggy and Frankie take a nice walk 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -34,7 +34,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            game (not the definitive name, as you might have guessed)
+            Froggy and Frankie take a nice walk
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -54,7 +54,21 @@
 <li class="toctree-l2"><a class="reference internal" href="game.html">game module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gui.html">gui module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="main.html">main module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">main_menu module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">main_menu module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main_menu.HelpView"><code class="docutils literal notranslate"><span class="pre">HelpView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.HelpView.on_draw"><code class="docutils literal notranslate"><span class="pre">HelpView.on_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.HelpView.on_hide_view"><code class="docutils literal notranslate"><span class="pre">HelpView.on_hide_view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.HelpView.on_show_view"><code class="docutils literal notranslate"><span class="pre">HelpView.on_show_view()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#main_menu.MenuView"><code class="docutils literal notranslate"><span class="pre">MenuView</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.MenuView.on_draw"><code class="docutils literal notranslate"><span class="pre">MenuView.on_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.MenuView.on_hide_view"><code class="docutils literal notranslate"><span class="pre">MenuView.on_hide_view()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#main_menu.MenuView.on_show_view"><code class="docutils literal notranslate"><span class="pre">MenuView.on_show_view()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="npc.html">npc module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tiled_utils.html">tiled_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="uix.html">uix module</a></li>
@@ -70,7 +84,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">game (not the definitive name, as you might have guessed)</a>
+          <a href="index.html">Froggy and Frankie take a nice walk</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -91,6 +105,56 @@
              
   <section id="module-main_menu">
 <span id="main-menu-module"></span><h1>main_menu module<a class="headerlink" href="#module-main_menu" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="main_menu.HelpView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main_menu.</span></span><span class="sig-name descname"><span class="pre">HelpView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_view</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.HelpView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>Main menu view class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main_menu.HelpView.on_draw">
+<span class="sig-name descname"><span class="pre">on_draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.HelpView.on_draw" title="Link to this definition"></a></dt>
+<dd><p>Render the screen.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_menu.HelpView.on_hide_view">
+<span class="sig-name descname"><span class="pre">on_hide_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.HelpView.on_hide_view" title="Link to this definition"></a></dt>
+<dd><p>Called once when this view is hidden.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_menu.HelpView.on_show_view">
+<span class="sig-name descname"><span class="pre">on_show_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.HelpView.on_show_view" title="Link to this definition"></a></dt>
+<dd><p>This is run once when we switch to this view</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="main_menu.MenuView">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">main_menu.</span></span><span class="sig-name descname"><span class="pre">MenuView</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">game_view</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.MenuView" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>Main menu view class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="main_menu.MenuView.on_draw">
+<span class="sig-name descname"><span class="pre">on_draw</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.MenuView.on_draw" title="Link to this definition"></a></dt>
+<dd><p>Render the screen.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_menu.MenuView.on_hide_view">
+<span class="sig-name descname"><span class="pre">on_hide_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.MenuView.on_hide_view" title="Link to this definition"></a></dt>
+<dd><p>Called once when this view is hidden.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="main_menu.MenuView.on_show_view">
+<span class="sig-name descname"><span class="pre">on_show_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main_menu.MenuView.on_show_view" title="Link to this definition"></a></dt>
+<dd><p>This is run once when we switch to this view</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 

@@ -23,21 +23,54 @@ class MainMenu(arcade.View):
     def __init__(self, connection):
         super().__init__()
         self.connection = connection
+        self.manager = gui.UIManager()
+
+        play = arcade.load_texture("assets/tiled/tiles/own/PLAY_mm.png")
+        play_button = gui.UITextureButton(texture=play, scale=4)
+        self.manager.add(gui.UIAnchorWidget(anchor_x='center', anchor_y='center', child=play_button))
+
+        @play_button.event("on_click")
+        def on_click_play_button(event):
+            """Use a click button to advance to the 'game' view."""
+            game_view = Game(self.connection)
+            game_view.setup()
+            self.window.show_view(game_view)
+
+        self.background = arcade.load_texture("assets/backgrounds/starting_image.png")
+        self.scene = arcade.Scene()
+        image_character = "assets/backgrounds/Character.png"
+        self.character_menu = arcade.Sprite(image_character)
+        self.character_menu.scale = 2.3
+        self.character_menu.center_x = 50
+        self.character_menu.center_y = 270
+        self.scene.add_sprite("character_menu", self.character_menu)
+        image_character = "assets/backgrounds/frog.png"
+        self.frog = arcade.Sprite(image_character)
+        self.frog.scale = 4
+        self.frog.center_x = 170
+        self.frog.center_y = 180
+        self.scene.add_sprite("frog", self.frog)
 
     def on_show_view(self):
         """Called when switching to this view."""
         arcade.set_background_color(arcade.color.WHITE)
+        self.manager.enable()
 
-    def on_draw(self):
+    def on_draw(self, pixelated=True):
         """Draw the menu"""
         self.clear()
-        arcade.draw_text("Play", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, arcade.color.BLACK, font_size=30, anchor_x='center')
 
-    def on_mouse_press(self, _x, _y, _button, _modifiers):
-        """Use a mouse press to advance to the 'game' view."""
-        game_view = Game(self.connection)
-        game_view.setup()
-        self.window.show_view(game_view)
+        arcade.draw_texture_rectangle(500, 280, 1000,
+                                      563, self.background)
+        arcade.draw_text("Froggie and Frankie take a nice walk", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+220, arcade.color.BLACK, font_size=30,
+                         anchor_x='center', italic=True, font_name=(
+                "Times New Roman",  # Comes with Windows
+                "Times",  # MacOS may sometimes have this variant
+                "Liberation Serif"  # Common on Linux systems)
+            ))
+        self.scene.draw()
+        self.manager.draw()
+
 
 class Game(arcade.View):
     """ Main application class. """
@@ -62,7 +95,7 @@ class Game(arcade.View):
         self.down_pressed = False
         self.p_pressed = False
 
-        # arcade_game.jump_needs_reset = False
+        self.frog = False
 
         # Our TileMap Object
         self.tile_map = None
@@ -178,8 +211,7 @@ class Game(arcade.View):
         self.end_of_map = 1000
 
         # Initialize Player Sprite
-        image_source = "assets/characters/chara.png"
-        self.player_sprite = entities.PlayerCharacter()
+        self.player_sprite = entities.PlayerCharacter(self.frog)
         self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
         self.player_sprite.center_y = self.level_data["spawn_y"]
@@ -215,8 +247,10 @@ class Game(arcade.View):
         self.scene.add_sprite("Player", self.player_sprite)
 
         # Blue tile showing the place_block() offset to the player
-        if self.level_data["offset"] != -1:     # else offset no tile should be placed by convention
-            offset_block = arcade.Sprite("assets/tiled/tiles/Minecraft tiles/beacon.png")
+
+        if self.level_data["offset"] != -1:
+            offset_block = arcade.Sprite("assets/backgrounds/start.png")
+
             offset_block.width = offset_block.height = TILE_SIZE * self.level_data["scaling"]
             offset_block.left = self.level_data["offset"] * TILE_SIZE * self.level_data["scaling"]
             offset_block.bottom = 0
