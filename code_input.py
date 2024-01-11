@@ -4,6 +4,7 @@ import signal
 # Might be used in exec(code), do not remove !
 from user_functions import place_block
 from user_functions import is_empty
+from user_functions import frog
 
 
 def user_instructions(game, code, forbidden=[], timeout=15):
@@ -39,6 +40,7 @@ def user_instructions(game, code, forbidden=[], timeout=15):
     code = code.replace('print(', "artificial_buffer +=  '\\n' + str(")
     code = code.replace('place_block(', 'place_block(game,')
     code = code.replace('is_empty(', 'is_empty(game,')
+    code = code.replace('frog(', 'frog(game,')
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 

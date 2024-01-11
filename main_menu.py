@@ -94,29 +94,74 @@ class HelpView(arcade.View):
         self.scene.draw(pixelated=True)
         self.manager.draw()
         i=0
-        self.foncts =             "     place_block(x)    "\
-                                  "\nplace a block at the x columns on the screen " \
-                                  "\n(the 0 is signified by the special tile). " \
-                                  "\nYou can stack them"\
-                                  "\n\n    is_empty(x,y)"\
-                                  "\n return True if the block at the x,y coordinate " \
+        # Print the description of the is_empty function in the hint book
+        arcade.draw_text("     place_block(x)    ", 550, 300 - i, arcade.color.BLACK, 12,
+                         width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top", bold=True, font_name=(
+                "Times New Roman",  # Comes with Windows
+                "Times",  # MacOS may sometimes have this variant
+                "Liberation Serif"  # Common on Linux systems)
+            ))
+        i += 15
+        self.foncts = "place a block at the x columns on the screen " \
+                      "\n(the 0 is signified by the special tile). " \
+                      "\nYou can stack them" \
+
+        liste_ligne = self.foncts.splitlines()
+        for ligne in liste_ligne:
+            arcade.draw_text(ligne, 550, 300 - i, arcade.color.BLACK, 10,
+                             width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top", font_name=(
+                    "Times New Roman",  # Comes with Windows
+                    "Times",  # MacOS may sometimes have this variant
+                    "Liberation Serif"  # Common on Linux systems)
+                ))
+            i += 15
+        i+=30
+        # Print the description of the is_empty function in the hint book
+        arcade.draw_text("     is_empty(x,y)    ", 550, 300 - i, arcade.color.BLACK, 12,
+                         width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top", bold=True, font_name=(
+                "Times New Roman",  # Comes with Windows
+                "Times",  # MacOS may sometimes have this variant
+                "Liberation Serif"  # Common on Linux systems)
+            ))
+        i += 15
+        self.foncts = "return True if the block at the x,y coordinate " \
                                   "\nin the level are empty," \
                                   "\n return false if it isn’t the case"\
-                                  "\n\nPython loops :  \n "\
-                                  "\n For i in range (X):"\
-                                  "\nThe “for loop” is used in order to repeat X time" \
+
+        liste_ligne = self.foncts.splitlines()
+        for ligne in liste_ligne:
+            arcade.draw_text(ligne, 550, 300 - i, arcade.color.BLACK, 10,
+                             width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top", font_name=(
+                    "Times New Roman",  # Comes with Windows
+                    "Times",  # MacOS may sometimes have this variant
+                    "Liberation Serif"  # Common on Linux systems)
+                ))
+            i += 15
+
+        #Print the text of the python loops in the hint book
+        i=0
+        arcade.draw_text("Python loops :  \n ", 222, 480 - i, arcade.color.BLACK, 12,
+                         width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top", bold=True, font_name=(
+                "Times New Roman",  # Comes with Windows
+                "Times",  # MacOS may sometimes have this variant
+                "Liberation Serif"  # Common on Linux systems)
+            ))
+        i += 30
+
+        self.foncts =            "For i in range (X):"\
+                                  "\n\nThe “for loop” is used in order to repeat X time" \
                                   "\n the instructions. Placed in it (here place block)," \
                                   "\n i goes from 0 to X-1 "\
-                                  "\n\n  For j in range(i): "\
-                                  "\n The interlocked loops can be used to automate" \
+                                  "\n\n\n\n  For i in range (10):\n     For j in range(i): "\
+                                  "\n\n The interlocked loops can be used to automate" \
                                   "\n a large number of actions"\
-                                  "\n\nWhile (condition) : "\
+                                  "\n\n\n\nWhile (condition) : "\
                                   "\n    place_block(0) "\
                                   "\n\nWhile loops check if the condition is true," \
                                   "\n if it’s the case, it execute the instruction "
         liste_ligne = self.foncts.splitlines()
         for ligne in liste_ligne:
-            arcade.draw_text(ligne, 210,500-i, arcade.color.BLACK, 10,
+            arcade.draw_text(ligne, 200,480-i, arcade.color.BLACK, 11,
                              width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top",font_name=(
                              "Times New Roman",  # Comes with Windows
                              "Times",  # MacOS may sometimes have this variant

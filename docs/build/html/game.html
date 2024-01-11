@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>game module &mdash; game (not the definitive name, as you might have guessed) 1.0 documentation</title>
+  <title>game module &mdash; Froggy and Frankie take a nice walk 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -34,7 +34,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            game (not the definitive name, as you might have guessed)
+            Froggy and Frankie take a nice walk
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -53,14 +53,23 @@
 <li class="toctree-l2"><a class="reference internal" href="entities.html">entities module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">game module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#game.Game"><code class="docutils literal notranslate"><span class="pre">Game</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#game.Game.on_click_help"><code class="docutils literal notranslate"><span class="pre">Game.on_click_help()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#game.Game.on_click_menu"><code class="docutils literal notranslate"><span class="pre">Game.on_click_menu()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.on_click_reset"><code class="docutils literal notranslate"><span class="pre">Game.on_click_reset()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.on_draw"><code class="docutils literal notranslate"><span class="pre">Game.on_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#game.Game.on_hide_view"><code class="docutils literal notranslate"><span class="pre">Game.on_hide_view()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.on_key_press"><code class="docutils literal notranslate"><span class="pre">Game.on_key_press()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.on_key_release"><code class="docutils literal notranslate"><span class="pre">Game.on_key_release()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#game.Game.on_show_view"><code class="docutils literal notranslate"><span class="pre">Game.on_show_view()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.on_update"><code class="docutils literal notranslate"><span class="pre">Game.on_update()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.process_keychange"><code class="docutils literal notranslate"><span class="pre">Game.process_keychange()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.save_and_quit"><code class="docutils literal notranslate"><span class="pre">Game.save_and_quit()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#game.Game.setup"><code class="docutils literal notranslate"><span class="pre">Game.setup()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#game.MainMenu"><code class="docutils literal notranslate"><span class="pre">MainMenu</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#game.MainMenu.on_draw"><code class="docutils literal notranslate"><span class="pre">MainMenu.on_draw()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#game.MainMenu.on_show_view"><code class="docutils literal notranslate"><span class="pre">MainMenu.on_show_view()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -83,7 +92,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">game (not the definitive name, as you might have guessed)</a>
+          <a href="index.html">Froggy and Frankie take a nice walk</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -107,8 +116,18 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="game.Game">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">Game</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Window</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
 <p>Main application class.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.Game.on_click_help">
+<span class="sig-name descname"><span class="pre">on_click_help</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.on_click_help" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.Game.on_click_menu">
+<span class="sig-name descname"><span class="pre">on_click_menu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.on_click_menu" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="game.Game.on_click_reset">
 <span class="sig-name descname"><span class="pre">on_click_reset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.on_click_reset" title="Link to this definition"></a></dt>
@@ -121,6 +140,12 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="game.Game.on_hide_view">
+<span class="sig-name descname"><span class="pre">on_hide_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.on_hide_view" title="Link to this definition"></a></dt>
+<dd><p>Called once when this view is hidden.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="game.Game.on_key_press">
 <span class="sig-name descname"><span class="pre">on_key_press</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modifiers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.on_key_press" title="Link to this definition"></a></dt>
 <dd><p>Called whenever a key is pressed.</p>
@@ -130,6 +155,16 @@
 <dt class="sig sig-object py" id="game.Game.on_key_release">
 <span class="sig-name descname"><span class="pre">on_key_release</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">key_modifiers</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.on_key_release" title="Link to this definition"></a></dt>
 <dd><p>Called whenever the user lets off a previously pressed key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.Game.on_show_view">
+<span class="sig-name descname"><span class="pre">on_show_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.on_show_view" title="Link to this definition"></a></dt>
+<dd><p>Called once when the view is shown.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">on_hide_view()</span></code></p>
+</div>
 </dd></dl>
 
 <dl class="py method">
@@ -154,6 +189,25 @@ Normally, you’ll call update() on the sprite lists that need it.</p>
 <dt class="sig sig-object py" id="game.Game.setup">
 <span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.Game.setup" title="Link to this definition"></a></dt>
 <dd><p>Set up the game here. Call this function to restart the game.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="game.MainMenu">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">game.</span></span><span class="sig-name descname"><span class="pre">MainMenu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">connection</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.MainMenu" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">View</span></code></p>
+<p>Class that manages the ‘menu’ view.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="game.MainMenu.on_draw">
+<span class="sig-name descname"><span class="pre">on_draw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pixelated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#game.MainMenu.on_draw" title="Link to this definition"></a></dt>
+<dd><p>Draw the menu</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="game.MainMenu.on_show_view">
+<span class="sig-name descname"><span class="pre">on_show_view</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#game.MainMenu.on_show_view" title="Link to this definition"></a></dt>
+<dd><p>Called when switching to this view.</p>
 </dd></dl>
 
 </dd></dl>

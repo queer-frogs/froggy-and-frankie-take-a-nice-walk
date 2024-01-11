@@ -10,7 +10,7 @@ sys.path.insert(0, basedir)
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'game (not the definitive name, as you might have guessed)'
+project = 'Froggy and Frankie take a nice walk'
 copyright = '2024, Lauranne Fossat, Page Magnier—Slimani, Maxence Vahedi'
 author = 'Lauranne Fossat, Page Magnier—Slimani, Maxence Vahedi'
 release = '1.0'

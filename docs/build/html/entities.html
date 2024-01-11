@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>entities module &mdash; game (not the definitive name, as you might have guessed) 1.0 documentation</title>
+  <title>entities module &mdash; Froggy and Frankie take a nice walk 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -34,7 +34,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            game (not the definitive name, as you might have guessed)
+            Froggy and Frankie take a nice walk
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -60,6 +60,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#entities.TextBox.show"><code class="docutils literal notranslate"><span class="pre">TextBox.show()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#entities.load_texture_pair"><code class="docutils literal notranslate"><span class="pre">load_texture_pair()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="game.html">game module</a></li>
@@ -81,7 +82,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">game (not the definitive name, as you might have guessed)</a>
+          <a href="index.html">Froggy and Frankie take a nice walk</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -104,14 +105,14 @@
 <span id="entities-module"></span><h1>entities module<a class="headerlink" href="#module-entities" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="entities.Entity">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">entities.</span></span><span class="sig-name descname"><span class="pre">Entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_source</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#entities.Entity" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">entities.</span></span><span class="sig-name descname"><span class="pre">Entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frog</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#entities.Entity" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Sprite</span></code></p>
 <p>Basic structure of every sprite</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="entities.PlayerCharacter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">entities.</span></span><span class="sig-name descname"><span class="pre">PlayerCharacter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_source</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#entities.PlayerCharacter" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">entities.</span></span><span class="sig-name descname"><span class="pre">PlayerCharacter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frog</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#entities.PlayerCharacter" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="#entities.Entity" title="entities.Entity"><code class="xref py py-class docutils literal notranslate"><span class="pre">Entity</span></code></a></p>
 <p>Player Sprite</p>
 <dl class="py method">
@@ -138,6 +139,12 @@ animated.</p>
 <span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#entities.TextBox.show" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="entities.load_texture_pair">
+<span class="sig-prename descclassname"><span class="pre">entities.</span></span><span class="sig-name descname"><span class="pre">load_texture_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#entities.load_texture_pair" title="Link to this definition"></a></dt>
+<dd><p>Load a texture pair, with the second being a mirror image.</p>
 </dd></dl>
 
 </section>
