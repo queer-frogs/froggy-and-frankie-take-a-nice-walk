@@ -77,7 +77,7 @@ def save_free_slots(arcade_game):
     # Update the levels.json file
     arcade_game.level_data["first_free_slots"] = first_free_slots
 
-    with open("assets/levels.json", "w") as levels_file:
+    with open("levels.json", "w") as levels_file:
         json.dump(arcade_game.levels, levels_file, indent=2)
 
 

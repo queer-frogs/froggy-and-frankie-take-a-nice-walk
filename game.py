@@ -128,7 +128,7 @@ class Game(arcade.View):
         # Reload level data
 
         # Reset positions available to precomputed values
-        with open("assets/levels.json", "r") as read_levels_file:
+        with open("levels.json", "r") as read_levels_file:
             self.levels = json.loads(read_levels_file.read())
 
         self.level_data = self.levels[self.save["current_level"]]
