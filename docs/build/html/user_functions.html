@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>user_functions module &mdash; game (not the definitive name, as you might have guessed) 1.0 documentation</title>
+  <title>user_functions module &mdash; Froggy and Frankie take a nice walk 1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -34,7 +34,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            game (not the definitive name, as you might have guessed)
+            Froggy and Frankie take a nice walk
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -59,6 +59,7 @@
 <li class="toctree-l2"><a class="reference internal" href="tiled_utils.html">tiled_utils module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="uix.html">uix module</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">user_functions module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#user_functions.frog"><code class="docutils literal notranslate"><span class="pre">frog()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#user_functions.is_empty"><code class="docutils literal notranslate"><span class="pre">is_empty()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#user_functions.place_block"><code class="docutils literal notranslate"><span class="pre">place_block()</span></code></a></li>
 </ul>
@@ -74,7 +75,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">game (not the definitive name, as you might have guessed)</a>
+          <a href="index.html">Froggy and Frankie take a nice walk</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -96,6 +97,20 @@
   <section id="module-user_functions">
 <span id="user-functions-module"></span><h1>user_functions module<a class="headerlink" href="#module-user_functions" title="Link to this heading"></a></h1>
 <dl class="py function">
+<dt class="sig sig-object py" id="user_functions.frog">
+<span class="sig-prename descclassname"><span class="pre">user_functions.</span></span><span class="sig-name descname"><span class="pre">frog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arcade_game</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#user_functions.frog" title="Link to this definition"></a></dt>
+<dd><p>Turns the character into the frog.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>arcade_game</strong> – </p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Nothing</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="user_functions.is_empty">
 <span class="sig-prename descclassname"><span class="pre">user_functions.</span></span><span class="sig-name descname"><span class="pre">is_empty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arcade_game</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#user_functions.is_empty" title="Link to this definition"></a></dt>
 <dd><p>Checks if there is a plotform at the (x_pos, y_pos) position.</p>
@@ -113,7 +128,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="user_functions.place_block">
-<span class="sig-prename descclassname"><span class="pre">user_functions.</span></span><span class="sig-name descname"><span class="pre">place_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arcade_game</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'assets/tiled/tiles/Minecraft</span> <span class="pre">tiles/acacia_planks.png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#user_functions.place_block" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">user_functions.</span></span><span class="sig-name descname"><span class="pre">place_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arcade_game</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">block_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'assets/backgrounds/Bois2.png'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#user_functions.place_block" title="Link to this definition"></a></dt>
 <dd><p>Places a block on the lowest slot avaible at the hoziontal position passed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
