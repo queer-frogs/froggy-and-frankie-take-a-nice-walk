@@ -1056,9 +1056,9 @@
   },
   {
     "name": "thanks for making it here",
-    "tilemap_path": "assets/tiled/tilemaps/level_final.tmx",
+    "tilemap_path": "assets/tiled/tilemaps/fin_obligatoire.tmx",
     "cutscene_path": "",
-    "scaling": 0.36,
+    "scaling": 1.43,
     "character_state": 0,
     "forbidden_functions": [],
     "max_lines": 4,
@@ -1069,8 +1069,21 @@
     "spawn_x": 10,
     "spawn_y": 450,
     "hints": [],
-    "npc": [],
-    "textbox": {},
+    "npc": [
+      {
+        "x": 760,
+        "y": 267,
+        "scale": 2,
+        "sprite_path": "assets/tiled/tiles/own/frog.png"
+      }
+    ],
+    "textbox": {
+      "x": 400,
+      "y": 500,
+      "w": 575,
+      "h": 130,
+      "text": "You've reached the standard end of the challenges. Congratulations !! \nYou can stop here, or continue on to more complex levels. The choice is yours. \nIn any case, we're delighted to have come this far with you."
+    },
     "first_free_slots": [
       74,
       74,
