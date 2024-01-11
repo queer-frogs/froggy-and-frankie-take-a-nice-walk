@@ -185,19 +185,21 @@ class Game(arcade.View):
         self.player_sprite.center_y = self.level_data["spawn_y"]
 
         # Initialize NPCs of the level ; TODO currently only the last npc added to the json has the level textbox
-        for npc_index in range(len(self.level_data["npc"])):
-            npc_data = self.level_data["npc"][npc_index]
-            npc_sprite = arcade.Sprite(npc_data["sprite_path"])
-            npc_sprite.scale = npc_data["scale"]
-            npc_sprite.center_x = npc_data["x"]
-            npc_sprite.center_y = npc_data["y"]
-            self.scene.add_sprite(f"NPC {npc_index}", npc_sprite)
-            self.textbox_npc = npc_sprite
+        if self.level_data["npc"]:
+            for npc_index in range(len(self.level_data["npc"])):
+                npc_data = self.level_data["npc"][npc_index]
+                npc_sprite = arcade.Sprite(npc_data["sprite_path"])
+                npc_sprite.scale = npc_data["scale"]
+                npc_sprite.center_x = npc_data["x"]
+                npc_sprite.center_y = npc_data["y"]
+                self.scene.add_sprite(f"NPC {npc_index}", npc_sprite)
+                self.textbox_npc = npc_sprite
 
         # Initialize the TextBox of the level ; will be displayed when pressed enter next to an NPC
-        textbox_data = self.level_data["textbox"]
-        self.textbox = npc.TextBox(textbox_data["x"], textbox_data["y"], textbox_data["w"], textbox_data["h"],
-                                   textbox_data["text"])
+        if self.level_data["textbox"]:
+            textbox_data = self.level_data["textbox"]
+            self.textbox = npc.TextBox(textbox_data["x"], textbox_data["y"], textbox_data["w"], textbox_data["h"],
+                                       textbox_data["text"])
 
         ''' TODO remove
         if self.level_data["name"] == "La super maisonnette":

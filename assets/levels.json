@@ -21,18 +21,18 @@
     "npc": [
       {
         "x": 740,
-        "y": 215,
-        "scale": 4,
+        "y": 160,
+        "scale": 2,
         "sprite_path": "assets/tiled/tiles/own/frog.png"
       }
     ],
     "textbox": {
-          "x": 400,
-          "y": 500,
-          "w": 575,
-          "h": 120,
-          "text": "Welcome to our game ! It aims to teach loops in Python ! ^^\nUse the other window to change elements of the game !\nThe function place_block(x) make fall a block from the sky at the x coordinate. \nYou can stack them !\nUse the blocks in game to place yours !"
-        },
+      "x": 400,
+      "y": 500,
+      "w": 575,
+      "h": 130,
+      "text": "Welcome to our game! It's all about teaching loops in Python! \nUse the second window to modify game elements! \nThe place_block(x) function drops a block from the sky at the x coordinate. \nYou can stack them! If you need help, just press the help button in the menu, \nwhere new hints appear for each level. \n Press enter to make this message disappear."
+    },
     "first_free_slots": [
       10,
       11,
@@ -104,6 +104,8 @@
       "\nwith the function place_block(0)",
       "\n"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       2,
@@ -156,6 +158,8 @@
       "\nand the function place_block(i)",
       "\n"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       0,
@@ -205,6 +209,8 @@
       "\ntry adapting your code from the previous level",
       "\n"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       0,
@@ -337,6 +343,8 @@
       "\nfor i in range (20):",
       "\n   for j in range (i):"
     ],
+    "npc": [],
+    "textbox": {},
     "spawn_y": 100,
     "first_free_slots": [
       1,
@@ -405,6 +413,8 @@
       "\n",
       "\nfor i in range (x, y,1):"
     ],
+    "npc": [],
+    "textbox": {},
     "spawn_y": 50,
     "first_free_slots": [
       1,
@@ -474,6 +484,8 @@
       "\n",
       "\nfor i in range (x, y,-1):"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       0,
@@ -537,6 +549,8 @@
       "For this level, ",
       "\ntry changing the step of the for loop"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       8,
       0,
@@ -650,28 +664,34 @@
     "character_state": 0,
     "forbidden_functions": [],
     "max_lines": 4,
-    "offset": 1,
+    "offset": 10,
     "player_movement_speed": 5,
     "player_jump_speed": 10,
     "player_scaling": 1,
-    "spawn_x": 2,
-    "spawn_y": 10,
+    "spawn_x": 10,
+    "spawn_y": 20,
     "hints": [
       " If you don\u00e2\u20ac\u2122t know how big this hole is ",
       "\ntry using the while loop",
       "\ntry using the while loop",
       "\nand the is_empty(x,y) function"
     ],
+    "npc": [
+      {
+        "x": 50,
+        "y": 15,
+        "scale": 1,
+        "sprite_path": "assets/tiled/tiles/own/frog.png"
+      }
+    ],
+    "textbox": {
+      "x": 400,
+      "y": 500,
+      "w": 575,
+      "h": 130,
+      "text": "Well done for getting here. \nFor this level, we introduce a new function, is_empty(). \nThis checks whether a block is already present at the (x,y) coordinates \npassed in parameters. As we don't know the size of the hole \nfor this new challenge, try using a while loop."
+    },
     "first_free_slots": [
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -858,6 +878,8 @@
       "\nIn the Fibonacci Sequence, each number is the sum",
       "\n of the two preceding ones.F0=0 and F1=1"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       88,
       88,
@@ -1045,6 +1067,9 @@
     "player_scaling": 0.65,
     "spawn_x": 10,
     "spawn_y": 450,
+    "hints": [],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       74,
       74,
@@ -1235,6 +1260,8 @@
       "\nyou must place in each x column",
       "\nis proportional to y=25-x**2"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       1,
@@ -1313,6 +1340,8 @@
       "\nyou should be able to do it,",
       "\n\ngood luck :)\n"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       0,
@@ -1389,6 +1418,8 @@
       "\n in order to cross a gap",
       "\n\ngood luck :)\n"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       0,
@@ -1465,6 +1496,8 @@
       "\n and then walk to the end.",
       "\n\ngood luck :)\n"
     ],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       0,
       0,
@@ -1534,6 +1567,9 @@
     "player_scaling": 1,
     "spawn_x": 10,
     "spawn_y": 400,
+    "hints": [],
+    "npc": [],
+    "textbox": {},
     "first_free_slots": [
       9,
       9,
