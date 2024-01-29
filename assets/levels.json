@@ -108,7 +108,7 @@
     "textbox": {},
     "first_free_slots": [
       0,
-      2,
+      0,
       2,
       3,
       3,
@@ -670,7 +670,6 @@
     "player_scaling": 1,
     "spawn_x": 10,
     "spawn_y": 20,
-
     "hints": [
       "If you don't know how big this hole is ",
       "\ntry using the while loop",
@@ -1645,7 +1644,8 @@
       "y": 500,
       "w": 575,
       "h": 130,
-      "text": "You've reached the end of the game. Yippee !!!\n Thanks for playing. We hope you enjoyed the experience. \nTo reward you, we've got one last function for you to try out: frog().\n Maybe we'll see you soon, byeee !\n\n Maxence, Page et Lauranne :) " },
+      "text": "You've reached the end of the game. Yippee !!!\n Thanks for playing. We hope you enjoyed the experience. \nTo reward you, we've got one last function for you to try out: frog().\n Maybe we'll see you soon, byeee !\n\n Maxence, Page et Lauranne :) "
+    },
     "max_fall_time": -1
   }
 ]
