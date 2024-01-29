@@ -118,7 +118,7 @@
  <tile id="76">
   <image width="16" height="16" source="../../backgrounds/cloud_0.png"/>
  </tile>
- <tile id="86">
-  <image width="50" height="50" source="../../backgrounds/Enter.png"/>
+ <tile id="82">
+  <image width="50" height="50" source="../../../../../Downloads/Enter.png"/>
  </tile>
 </tileset>
