@@ -35,6 +35,7 @@ class MainMenu(arcade.View):
             game_view = Game(self.connection)
             game_view.setup()
             self.window.show_view(game_view)
+            self.manager.disable()
 
         self.background = arcade.load_texture("assets/backgrounds/starting_image.png")
         self.scene = arcade.Scene()
@@ -254,7 +255,7 @@ class Game(arcade.View):
             offset_block.width = offset_block.height = TILE_SIZE * self.level_data["scaling"]
             offset_block.left = self.level_data["offset"] * TILE_SIZE * self.level_data["scaling"]
             offset_block.bottom = 0
-            self.scene["Background"].append(offset_block)
+            self.scene.add_sprite("offset", offset_block)
 
         # Keep track of the score, make sure we keep the score if the player finishes a level
         if self.reset_score:
