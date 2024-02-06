@@ -1,5 +1,5 @@
 import json
-import signal
+import wrapt_timeout_decorator
 import utils
 
 # Might be used in exec(code), do not remove !
@@ -44,39 +44,38 @@ def user_instructions(game, code, forbidden=[], timeout=15):
     code = code.replace('frog(', 'frog(game,')
 
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
-
     local_variables = locals()
-    #TODO adapt SIGALRM to windows
-
-    # signal alarm for timeout
-    #signal.signal(signal.SIGALRM, timeout_handler)
-    #signal.alarm(timeout)
-
-    ticker = utils.Ticker(10)
-    ticker.start()
 
     # execution
     try:
-        game.setup()
-        exec(code, globals(), local_variables)
-        artificial_buffer = local_variables['artificial_buffer']
+        artificial_buffer = code_execution(game, code, globals(), local_variables)
 
     # handling errors
 
     except Exception as error:
+        print("heuy")
         with open("assets/text/errors.json") as custom_errors_json:
             custom_errors = json.loads(custom_errors_json.read())
             game.setup()
             return f'/!\\ {error.__class__.__name__} : {error}\n{artificial_buffer}'
 
-    finally:
-        ticker.stop()
-
-    #finally:
-    #    signal.alarm(0)
-
     return artificial_buffer
 
 
-def timeout_handler(signum, frame):
-    raise TimeoutError("The code was too long to run. hint : look for infinite loops.")
+@wrapt_timeout_decorator.timeout(5)
+# Timeout to prevent from looping infinetly
+def code_execution(game, code, global_variables, local_variables):
+    """
+    Executes the code performed by user. Func used in user_instructions.
+    Args:
+        game:
+        code:
+        global_variables:
+        local_variables:
+
+    Returns:
+
+    """
+    game.setup()
+    exec(code, global_variables, local_variables)
+    return local_variables['artificial_buffer']
