@@ -12,10 +12,10 @@ class MenuView(arcade.View):
         self.manager = gui.UIManager()
         self.game_view = game_view
 
-        resume = arcade.load_texture("assets/tiled/tiles/own/Play.png")
+        resume = arcade.load_texture("assets/menu/Play.png")
         resume_button = gui.UITextureButton(texture=resume, scale=4)
 
-        sortie = arcade.load_texture("assets/tiled/tiles/own/Exit.png")
+        sortie = arcade.load_texture("assets/menu/Exit.png")
         exit_button = gui.UITextureButton(texture=sortie, scale=4)
 
         # Initialise a grid in which widgets can be arranged.
@@ -57,14 +57,14 @@ class HelpView(arcade.View):
         self.manager = gui.UIManager()
         self.game_view = game_view
 
-        retour = arcade.load_texture("assets/tiled/tiles/own/Retour.png")
+        retour = arcade.load_texture("assets/menu/Retour.png")
         retour_button = gui.UITextureButton(texture=retour, scale=2)
         self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[retour_button])
 
         self.manager.add(gui.UIAnchorWidget(anchor_x='right', anchor_y='bottom', child=self.box))
 
         self.scene = arcade.Scene()
-        image_book = "assets/tiled/tiles/own/Book2.png"
+        image_book = "assets/menu/Book2.png"
         self.book = arcade.Sprite(image_book)
         self.book.scale = 2.3
         self.book.center_x = 500

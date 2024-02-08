@@ -25,7 +25,7 @@ class MainMenu(arcade.View):
         self.connection = connection
         self.manager = gui.UIManager()
 
-        play = arcade.load_texture("assets/tiled/tiles/own/PLAY_mm.png")
+        play = arcade.load_texture("assets/menu/Play_intro.png")
         play_button = gui.UITextureButton(texture=play, scale=4)
         self.manager.add(gui.UIAnchorWidget(anchor_x='center', anchor_y='center', child=play_button))
 
@@ -37,7 +37,7 @@ class MainMenu(arcade.View):
             self.window.show_view(game_view)
             self.manager.disable()
 
-        self.background = arcade.load_texture("assets/backgrounds/starting_image.png")
+        self.background = arcade.load_texture("assets/menu/starting_image.png")
         self.scene = arcade.Scene()
         image_character = "assets/backgrounds/Character.png"
         self.character_menu = arcade.Sprite(image_character)
@@ -163,7 +163,7 @@ class Game(arcade.View):
         # Reload level data
 
         # Reset positions available to precomputed values
-        with open("assets/levels.json", "r") as read_levels_file:
+        with open("levels.json", "r") as read_levels_file:
             self.levels = json.loads(read_levels_file.read())
 
         self.level_data = self.levels[self.save["current_level"]]
@@ -190,15 +190,15 @@ class Game(arcade.View):
         self.manager.enable()
 
         # Menu
-        reset = arcade.load_texture("assets/tiled/tiles/own/Reset.png")
+        reset = arcade.load_texture("assets/menu/Reset.png")
         reset_button = gui.UITextureButton(texture=reset, scale=2)
         reset_button.on_click = self.on_click_reset
 
-        help = arcade.load_texture("assets/tiled/tiles/own/Help.png")
+        help = arcade.load_texture("assets/menu/Help.png")
         help_button = gui.UITextureButton(texture=help, scale=2)
         help_button.on_click = self.on_click_help
 
-        pause = arcade.load_texture("assets/tiled/tiles/own/Stop.png")
+        pause = arcade.load_texture("assets/menu/Stop.png")
         switch_menu_button = gui.UITextureButton(texture=pause, scale=2)
         switch_menu_button.on_click = self.on_click_menu
 
@@ -234,15 +234,6 @@ class Game(arcade.View):
             self.textbox = npc.TextBox(textbox_data["x"], textbox_data["y"], textbox_data["w"], textbox_data["h"],
                                        textbox_data["text"])
 
-        ''' TODO remove
-        if self.level_data["name"] == "La super maisonnette":
-            image_source = "assets/characters/npc_chara.png"
-            self.npc_sprite = arcade.Sprite(image_source)
-            self.npc_sprite.scale = 1.5
-            self.npc_sprite.center_x = 740
-            self.npc_sprite.center_y = 215
-            self.scene.add_sprite("Npc", self.npc_sprite)
-        '''
 
         # Add player to the scene
         self.scene.add_sprite("Player", self.player_sprite)
@@ -254,7 +245,7 @@ class Game(arcade.View):
 
             offset_block.width = offset_block.height = TILE_SIZE * self.level_data["scaling"]
             offset_block.left = self.level_data["offset"] * TILE_SIZE * self.level_data["scaling"]
-            offset_block.bottom = 0
+            offset_block.bottom = self.level_data["first_free_slots"][0] * TILE_SIZE * self.level_data["scaling"]
             self.scene.add_sprite("offset", offset_block)
 
         # Keep track of the score, make sure we keep the score if the player finishes a level
