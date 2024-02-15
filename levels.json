@@ -84,7 +84,7 @@
       7,
       7
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "Introducing Mechanics",
@@ -138,7 +138,7 @@
       4,
       4
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "10 block hole",
@@ -193,7 +193,7 @@
       3,
       3
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "big big hole",
@@ -320,8 +320,8 @@
     "player_jump_speed": 10,
     "player_scaling": 0.65,
     "spawn_x": 50,
-    "spawn_y": 150,
-    "max_fall_time": -1
+    "spawn_y": 50,
+    "max_fall_time": 0.2
   },
   {
     "name": "big big stairs",
@@ -389,7 +389,7 @@
       17,
       17
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "big stairs not starting at 5",
@@ -457,7 +457,7 @@
       17,
       17
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "big big stairs down",
@@ -525,7 +525,7 @@
       2,
       2
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "des batonnets de fromage",
@@ -648,7 +648,7 @@
       8,
       0
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "introducing the new and fun while",
@@ -849,7 +849,7 @@
       2,
       2
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "it's not an info exercice withou a fibo",
@@ -864,7 +864,7 @@
     "player_jump_speed": 5,
     "player_scaling": 0.65,
     "spawn_x": 5,
-    "spawn_y": 650,
+    "spawn_y": 600,
     "hints": [
       "This hole is proportional to the Fibonacci Sequence,",
       "\nplace at each column the corresponding number",
@@ -1038,7 +1038,7 @@
       72,
       72
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "thanks for making it here",
@@ -1052,8 +1052,8 @@
     "player_movement_speed": 3,
     "player_jump_speed": 10,
     "player_scaling": 0.65,
-    "spawn_x": 10,
-    "spawn_y": 450,
+    "spawn_x": 50,
+    "spawn_y": 400,
     "hints": [],
     "npc": [
       {
@@ -1239,7 +1239,7 @@
       1,
       1
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "25-x**2",
@@ -1315,7 +1315,7 @@
       13,
       12
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "oh good luck with that",
@@ -1395,7 +1395,7 @@
       23,
       22
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "grand canyon",
@@ -1473,7 +1473,7 @@
       21,
       21
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "stairs then walk then win",
@@ -1534,7 +1534,7 @@
       20,
       21
     ],
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   },
   {
     "name": "The END",
@@ -1548,8 +1548,8 @@
     "player_movement_speed": 3,
     "player_jump_speed": 10,
     "player_scaling": 1,
-    "spawn_x": 20,
-    "spawn_y": 400,
+    "spawn_x": 30,
+    "spawn_y": 200,
     "hints": [],
     "first_free_slots": [
       9,
@@ -1616,6 +1616,6 @@
       "h": 130,
       "text": "You've reached the end of the game. Yippee !!!\n Thanks for playing. We hope you enjoyed the experience. \nTo reward you, we've got one last function for you to try out: frog().\n Maybe we'll see you soon, byeee !\n\n Maxence, Page and Lauranne :) "
     },
-    "max_fall_time": -1
+    "max_fall_time": 0.2
   }
 ]

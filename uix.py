@@ -58,11 +58,13 @@ class Input(App):
 
     def submit(self, obj):
         """
-        Is called when the submit button is pressed
-        It uses the user_instruction() function to execute the code, and
-        prints the result inside the output label
+                Is called when the submit button is pressed
+                It uses the user_instruction() function to execute the code, and
+                prints the result inside the output label
         """
 
+        # Reset output
+        self.output.text = ""
         # Send code input to arcade
         self.kivy_connection.send(self.code.text)
 

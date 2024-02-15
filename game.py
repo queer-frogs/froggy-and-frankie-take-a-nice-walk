@@ -1,7 +1,9 @@
 import arcade
 import arcade.gui as gui
 
+import pyglet
 import json
+
 import code_input
 import npc
 import utils
@@ -17,6 +19,11 @@ LAYER_NAME_NPC = "Npc"
 GRAVITY = 1.5
 TILE_SIZE = 16
 
+
+# Set up the screen
+SCREEN_NUM = 0
+SCREENS = pyglet.canvas.Display().get_screens()
+SCREEN = SCREENS[SCREEN_NUM]
 
 class MainMenu(arcade.View):
     """Class that manages the 'menu' view."""
@@ -141,8 +148,6 @@ class Game(arcade.View):
 
         self.levels = {}
 
-        # TODO add save & close somewhere ; save unsuppported as of today
-
         # Level data, loaded later on
         self.level_data = None
 
@@ -160,7 +165,8 @@ class Game(arcade.View):
         self.camera = arcade.Camera(self.window.width, self.window.height)
         self.gui_camera = arcade.Camera(self.window.width, self.window.height)
 
-        # Reload level data
+        # hide textbox
+        self.show_textbox = False
 
         # Reset positions available to precomputed values
         with open("levels.json", "r") as read_levels_file:
