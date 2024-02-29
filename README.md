@@ -1,8 +1,8 @@
-# game (not the definitive name, as you might have guessed)
+# Froggy and Frankie take a nice walk 
 
 ## What is it ?
 
-game (not the definitve name, as you might have guessed) is an educative game, made for teaching Python loops to
+Froggy and Frankie take a nice walk is an educative game, made for teaching Python loops to
 beginners.
 Contrary to most coding games, the player controls its avatar using his keyboard arrows. The code they produce allow
 them to modify their environment (e.g. by building bridges).
