@@ -7,8 +7,8 @@ beginners.
 Contrary to most coding games, the player controls its avatar using his keyboard arrows. The code they produce allow
 them to modify their environment (e.g. by building bridges).
 It was originally made during a university project by three UTC (Université de Technologie de Compiègne) students. If
-you can read french, here is the full project report : .
-You can also read (in english) the [full technical documentation](https://google.com).
+you can read french, the full report is the docs/report folder.
+You can also read (in english) the full technical documentation available in the docs/build folder.
 
 ## How does it work ?
 
@@ -60,3 +60,5 @@ python main.py
 - Maxence Vahedi :
   - Contact : maxence.vahedi@etu.utc.fr
   - Github : https://github.com/maxencevahedi
+
+Special thanks to Domitile Lourdeaux, our teacher, for her essential support and advice throughout the whole project.
