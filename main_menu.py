@@ -18,8 +18,11 @@ class MenuView(arcade.View):
         sortie = arcade.load_texture("assets/menu/Exit.png")
         exit_button = gui.UITextureButton(texture=sortie, scale=4)
 
+        restart = arcade.load_texture("assets/menu/Restart.png")
+        restart_button = gui.UITextureButton(texture=restart, scale=4)
+
         # Initialise a grid in which widgets can be arranged.
-        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[resume_button, exit_button])
+        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[resume_button, exit_button, restart_button])
         self.manager.add(gui.UIAnchorWidget(anchor_x='center', anchor_y='center', child=self.box))
 
         @exit_button.event("on_click")
@@ -30,6 +33,13 @@ class MenuView(arcade.View):
         @resume_button.event("on_click")
         def on_click_resume_button(event):
             # Pass already created view because we are resuming.
+            self.window.show_view(self.game_view)
+
+        @restart_button.event("on_click")
+        def on_click_restart_button(event):
+            self.game_view.save["current_level"] = 0
+            write_save(self.game_view)
+            self.game_view.setup()
             self.window.show_view(self.game_view)
 
 
@@ -138,7 +148,7 @@ class HelpView(arcade.View):
                 ))
             i += 15
 
-        #Print the text of the python loops in the hint book
+        # Print the text of the python loops in the hint book
         i=0
         arcade.draw_text("Python loops :  \n ", 222, 480 - i, arcade.color.BLACK, 12,
                          width=int(1000 - 20), align="left", anchor_x="left", anchor_y="top", bold=True, font_name=(
