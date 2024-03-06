@@ -175,6 +175,9 @@ class Game(arcade.View):
         self.level_data = self.levels[self.save["current_level"]]
         map_path = self.level_data["tilemap_path"]
 
+        # Save progress
+        utils.write_save(self)
+
         # Initialize map
 
         layer_options = {  # options specific to each layer
@@ -429,15 +432,17 @@ class Game(arcade.View):
             self.player_sprite.walking_right = False
             self.player_sprite.walking_left = False
 
-        # TODO
         if self.enter_pressed:
             if self.show_textbox:
                 self.show_textbox = False
             elif npc.dist_between_sprites(self.player_sprite, self.textbox_npc) < 100:
                 self.show_textbox = True
 
+        # Used to set the level and its platforms
+        """
         if self.p_pressed:
             utils.save_free_slots(self)
+        """
 
     def on_click_reset(self, event):
         self.setup()
