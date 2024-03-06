@@ -28,6 +28,7 @@ def user_instructions(game, code, forbidden=[], timeout=15):
     with open("assets/text/unsafe_words.json", "r") as unsafe_json:
         unsafe = json.loads(unsafe_json.read())  # load from json unsafe words
 
+    forbidden += game.level_data["forbidden_functions"]
     forbidden += unsafe
 
     for word in forbidden:
