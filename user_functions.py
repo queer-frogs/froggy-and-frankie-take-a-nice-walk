@@ -64,6 +64,8 @@ def frog(arcade_game):
     :param arcade_game:
     :return: Nothing
     """
-
-    arcade_game.frog = True
+    if not arcade_game.frog :
+        arcade_game.frog = True
+    else :
+        arcade_game.frog = False
     arcade_game.setup()
