@@ -333,11 +333,7 @@
     "spawn_x": 20,
     "hints": [
       "In order to build a staircase, try using",
-      "nested loops (loop inside another loop).",
-      "",
-      "For exemple :",
-      "for i in range (20):",
-      "   for j in range (i):"
+      "nested loops (loop inside another loop)."
     ],
     "npc": [],
     "textbox": {},
@@ -470,10 +466,10 @@
     "spawn_y": 450,
     "hints": [
       "For this level, you have to create a stairway down.",
-      "If you didn't know, loops can use negative steps",
-      "",
-      "For exemple :",
-      "for i in range (x, y,-1):"
+      "Reuse your previous code. The first loop shouldn't",
+      "change, it iterates over all the columns of ",
+      "the hole. The second loop, on the other hand,",
+      "might be different."
     ],
     "npc": [],
     "textbox": {},
@@ -533,13 +529,13 @@
     "offset": 2,
     "player_movement_speed": 3.5,
     "player_jump_speed": 2,
-    "player_scaling": 0.46,
+    "player_scaling": 0.4,
     "spawn_x": 5,
     "spawn_y": 90,
     "hints": [
       "Try playing with the value of the step inside the",
       "\"for\" loop. Another possibility is to use",
-      "\"if\" statements."
+      "an \"if\" statement."
     ],
     "npc": [],
     "textbox": {},
