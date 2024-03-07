@@ -59,11 +59,9 @@ def user_instructions(game, code, forbidden=[], timeout=15):
         artificial_buffer = local_variables['artificial_buffer']
 
     # handling errors
-
     except Exception as error:
-        with open("assets/text/errors.json") as custom_errors_json:
-            custom_errors = json.loads(custom_errors_json.read())
-            return f'/!\\ {error.__class__.__name__} : {error}\n{artificial_buffer}'
+        artificial_buffer = local_variables['artificial_buffer']
+        return f'/!\\ {error.__class__.__name__} : {error}\n{artificial_buffer}'
 
     # finally:
     #    signal.alarm(0)
