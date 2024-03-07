@@ -103,6 +103,8 @@ class Game(arcade.View):
         self.down_pressed = False
         self.p_pressed = False
 
+        self.can_move = True
+
         # Our TileMap Object
         self.tile_map = None
 
@@ -215,6 +217,7 @@ class Game(arcade.View):
         self.end_of_map = 1000
 
         # Initialize Player Sprite
+        self.can_move = True
         self.player_sprite = entities.PlayerCharacter(self.frog)
         self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
@@ -344,6 +347,8 @@ class Game(arcade.View):
                 res = code_input.user_instructions(self, kivy_message, [])
                 if res:
                     self.connection.send(res)
+                    if res.startswith("/!\\"):  # error output :
+                        self.can_move = False
         except EOFError as e:
             print(e)
             # save and quit
@@ -400,16 +405,17 @@ class Game(arcade.View):
                 """
 
         # Process left/right
-        if self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = (-self.level_data["player_movement_speed"] * self.level_data["scaling"])
-            self.player_sprite.walking_right = True
-        elif self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = (self.level_data["player_movement_speed"] * self.level_data["scaling"])
-            self.player_sprite.walking_right = True
-        else:
-            self.player_sprite.change_x = 0
-            self.player_sprite.walking_right = False
-            self.player_sprite.walking_left = False
+        if self.can_move:
+            if self.left_pressed and not self.right_pressed:
+                self.player_sprite.change_x = (-self.level_data["player_movement_speed"] * self.level_data["scaling"])
+                self.player_sprite.walking_right = True
+            elif self.right_pressed and not self.left_pressed:
+                self.player_sprite.change_x = (self.level_data["player_movement_speed"] * self.level_data["scaling"])
+                self.player_sprite.walking_right = True
+            else:
+                self.player_sprite.change_x = 0
+                self.player_sprite.walking_right = False
+                self.player_sprite.walking_left = False
 
         if self.enter_pressed:
             if self.show_textbox:
