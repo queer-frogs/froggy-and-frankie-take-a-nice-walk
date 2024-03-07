@@ -70,12 +70,12 @@ class MainMenu(arcade.View):
 
         arcade.draw_texture_rectangle(500, 280, 1000,
                                       563, self.background)
-        arcade.draw_text("Froggie and Frankie take a nice walk", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+220, arcade.color.BLACK, font_size=30,
-                         anchor_x='center', italic=True, font_name=(
-                "Times New Roman",  # Comes with Windows
-                "Times",  # MacOS may sometimes have this variant
-                "Liberation Serif"  # Common on Linux systems)
-            ))
+        arcade.draw_text("Froggie and Frankie take a nice walk", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+220,
+                         arcade.color.BLACK, font_size=30,
+                         anchor_x='center', italic=True, font_name=("Times New Roman",  # Comes with Windows
+                                                                    "Times",  # MacOS may sometimes have this variant
+                                                                    "Liberation Serif"  # Common on Linux systems)
+                                                                    ))
         self.scene.draw()
         self.manager.draw()
 
@@ -103,8 +103,6 @@ class Game(arcade.View):
         self.down_pressed = False
         self.p_pressed = False
 
-        self.frog = False
-
         # Our TileMap Object
         self.tile_map = None
 
@@ -114,6 +112,7 @@ class Game(arcade.View):
         # Create sprite lists here, and set them to None
         self.player_sprite = None
         self.npc_sprite = None
+        self.frog = False
 
         # Our 'physics' engine
         self.physics_engine = None
@@ -123,12 +122,6 @@ class Game(arcade.View):
 
         # A Camera that can be used to draw GUI elements (menu, score)
         self.gui_camera = None
-
-        # Keep track of the score
-        self.score = 0
-
-        # Do we need to reset the score?
-        self.reset_score = True
 
         # Where is the right edge of the map?
         self.end_of_map = 0
@@ -203,16 +196,17 @@ class Game(arcade.View):
         reset_button = gui.UITextureButton(texture=reset, scale=2)
         reset_button.on_click = self.on_click_reset
 
-        help = arcade.load_texture("assets/menu/Help.png")
-        help_button = gui.UITextureButton(texture=help, scale=2)
+        hint = arcade.load_texture("assets/menu/Help.png")
+        help_button = gui.UITextureButton(texture=hint, scale=2)
         help_button.on_click = self.on_click_help
 
         pause = arcade.load_texture("assets/menu/Stop.png")
         switch_menu_button = gui.UITextureButton(texture=pause, scale=2)
         switch_menu_button.on_click = self.on_click_menu
 
-        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button, switch_menu_button])
-        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=self.box))
+        box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button,
+                                                                     switch_menu_button])
+        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=box))
 
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -257,13 +251,7 @@ class Game(arcade.View):
             offset_block.bottom = self.level_data["first_free_slots"][0] * TILE_SIZE * self.level_data["scaling"]
             self.scene.add_sprite("offset", offset_block)
 
-        # Keep track of the score, make sure we keep the score if the player finishes a level
-        if self.reset_score:
-            self.score = 0
-        self.reset_score = True
-
         # Create the physics engine
-
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
 
@@ -292,18 +280,12 @@ class Game(arcade.View):
         # Activate the GUI camera before drawing GUI elements
         self.gui_camera.use()
 
-        # Indicate level number
-        nb_level = f"Level: {self.levels[self.save['current_level']]['name']}"
-        arcade.draw_text(nb_level, 10, 600, arcade.csscolor.WHITE, 18)
-
         # Draw the NPC textbox
-
         if self.show_textbox:
             self.textbox.show()
 
         # Draw hit boxes.
         # self.player_sprite.draw_hit_box(arcade.color.BLUE, 3)
-
 
     def on_update(self, delta_time):
         """
@@ -345,15 +327,12 @@ class Game(arcade.View):
             # Advance to the next level
             self.save["current_level"] += 1
 
-            # Make sure to keep the score from this level when setting up the next level
-            self.reset_score = False
-
             # Load the next level
             self.setup()
 
         # Trigger auto-jump if needed
-        if (
-                self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.last_pos == self.player_sprite.current_pos:
+        if (self.player_sprite.walking_right or self.player_sprite.walking_left) \
+                and self.player_sprite.last_pos == self.player_sprite.current_pos:
             self.player_sprite.change_y = self.level_data["player_jump_speed"]
 
 
@@ -447,7 +426,7 @@ class Game(arcade.View):
     def on_click_reset(self, event):
         self.setup()
 
-    def on_click_help(self,event):
+    def on_click_help(self, event):
         help_view = HelpView(self)
         self.window.show_view(help_view)
 
@@ -455,7 +434,7 @@ class Game(arcade.View):
         # Passing the main view into menu view as an argument.
         menu_view = MenuView(self)
         self.window.show_view(menu_view)
+
     def save_and_quit(self):
         utils.write_save(self)
         self.on_close()
-
