@@ -1,5 +1,5 @@
 import json
-import signal
+# import signal
 
 # Might be used in exec(code), do not remove !
 from user_functions import place_block
@@ -46,11 +46,11 @@ def user_instructions(game, code, forbidden=[], timeout=15):
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 
     local_variables = locals()
-    #TODO adapt SIGALRM to windows
+    # TODO adapt SIGALRM to windows
 
     # signal alarm for timeout
-    #signal.signal(signal.SIGALRM, timeout_handler)
-    #signal.alarm(timeout)
+    # signal.signal(signal.SIGALRM, timeout_handler)
+    # signal.alarm(timeout)
 
     # execution
     try:
@@ -66,7 +66,7 @@ def user_instructions(game, code, forbidden=[], timeout=15):
             game.setup()
             return f'/!\\ {error.__class__.__name__} : {error}\n{artificial_buffer}'
 
-    #finally:
+    # finally:
     #    signal.alarm(0)
 
     return artificial_buffer

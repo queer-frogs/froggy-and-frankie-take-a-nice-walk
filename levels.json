@@ -849,7 +849,7 @@
     "max_fall_time": 0.2
   },
   {
-    "name": "it's not an info exercice withou a fibo",
+    "name": "it's not an info exercice without a fibo",
     "tilemap_path": "assets/tiled/tilemaps/level_9.tmx",
     "cutscene_path": "",
     "scaling": 0.365,

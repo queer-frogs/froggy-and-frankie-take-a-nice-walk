@@ -2,12 +2,12 @@
 
 ## What is it ?
 
-game (not the definitve name, as you might have guessed) is an educative game, made for teaching Python loops to
+game (not the definitive name, as you might have guessed) is an educative game, made for teaching Python loops to
 beginners.
 Contrary to most coding games, the player controls its avatar using his keyboard arrows. The code they produce allow
 them to modify their environment (e.g. by building bridges).
 It was originally made during a university project by three UTC (Université de Technologie de Compiègne) students. If
-you can read french, here is the full project report : .
+you can read French, here is the full project report : .
 You can also read (in english) the [full technical documentation](https://google.com).
 
 ## How does it work ?
@@ -18,7 +18,7 @@ documentation (href  missing).
 
 ## Project status
 
-The project is no longer in developement. However, anyone can contribute to it ! Please feel free to contact us if you
+The project is no longer in development. However, anyone can contribute to it ! Please feel free to contact us if you
 want to know how to get started.
 
 ## Installation

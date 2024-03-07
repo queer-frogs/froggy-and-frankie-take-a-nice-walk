@@ -4,7 +4,7 @@ import game
 
 def place_block(arcade_game, x_pos, block_type="assets/backgrounds/Bois2.png"):
     """
-    Places a block on the lowest slot avaible at the hoziontal position passed.
+    Places a block on the lowest slot available at the horizontal position passed.
 
     Args:
         arcade_game: Game object target
@@ -32,7 +32,7 @@ def place_block(arcade_game, x_pos, block_type="assets/backgrounds/Bois2.png"):
     arcade_game.level_data["first_free_slots"][x_pos] += 1
 
     if new_block.bottom > game.SCREEN_HEIGHT:
-        raise ValueError("No room is avaible for this block at that position.")
+        raise ValueError("No room is available for this block at that position.")
 
     # Update sprite list and render the new sprite
     arcade_game.scene["Platforms"].append(new_block)
@@ -41,7 +41,7 @@ def place_block(arcade_game, x_pos, block_type="assets/backgrounds/Bois2.png"):
 
 def is_empty(arcade_game, x_pos, y_pos):
     """
-    Checks if there is a plotform at the (x_pos, y_pos) position.
+    Checks if there is a platform at the (x_pos, y_pos) position.
 
     Args:
         arcade_game: arcade game instance
@@ -64,8 +64,8 @@ def frog(arcade_game):
     :param arcade_game:
     :return: Nothing
     """
-    if not arcade_game.frog :
+    if not arcade_game.frog:
         arcade_game.frog = True
-    else :
+    else:
         arcade_game.frog = False
     arcade_game.setup()
