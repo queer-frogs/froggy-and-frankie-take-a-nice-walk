@@ -330,6 +330,16 @@ class Game(arcade.View):
             # Advance to the next level
             self.save["current_level"] += 1
 
+            # Save progress
+            try:
+                utils.write_save(self)
+            except AttributeError:
+                # On first setup
+                pass
+
+            # Make sure to keep the score from this level when setting up the next level
+            self.reset_score = False
+
             # Load the next level
             self.setup()
 
