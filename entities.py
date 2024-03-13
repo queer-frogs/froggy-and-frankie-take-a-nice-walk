@@ -38,7 +38,7 @@ class Entity(arcade.Sprite):
             self.texture = arcade.load_texture(image)
             self.set_hit_box(self.texture.hit_box_points)
 
-        else :
+        else:
             main_path = f"assets/characters"
             self.idle_texture_pair = load_texture_pair(f"{main_path}/Personnage.png")
 
@@ -71,7 +71,7 @@ class PlayerCharacter(Entity):
 
     def update_animation(self, delta_time: float = 1 / 60):
 
-        if not self.frog :
+        if not self.frog:
             # Figure out if we need to flip face left or right
             if self.change_x < 0 and self.facing_direction == RIGHT_FACING:
                 self.facing_direction = LEFT_FACING

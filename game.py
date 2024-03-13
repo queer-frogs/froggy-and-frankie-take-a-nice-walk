@@ -1,7 +1,9 @@
 import arcade
 import arcade.gui as gui
 
+import pyglet
 import json
+
 import code_input
 import npc
 import utils
@@ -18,6 +20,11 @@ GRAVITY = 1.5
 TILE_SIZE = 16
 
 
+# Set up the screen
+SCREEN_NUM = 0
+SCREENS = pyglet.canvas.Display().get_screens()
+SCREEN = SCREENS[SCREEN_NUM]
+
 class MainMenu(arcade.View):
     """Class that manages the 'menu' view."""
     def __init__(self, connection):
@@ -25,7 +32,7 @@ class MainMenu(arcade.View):
         self.connection = connection
         self.manager = gui.UIManager()
 
-        play = arcade.load_texture("assets/tiled/tiles/own/PLAY_mm.png")
+        play = arcade.load_texture("assets/menu/Play_intro.png")
         play_button = gui.UITextureButton(texture=play, scale=4)
         self.manager.add(gui.UIAnchorWidget(anchor_x='center', anchor_y='center', child=play_button))
 
@@ -37,7 +44,7 @@ class MainMenu(arcade.View):
             self.window.show_view(game_view)
             self.manager.disable()
 
-        self.background = arcade.load_texture("assets/backgrounds/starting_image.png")
+        self.background = arcade.load_texture("assets/menu/starting_image.png")
         self.scene = arcade.Scene()
         image_character = "assets/backgrounds/Character.png"
         self.character_menu = arcade.Sprite(image_character)
@@ -63,12 +70,12 @@ class MainMenu(arcade.View):
 
         arcade.draw_texture_rectangle(500, 280, 1000,
                                       563, self.background)
-        arcade.draw_text("Froggie and Frankie take a nice walk", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+220, arcade.color.BLACK, font_size=30,
-                         anchor_x='center', italic=True, font_name=(
-                "Times New Roman",  # Comes with Windows
-                "Times",  # MacOS may sometimes have this variant
-                "Liberation Serif"  # Common on Linux systems)
-            ))
+        arcade.draw_text("Froggie and Frankie take a nice walk", SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+220,
+                         arcade.color.BLACK, font_size=30,
+                         anchor_x='center', italic=True, font_name=("Times New Roman",  # Comes with Windows
+                                                                    "Times",  # MacOS may sometimes have this variant
+                                                                    "Liberation Serif"  # Common on Linux systems)
+                                                                    ))
         self.scene.draw()
         self.manager.draw()
 
@@ -96,7 +103,7 @@ class Game(arcade.View):
         self.down_pressed = False
         self.p_pressed = False
 
-        self.frog = False
+        self.can_move = True
 
         # Our TileMap Object
         self.tile_map = None
@@ -107,6 +114,7 @@ class Game(arcade.View):
         # Create sprite lists here, and set them to None
         self.player_sprite = None
         self.npc_sprite = None
+        self.frog = False
 
         # Our 'physics' engine
         self.physics_engine = None
@@ -116,12 +124,6 @@ class Game(arcade.View):
 
         # A Camera that can be used to draw GUI elements (menu, score)
         self.gui_camera = None
-
-        # Keep track of the score
-        self.score = 0
-
-        # Do we need to reset the score?
-        self.reset_score = True
 
         # Where is the right edge of the map?
         self.end_of_map = 0
@@ -141,8 +143,6 @@ class Game(arcade.View):
 
         self.levels = {}
 
-        # TODO add save & close somewhere ; save unsuppported as of today
-
         # Level data, loaded later on
         self.level_data = None
 
@@ -160,14 +160,18 @@ class Game(arcade.View):
         self.camera = arcade.Camera(self.window.width, self.window.height)
         self.gui_camera = arcade.Camera(self.window.width, self.window.height)
 
-        # Reload level data
+        # hide textbox
+        self.show_textbox = False
 
         # Reset positions available to precomputed values
-        with open("assets/levels.json", "r") as read_levels_file:
+        with open("levels.json", "r") as read_levels_file:
             self.levels = json.loads(read_levels_file.read())
 
         self.level_data = self.levels[self.save["current_level"]]
         map_path = self.level_data["tilemap_path"]
+
+        # Save progress
+        utils.write_save(self)
 
         # Initialize map
 
@@ -190,20 +194,21 @@ class Game(arcade.View):
         self.manager.enable()
 
         # Menu
-        reset = arcade.load_texture("assets/tiled/tiles/own/Reset.png")
+        reset = arcade.load_texture("assets/menu/Reset.png")
         reset_button = gui.UITextureButton(texture=reset, scale=2)
         reset_button.on_click = self.on_click_reset
 
-        help = arcade.load_texture("assets/tiled/tiles/own/Help.png")
-        help_button = gui.UITextureButton(texture=help, scale=2)
+        hint = arcade.load_texture("assets/menu/Help.png")
+        help_button = gui.UITextureButton(texture=hint, scale=2)
         help_button.on_click = self.on_click_help
 
-        pause = arcade.load_texture("assets/tiled/tiles/own/Stop.png")
+        pause = arcade.load_texture("assets/menu/Stop.png")
         switch_menu_button = gui.UITextureButton(texture=pause, scale=2)
         switch_menu_button.on_click = self.on_click_menu
 
-        self.box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button, switch_menu_button])
-        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=self.box))
+        box = gui.UIBoxLayout(x=100, y=100, vertical=True, children=[reset_button, help_button,
+                                                                     switch_menu_button])
+        self.manager.add(gui.UIAnchorWidget(anchor_x="right", anchor_y="top", child=box))
 
         # Initialize Scene
         self.scene = arcade.Scene.from_tilemap(self.tile_map)
@@ -212,6 +217,7 @@ class Game(arcade.View):
         self.end_of_map = 1000
 
         # Initialize Player Sprite
+        self.can_move = True
         self.player_sprite = entities.PlayerCharacter(self.frog)
         self.player_sprite.scale = 1.2 * self.level_data["player_scaling"] * self.level_data["scaling"]
         self.player_sprite.center_x = self.level_data["spawn_x"]
@@ -234,15 +240,6 @@ class Game(arcade.View):
             self.textbox = npc.TextBox(textbox_data["x"], textbox_data["y"], textbox_data["w"], textbox_data["h"],
                                        textbox_data["text"])
 
-        ''' TODO remove
-        if self.level_data["name"] == "La super maisonnette":
-            image_source = "assets/characters/npc_chara.png"
-            self.npc_sprite = arcade.Sprite(image_source)
-            self.npc_sprite.scale = 1.5
-            self.npc_sprite.center_x = 740
-            self.npc_sprite.center_y = 215
-            self.scene.add_sprite("Npc", self.npc_sprite)
-        '''
 
         # Add player to the scene
         self.scene.add_sprite("Player", self.player_sprite)
@@ -254,16 +251,10 @@ class Game(arcade.View):
 
             offset_block.width = offset_block.height = TILE_SIZE * self.level_data["scaling"]
             offset_block.left = self.level_data["offset"] * TILE_SIZE * self.level_data["scaling"]
-            offset_block.bottom = 0
+            offset_block.bottom = self.level_data["first_free_slots"][0] * TILE_SIZE * self.level_data["scaling"]
             self.scene.add_sprite("offset", offset_block)
 
-        # Keep track of the score, make sure we keep the score if the player finishes a level
-        if self.reset_score:
-            self.score = 0
-        self.reset_score = True
-
         # Create the physics engine
-
         self.physics_engine = arcade.PhysicsEnginePlatformer(self.player_sprite, self.scene["Platforms"],
                                                              gravity_constant=GRAVITY)
 
@@ -292,18 +283,12 @@ class Game(arcade.View):
         # Activate the GUI camera before drawing GUI elements
         self.gui_camera.use()
 
-        # Indicate level number
-        nb_level = f"Level: {self.levels[self.save['current_level']]['name']}"
-        arcade.draw_text(nb_level, 10, 600, arcade.csscolor.WHITE, 18)
-
         # Draw the NPC textbox
-
         if self.show_textbox:
             self.textbox.show()
 
         # Draw hit boxes.
         # self.player_sprite.draw_hit_box(arcade.color.BLUE, 3)
-
 
     def on_update(self, delta_time):
         """
@@ -359,8 +344,8 @@ class Game(arcade.View):
             self.setup()
 
         # Trigger auto-jump if needed
-        if (
-                self.player_sprite.walking_right or self.player_sprite.walking_left) and self.player_sprite.last_pos == self.player_sprite.current_pos:
+        if (self.player_sprite.walking_right or self.player_sprite.walking_left) \
+                and self.player_sprite.last_pos == self.player_sprite.current_pos:
             self.player_sprite.change_y = self.level_data["player_jump_speed"]
 
 
@@ -372,6 +357,8 @@ class Game(arcade.View):
                 res = code_input.user_instructions(self, kivy_message, [])
                 if res:
                     self.connection.send(res)
+                    if res.startswith("/!\\"):  # error output :
+                        self.can_move = False
         except EOFError as e:
             print(e)
             # save and quit
@@ -428,31 +415,34 @@ class Game(arcade.View):
                 """
 
         # Process left/right
-        if self.left_pressed and not self.right_pressed:
-            self.player_sprite.change_x = (-self.level_data["player_movement_speed"] * self.level_data["scaling"])
-            self.player_sprite.walking_right = True
-        elif self.right_pressed and not self.left_pressed:
-            self.player_sprite.change_x = (self.level_data["player_movement_speed"] * self.level_data["scaling"])
-            self.player_sprite.walking_right = True
-        else:
-            self.player_sprite.change_x = 0
-            self.player_sprite.walking_right = False
-            self.player_sprite.walking_left = False
+        if self.can_move:
+            if self.left_pressed and not self.right_pressed:
+                self.player_sprite.change_x = (-self.level_data["player_movement_speed"] * self.level_data["scaling"])
+                self.player_sprite.walking_right = True
+            elif self.right_pressed and not self.left_pressed:
+                self.player_sprite.change_x = (self.level_data["player_movement_speed"] * self.level_data["scaling"])
+                self.player_sprite.walking_right = True
+            else:
+                self.player_sprite.change_x = 0
+                self.player_sprite.walking_right = False
+                self.player_sprite.walking_left = False
 
-        # TODO
         if self.enter_pressed:
             if self.show_textbox:
                 self.show_textbox = False
             elif npc.dist_between_sprites(self.player_sprite, self.textbox_npc) < 100:
                 self.show_textbox = True
 
+        # Used to set the level and its platforms
+        """
         if self.p_pressed:
             utils.save_free_slots(self)
+        """
 
     def on_click_reset(self, event):
         self.setup()
 
-    def on_click_help(self,event):
+    def on_click_help(self, event):
         help_view = HelpView(self)
         self.window.show_view(help_view)
 
@@ -460,7 +450,7 @@ class Game(arcade.View):
         # Passing the main view into menu view as an argument.
         menu_view = MenuView(self)
         self.window.show_view(menu_view)
+
     def save_and_quit(self):
         utils.write_save(self)
         self.on_close()
-

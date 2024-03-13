@@ -1,5 +1,5 @@
 import json
-import signal
+# import signal
 
 # Might be used in exec(code), do not remove !
 from user_functions import place_block
@@ -28,6 +28,7 @@ def user_instructions(game, code, forbidden=[], timeout=15):
     with open("assets/text/unsafe_words.json", "r") as unsafe_json:
         unsafe = json.loads(unsafe_json.read())  # load from json unsafe words
 
+    forbidden += game.level_data["forbidden_functions"]
     forbidden += unsafe
 
     for word in forbidden:
@@ -45,11 +46,11 @@ def user_instructions(game, code, forbidden=[], timeout=15):
     # defining locals dictionary passed into exec, so that variables are affected in the function scope
 
     local_variables = locals()
-    #TODO adapt SIGALRM to windows
+    # TODO adapt SIGALRM to windows
 
     # signal alarm for timeout
-    #signal.signal(signal.SIGALRM, timeout_handler)
-    #signal.alarm(timeout)
+    # signal.signal(signal.SIGALRM, timeout_handler)
+    # signal.alarm(timeout)
 
     # execution
     try:
@@ -58,14 +59,11 @@ def user_instructions(game, code, forbidden=[], timeout=15):
         artificial_buffer = local_variables['artificial_buffer']
 
     # handling errors
-
     except Exception as error:
-        with open("assets/text/errors.json") as custom_errors_json:
-            custom_errors = json.loads(custom_errors_json.read())
-            game.setup()
-            return f'/!\\ {error.__class__.__name__} : {error}\n{artificial_buffer}'
+        artificial_buffer = local_variables['artificial_buffer']
+        return f'/!\\ {error.__class__.__name__} : {error}\n{artificial_buffer}'
 
-    #finally:
+    # finally:
     #    signal.alarm(0)
 
     return artificial_buffer
