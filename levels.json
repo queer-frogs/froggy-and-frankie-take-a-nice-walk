@@ -24,10 +24,10 @@
     ],
     "textbox": {
       "x": 500,
-      "y": 498,
+      "y": 468,
       "w": 580,
-      "h": 130,
-      "text": "Welcome to our game! It's all about teaching loops in Python! \nUse the second window to modify game elements! \nThe place_block(x) function drops a block from the sky at the x coordinate. \nYou can stack them! If you need help, just press the help button in the menu, \nwhere new hints appear for each level. \nPress enter to make this message disappear."
+      "h": 160,
+      "text": "Welcome to our game! It's all about teaching loops in Python! \nUse the second window to modify game elements! \nThe place_block(x) function drops a block from the sky at the x coordinate, \nstarting at the green dot.\nYou can stack them! If you need help, just press the help button in the menu, \nwhere new hints appear for each level. \nPress enter to make this message disappear."
     },
     "first_free_slots": [
       10,
